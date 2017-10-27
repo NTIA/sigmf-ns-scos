@@ -14,12 +14,6 @@ Version 0.2
 ## 1. Description
 This transfer specification defines the controls and data format used within the Spectrum Characterization and Occupancy Sensing (SCOS) system. This system is an NTIA implementation of the [IEEE 802.22.3 draft standard](http://www.ieee802.org/22/P802_22_3_PAR_Detail_Approved.pdf), and draws upon the previous work of NIST and NTIA on the [MSOD System](https://github.com/usnistgov/SpectrumBrowser), while fully implementing the [SigMF Specification](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md) for the Data Plane.  
 
-Schedule ...  
-
-Action ...  
-
-Events ...  
-
 ## 2. Conventions Used in this Document
 
 We have adopted SigMF's conventions:
