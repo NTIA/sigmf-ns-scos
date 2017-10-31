@@ -32,7 +32,7 @@ Actions are functions that the sensor owner implements and exposes. Actions can 
 
 The following objects are used within the `scos` SigMF name space in the Control and Data planes.
 
-#### Schedule Entry Object
+### 3.1 Schedule Entry Object
 The `schedule_entry` object requires the following name/value pairs:
 
 |name|required|type|unit|description|
@@ -45,7 +45,7 @@ The `schedule_entry` object requires the following name/value pairs:
 |`priority`|false|integer|N/A|Priority of the schedule, similar to applying [nice](https://en.wikipedia.org/wiki/Nice_(Unix)). Lower numbers are higher priority.|
 |`action`|true|object|N/A|See [Action](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#51-action) object definition.|
 
-#### Action Object
+### 3.2 Action Object
 The `action` object requires the following name/value pairs
 
 |name|required|type|unit|description|
@@ -68,7 +68,7 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 |`schedule_entry`|false|object|N/A|See [Schedule Entry](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#59-schedule-entry) object definition.|
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schdeule_entry`.|
 
-#### Sensor Definition Object
+#### 4.1.1 Sensor Definition Object
 Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Signal Conditioning Unit (SCU), Data Extraction Unit (DEU), and Host Controller (HC). Sensor implementations are not required to have each component, but metadata must specify the presence, model numbers, and operational parameters associated with each.
 
 The following global objects are used within the `scos` SigMF name space to define the sensor.
@@ -255,6 +255,30 @@ The `stepped_frequency_fft` object requires the following name/value pairs:
 |`center_frequency_step`|true|float|Hz|Center frequency step of scan|
 |`fixed_frequency_fft`|true|object|||
 
+## 5. Index
+Action Object
+Annotations
+Antenna Object
+Calibrations Object
+Captures
+Control Plane
+Data Extraction Unit Object
+Data Plane
+Dynamic Antenna Settings Object
+Dynamic DEU Settings Object
+Dynamic SCU Settings Object
+Dynamic Sensor Settings
+Fixed Frequency FFT Object
+Global
+Host Controller Object
+Measurement Types
+Power Delay Profile Object 
+RF Path # Object
+Schedule Entry Object  
+Sensor Definition Object
+Signal Conditioning Unit Object
+Spectrum Analyzer Swept Frequency Object  
+Stepped Frequency FFT Object  
 
 # **COMMENTS / WORKING ETC.**
 
