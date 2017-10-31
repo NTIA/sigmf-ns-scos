@@ -256,29 +256,29 @@ The `stepped_frequency_fft` object requires the following name/value pairs:
 |`fixed_frequency_fft`|true|object|||
 
 ## 5. Index
-Action Object
-Annotations
-Antenna Object
-Calibrations Object
-Captures
-Control Plane
-Data Extraction Unit Object
-Data Plane
-Dynamic Antenna Settings Object
-Dynamic DEU Settings Object
-Dynamic SCU Settings Object
-Dynamic Sensor Settings
-Fixed Frequency FFT Object
-Global
-Host Controller Object
-Measurement Types
-Power Delay Profile Object 
-RF Path # Object
-Schedule Entry Object  
-Sensor Definition Object
-Signal Conditioning Unit Object
-Spectrum Analyzer Swept Frequency Object  
-Stepped Frequency FFT Object  
+[Action Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#32-action-object)  
+[Annotations](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#43-annotations)  
+[Antenna Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#antenna-object)  
+[Calibrations Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#calibrations-object)  
+[Captures](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#42-captures)  
+[Control Plane](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#3-control-plane)  
+[Data Extraction Unit Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#data-extraction-unit-object)  
+[Data Plane](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#4-data-plane)  
+[Dynamic Antenna Settings Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#dynamic-antenna-settings-object)  
+[Dynamic DEU Settings Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#dynamic-deu-settings-object)  
+[Dynamic SCU Settings Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#dynamic-scu-settings-object)  
+[Dynamic Sensor Settings](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#431-dynamic-sensor-settings)  
+[Fixed Frequency FFT Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#fixed-frequency-fft-object)  
+[Global](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#41-global)  
+[Host Controller Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#host-controller-object)  
+[Measurement Types](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#432-measurement-types)  
+[Power Delay Profile Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#power-delay-profile-object)  
+[RF Path # Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#rf-path--object)  
+[Schedule Entry Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#31-schedule-entry-object)  
+[Sensor Definition Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#411-sensor-definition-object)  
+[Signal Conditioning Unit Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#signal-conditioning-unit-object)  
+[Spectrum Analyzer Swept Frequency Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#spectrum-analyzer-swept-frequency-object)  
+[Stepped Frequency FFT Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#stepped-frequency-fft-object)  
 
 # **COMMENTS / WORKING ETC.**
 
