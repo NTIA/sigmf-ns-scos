@@ -20,11 +20,21 @@ Version 0.1
         - [4.1 Global](#41-global)
             - [4.1.1 Sensor Definition Object](#411-sensor-definition-object)
                 - [Antenna Object](#antenna-object)
-                - [Data Extration Unit Object](#data-extration-unit-object)
-                - [Signal Conditioning Unit Object](#signal-conditioning-unit-object)
+                - [Data Extration Unit Object](#data-extration-unit-object-deu)
+                - [Signal Conditioning Unit Object](#signal-conditioning-unit-object-scu)
                 - [RF Path Object](#rf-path--object)
         - [4.2 Captures](#42-captures)
         - [4.3 Annotations](#43-annotations)
+            - [4.3.1 Dynamic Sensor Settings](#431-dynamic-sensor-settings)
+                - [Dynamic Antenna Settings Object](#dynamic-antenna-settings-object)
+                - [Dynamic DEU Settings Object](#dynamic-deu-settings-object)
+                - [Dynamic SCU Settings Object](#dynamic-scu-settings-object)
+            - [4.3.2 Measurement Types](#432-measurement-types)
+                - [Calibrations Object](#calibrations-object)
+                - [Single Frequency FFT Object](#single-frequency-fft-object)
+                - [Spectrum Analyzer Swept Frequency Object](#spectrum-analyzer-swept-frequency-object)
+                - [Stepped Frequency FFT Object](#stepped-frequency-fft-object)
+    - [5. Index](#5-index)
 
 <!-- markdown-toc end -->
 
