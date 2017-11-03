@@ -1,5 +1,5 @@
 # SCOS Transfer Specification
-Version 0.2
+Version 1.0
 
 ## Abstract
 
@@ -41,7 +41,7 @@ The `schedule_entry` object requires the following name/value pairs:
 |`start`|false|integer|seconds|Absolute start time of the schedule in [Unix time](https://en.wikipedia.org/wiki/Unix_time).|
 |`relative_stop`|false|integer|seconds|Stop time of the schedule relative to `start` time.|
 |`stop`|false|integer|seconds|Absolute stop time of the schedule in [Unix time](https://en.wikipedia.org/wiki/Unix_time).|
-|`interval`|false?0?|integer|seconds|Interval time between instances of the `action` being performed.|
+|`interval`|false|integer|seconds|Interval time between instances of the `action` being performed.|
 |`priority`|false|integer|N/A|Priority of the schedule, similar to applying [nice](https://en.wikipedia.org/wiki/Nice_(Unix)). Lower numbers are higher priority.|
 |`action`|true|object|N/A|See [Action](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#51-action) object definition.|
 
@@ -159,7 +159,7 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |`dynamic_DEU_settings`|false|object||attenuation of Data Extraction Unit|
 |`system_to_detect`||string||The system that the measurement is designed to detect: `radar–SPN43`, `lte` or `none`.
 |`data_sensitivity`||string||The sensitivity of the data captured: `Low`, `Medium` or  `High`
-|`measurement_type`||object||The type of measurement acquired: [`fixed_frequency_fft`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#55-fixed-frequency-fft), [`stepped_frequency_fft`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#513-stepped-frequency-fft), [`spectrum_analyzer`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#512-spectrum-analyzer), [`calibration`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#53-calibration) or [`power_delay_profile`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#57-power-delay-profile)|
+|`measurement_type`||object||The type of measurement acquired: [`single_frequency_fft`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#55-single-frequency-fft), [`stepped_frequency_fft`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#513-stepped-frequency-fft), [`spectrum_analyzer`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#512-spectrum-analyzer), [`calibration`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#53-calibration) or [`power_delay_profile`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#57-power-delay-profile)|
 |`temperature`||float|celsius||
 |`overload_flag`||boolean||Flag indicator of system signal overload.|
 |`detected_system_noise_powers`||float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
@@ -215,8 +215,8 @@ An example `calibration_dictionary`, where "1" and "2" are attenuation values:
 }
 ```
 
-##### Fixed Frequency FFT Object
-The `fixed_frequency_fft` object requires the following name/value pairs:  
+##### Single Frequency FFT Object
+The `single_frequency_fft` object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -224,7 +224,7 @@ The `fixed_frequency_fft` object requires the following name/value pairs:
 |`window`|true|string||`Blackman-Harris`, `Flattop`, `Gaussian_a3.5`, `Gaussian_a4`, `Gauss Top`, `Hamming`, `Hanning`, `Rectangular`|
 |`equivalent_noise_bandwidth`|false|float|Hz||
 |`detector`|true|string||`sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`|
-|`number_of_ffts`|false|integer||Number of FFTs to be integrated over by detector|
+|`number_of_ffts`|true|integer||Number of FFTs to be integrated over by detector|
 
 ##### Power Delay Profile Object
 The `power_delay_profile` object requires the following name/value pairs:  
@@ -253,7 +253,7 @@ The `stepped_frequency_fft` object requires the following name/value pairs:
 |`center_frequency_start`|true|float|Hz|First center frequency of scan|
 |`center_frequency_stop`|true|float|Hz|Last center frequency of scan|
 |`center_frequency_step`|true|float|Hz|Center frequency step of scan|
-|`fixed_frequency_fft`|true|object|||
+|`single_frequency_fft`|true|object|||
 
 ## 5. Index
 [Action Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#32-action-object)  
@@ -268,7 +268,7 @@ The `stepped_frequency_fft` object requires the following name/value pairs:
 [Dynamic DEU Settings Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#dynamic-deu-settings-object)  
 [Dynamic SCU Settings Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#dynamic-scu-settings-object)  
 [Dynamic Sensor Settings](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#431-dynamic-sensor-settings)  
-[Fixed Frequency FFT Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#fixed-frequency-fft-object)  
+[Single Frequency FFT Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#single-frequency-fft-object)  
 [Global](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#41-global)  
 [Host Controller Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#host-controller-object)  
 [Measurement Types](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#432-measurement-types)  
@@ -279,20 +279,3 @@ The `stepped_frequency_fft` object requires the following name/value pairs:
 [Signal Conditioning Unit Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#signal-conditioning-unit-object)  
 [Spectrum Analyzer Swept Frequency Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#spectrum-analyzer-swept-frequency-object)  
 [Stepped Frequency FFT Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#stepped-frequency-fft-object)  
-
-# **COMMENTS / WORKING ETC.**
-
-CONTROL PLANE
-
-#### Endpoints
-    acquisitions
-    actions - List of Action objects
-      stepped_center_frequency_dft
-      ...
-    schedule - List of ScheduleEntry objects
-    sensor_definition
-      antenna - Antenna object
-      signal_conditioning_unit - List of RFPath objects AKA Preselector
-      data_extraction_unit - DataExtractionUnit object AKA COTS Sensor/Radio SDR
-      host_controller - HostController object
-    status
