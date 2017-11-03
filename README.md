@@ -77,7 +77,7 @@ The Schedule Entry object requires the following name/value pairs:
 |`stop`|false|integer|seconds|Absolute stop time of the schedule in [Unix time](https://en.wikipedia.org/wiki/Unix_time).|
 |`interval`|false|integer|seconds|Interval time between instances of the `action` being performed.|
 |`priority`|false|integer|N/A|Priority of the schedule, similar to applying [nice](https://en.wikipedia.org/wiki/Nice_(Unix)). Lower numbers are higher priority.|
-|`action`|true|string|N/A|Name of action to be performed. See [Action Object](32-action-object) definition.|
+|`action`|true|string|N/A|Name of action to be performed. See [Action Object](#32-action-object) definition.|
 
 ### 3.2 Action Object
 The Action object requires the following name/value pairs
