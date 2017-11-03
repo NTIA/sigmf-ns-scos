@@ -14,10 +14,17 @@ Version 0.1
     - [1. Description](#1-description)
     - [2. Conventions Used in this Document](#2-conventions-used-in-this-document)
     - [3. Control Plane](#3-control-plane)
-        - [3.1 Schedule Entry Object](#3-1-schedule-entry-object)
-        - [3.2 Action Object](#3-2-action-object)
+        - [3.1 Schedule Entry Object](#31-schedule-entry-object)
+        - [3.2 Action Object](#32-action-object)
     - [4. Data Plane](#4-data-plane)
-        - [4.1 Global](#4-1-global)
+        - [4.1 Global](#41-global)
+            - [4.1.1 Sensor Definition Object](#411-sensor-definition-object)
+                - [Antenna Object](#antenna-object)
+                - [Data Extration Unit Object](#data-extration-unit-object)
+                - [Signal Conditioning Unit Object](#signal-conditioning-unit-object)
+                - [RF Path Object](#rf-path--object)
+        - [4.2 Captures](#42-captures)
+        - [4.3 Annotations](#43-annotations)
 
 <!-- markdown-toc end -->
 
