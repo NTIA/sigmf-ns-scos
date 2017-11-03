@@ -191,7 +191,7 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, SCU, and DEU. They are listed in alphabetical order.  
 
 ##### Dynamic Antenna Settings Object
-The `dynamic_antenna_settings` object requires the following name/value pairs:  
+The Dynamic Antenna Settings object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -200,14 +200,14 @@ The `dynamic_antenna_settings` object requires the following name/value pairs:
 |`polarization`|false|float|string|`Vertical`, `Horizontal`, `Slant-45`, `Left-Hand Circular`, `Right-Hand Circular`|
 
 ##### Dynamic DEU Settings Object
-The `dynamic_DEU_settings` object requires the following name/value pairs:  
+The Dynamic DEU Settings object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`attenuation`|false|float|dB|Attenuation of DEU|
 
 ##### Dynamic SCU Settings Object
-The `dynamic_SCU_settings` object requires the following name/value pairs:  
+The Dynamic SCU Settings object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -217,7 +217,7 @@ The `dynamic_SCU_settings` object requires the following name/value pairs:
 The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. They are listed in alphabetical order.  
 
 ##### Calibrations Object
-The `calibrations` array holds calibration objects:  
+The Calibrations object array holds calibration objects:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -238,7 +238,7 @@ An example `calibration_dictionary`, where "1" and "2" are attenuation values:
 ```
 
 ##### Single Frequency FFT Object
-The `single_frequency_fft` object requires the following name/value pairs:  
+The Single Frequency FFT object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -249,7 +249,7 @@ The `single_frequency_fft` object requires the following name/value pairs:
 |`number_of_ffts`|true|integer||Number of FFTs to be integrated over by detector|
 
 ##### Spectrum Analyzer Swept Frequency Object
-The `spectrum_analyzer_swept_frequency` object requires the following name/value pairs:  
+The Spectrum Analyzer Swept Frequency object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -261,7 +261,7 @@ The `spectrum_analyzer_swept_frequency` object requires the following name/value
 |`video_bandwidth`|true|float|Hz|Video bandwidth|
 
 ##### Stepped Frequency FFT Object
-The `stepped_frequency_fft` object requires the following name/value pairs:  
+The Stepped Frequency FFT object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -271,25 +271,24 @@ The `stepped_frequency_fft` object requires the following name/value pairs:
 |`single_frequency_fft`|true|object|||
 
 ## 5. Index
-[Action Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#32-action-object)  
-[Annotations](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#43-annotations)  
-[Antenna Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#antenna-object)  
-[Calibrations Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#calibrations-object)  
-[Captures](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#42-captures)  
-[Control Plane](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#3-control-plane)  
-[Data Extraction Unit Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#data-extraction-unit-object)  
-[Data Plane](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#4-data-plane)  
-[Dynamic Antenna Settings Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#dynamic-antenna-settings-object)  
-[Dynamic DEU Settings Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#dynamic-deu-settings-object)  
-[Dynamic SCU Settings Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#dynamic-scu-settings-object)  
-[Dynamic Sensor Settings](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#431-dynamic-sensor-settings)  
-[Single Frequency FFT Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#single-frequency-fft-object)  
-[Global](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#41-global)  
-[Measurement Types](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#432-measurement-types)  
-[Power Delay Profile Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#power-delay-profile-object)  
-[RF Path # Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#rf-path--object)  
-[Schedule Entry Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#31-schedule-entry-object)  
-[Sensor Definition Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#411-sensor-definition-object)  
-[Signal Conditioning Unit Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#signal-conditioning-unit-object)  
-[Spectrum Analyzer Swept Frequency Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#spectrum-analyzer-swept-frequency-object)  
-[Stepped Frequency FFT Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#stepped-frequency-fft-object)  
+[Action Object](#32-action-object)  
+[Annotations](#43-annotations)  
+[Antenna Object](#antenna-object)  
+[Calibrations Object](#calibrations-object)  
+[Captures](#42-captures)  
+[Control Plane](#3-control-plane)  
+[Data Extraction Unit Object](#data-extraction-unit-object-deu)  
+[Data Plane](#4-data-plane)  
+[Dynamic Antenna Settings Object](#dynamic-antenna-settings-object)  
+[Dynamic DEU Settings Object](#dynamic-deu-settings-object)  
+[Dynamic SCU Settings Object](#dynamic-scu-settings-object)  
+[Dynamic Sensor Settings](#431-dynamic-sensor-settings)    
+[Global](#41-global)  
+[Measurement Types](#432-measurement-types)    
+[RF Path # Object](#rf-path--object)  
+[Schedule Entry Object](#31-schedule-entry-object)  
+[Sensor Definition Object](411-sensor-definition-object)  
+[Signal Conditioning Unit Object](#signal-conditioning-unit-object-scu)
+[Single Frequency FFT Object](#single-frequency-fft-object)
+[Spectrum Analyzer Swept Frequency Object]#spectrum-analyzer-swept-frequency-object)  
+[Stepped Frequency FFT Object](#stepped-frequency-fft-object)  
