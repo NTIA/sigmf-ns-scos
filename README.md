@@ -67,7 +67,7 @@ Actions are functions that the sensor owner implements and exposes. Actions can 
 The following objects are used within the `scos` SigMF name space in the Control and Data planes.
 
 ### 3.1 Schedule Entry Object
-The `schedule_entry` object requires the following name/value pairs:
+The Schedule Entry object requires the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -77,16 +77,16 @@ The `schedule_entry` object requires the following name/value pairs:
 |`stop`|false|integer|seconds|Absolute stop time of the schedule in [Unix time](https://en.wikipedia.org/wiki/Unix_time).|
 |`interval`|false|integer|seconds|Interval time between instances of the `action` being performed.|
 |`priority`|false|integer|N/A|Priority of the schedule, similar to applying [nice](https://en.wikipedia.org/wiki/Nice_(Unix)). Lower numbers are higher priority.|
-|`action`|true|string|N/A|Name of action to be performed. See [Action Object](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#51-action) definition.|
+|`action`|true|string|N/A|Name of action to be performed. See [Action Object](32-action-object) definition.|
 
 ### 3.2 Action Object
-The `action` object requires the following name/value pairs
+The Action object requires the following name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`name`|true|string|N/A|The unique identification string assigned to the action.|
-|`summary`|false|string|N/A|A succinct description of the action. Not required, but strongly recommended.|
-|`description`|false|string|N/A|A full description of the action. Not required, but strongly recommended.|
+|`summary`|false|string|N/A|A succinct description of the action. Not required, but is RECOMMENDED.|
+|`description`|false|string|N/A|A full description of the action. Not required, but is RECOMMENDED.|
 
 ## 4. Data Plane
 The SCOS specification uses and is fully compliant with the SigMF Specification. Building upon the SigMF [core namespace](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#namespaces), the specification is enhanced through the implementation of a `scos` namespace, the details of which follow.  
@@ -96,10 +96,10 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`sensor_definition`|false|object|N/A|Describes the sensor model components. See [Sensor Definition](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#510-sensor-definition) object definition. This object is RECOMMENDED.|
+|`sensor_definition`|false|object|N/A|Describes the sensor model components. See [Sensor Definition Object](#-sensor-definition-object) definition. This object is RECOMMENDED.|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
-|`schedule_entry`|false|object|N/A|See [Schedule Entry](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#59-schedule-entry) object definition.|
+|`schedule_entry`|false|object|N/A|See [Schedule Entry Object](#31-schedule-entry-object) definition.|
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schdeule_entry`.|
 
 #### 4.1.1 Sensor Definition Object
@@ -107,17 +107,17 @@ Sensor definition follows a simplified hardware model comprised of the following
 
 The following global objects are used within the `scos` SigMF name space to define the sensor.
 
-The `sensor_definition` object requires the following additional name/value pairs:
+The Sensor Definition object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`antenna`|true|object|N/A|See [Antenna](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#52-antenna) object definition.|
-|`signal_conditioning_unit`|false|object|N/A|See [Signal Conditioning Unit](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#511-signal-conditioning-unit) object definition.|
-|`data_extraction_unit`|true|object|N/A|See [Data Extraction Unit](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#54-data-extraction-unit) object definition.|
+|`antenna`|true|object|N/A|See [Antenna Object](#antenna-oject) definition.|
+|`signal_conditioning_unit`|false|object|N/A|See [Signal Conditioning Unit Object](#signal-conditioning-unit-object) definition.|
+|`data_extraction_unit`|true|object|N/A|See [Data Extraction Unit Object](#data-extraction-unit-object) definition.|
 |`host_controller`|false|string|N/A|Description of host computer. E.g. Make, model, and configuration.|
 
 ##### Antenna Object
-The `antenna` object requires the following additional name/value pairs
+The Antenna object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -134,7 +134,7 @@ The `antenna` object requires the following additional name/value pairs
 |`mobile`|false|boolean|N/A||
 
 ##### Data Extraction Unit Object (DEU)
-The `data_extraction_unit` object requires the following additional name/value pairs
+The Data Extraction Unit object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -150,22 +150,22 @@ The Signal Conditioning Unit object requires the following additional name/value
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_path_specs`|false|array|N/A|Array of RF paths objects in SCU|
+|`rf_path_specs`|false|array|N/A|Array of RF paths objects in SCU.|
 
 ##### RF Path # Object
 Each RF Path Spec object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_path_number`|false|integer||RF path number|
-|`low_frequency_passband`|false|float|Hz|Low frequency of filter 1-dB passband|
-|`high_frequency_passband`|false|float|Hz|High frequency of filter 1-dB passband|
-|`low_frequency_stopband`|false|float|Hz|Low frequency of filter 60-dB stopband|
-|`high_frequency_stopband`|false|float|Hz|High frequency of filter 60-dB stopband|
-|`lna_gain`|false|float|dB|Gain of low noise amplifier|
-|`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier|
-|`cal_source_type`|false|string||`calibrated noise source`|
-|`cal_source_ENR`|false|float|dB|Excess noise ratio of calibrated noise source at frequency of RF path|
+|`rf_path_number`|false|integer||RF path number.|
+|`low_frequency_passband`|false|float|Hz|Low frequency of filter 1-dB passband.|
+|`high_frequency_passband`|false|float|Hz|High frequency of filter 1-dB passband.|
+|`low_frequency_stopband`|false|float|Hz|Low frequency of filter 60-dB stopband.|
+|`high_frequency_stopband`|false|float|Hz|High frequency of filter 60-dB stopband.|
+|`lna_gain`|false|float|dB|Gain of low noise amplifier.|
+|`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier.|
+|`cal_source_type`|false|string||`calibrated noise source`.|
+|`cal_source_ENR`|false|float|dB|Excess noise ratio of calibrated noise source at frequency of RF path.|
 
 ### 4.2 Captures
 Per SigMF, the captures value is an array of capture segment objects that describe the parameters of the signal capture. The `scos` specification does not add any enhancements to this section.  
@@ -177,13 +177,13 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |----|--------------|-------|-------|-----------|
 |`altitude`|false|float|meters|The height of the antenna above sea level.|
 |`environment`|false|string||A description of the environment where antenna is mounted. E.g. `indoor` or `outdoor`.|
-|`dynamic_antenna_settings`|false|object||Dynamic parameters associated with the antenna attached to the sensor|
-|`dynamic_SCU_settings`|false|object||attenuation of Signal Conditioning Unit|
-|`dynamic_DEU_settings`|false|object||attenuation of Data Extraction Unit|
-|`system_to_detect`|false|string||The system that the measurement is designed to detect. E.g. `radar–SPN43`, `lte` or `none`.
-|`data_sensitivity`|false|string||The sensitivity of the data captured. E.g. `Low`, `Moderate` or  `High`
-|`measurement_type`|true|object||The type of measurement acquired: [`single_frequency_fft`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#55-single-frequency-fft), [`stepped_frequency_fft`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#513-stepped-frequency-fft), [`spectrum_analyzer`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#512-spectrum-analyzer), [`calibration`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#53-calibration) or [`power_delay_profile`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#57-power-delay-profile)|
-|`temperature`|false|float|celsius||
+|`dynamic_antenna_settings`|false|object||Dynamic parameters associated with the antenna attached to the sensor.|
+|`dynamic_SCU_settings`|false|object||attenuation of SCU.|
+|`dynamic_DEU_settings`|false|object||attenuation of DEU.|
+|`system_to_detect`|false|string||The system that the measurement is designed to detect. E.g. `radar–SPN43`, `lte` or `none`.|
+|`data_sensitivity`|false|string||The sensitivity of the data captured. E.g. `Low`, `Moderate` or  `High`.|
+|`measurement_type`|true|object||The type of measurement acquired: [Single Frequency FFT](#single-frequency-fft-object), [Stepped Frequency FFT](#stepped-frequency-fft-object), [Spectrum Analyzer Swept Frequency](#spectrum-analyzer-swept-frequency-object) or [Calibration](#calibrations-object).|
+|`temperature`|false|float|celsius|Environmental temperature.|
 |`overload_flag`|false|boolean||Flag indicator of system signal overload.|
 |`detected_system_noise_powers`|false|float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
 
@@ -195,23 +195,23 @@ The Dynamic Antenna Settings object requires the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`azimuth_beam_dir`|false|float|degrees|Angle of maximum antenna gain from North|
-|`elevation_beam_dir`|false|float|degrees|Angle of maximum antenna gain from horizontal|
-|`polarization`|false|float|string|`Vertical`, `Horizontal`, `Slant-45`, `Left-Hand Circular`, `Right-Hand Circular`|
+|`azimuth_beam_dir`|false|float|degrees|Angle of maximum antenna gain from North.|
+|`elevation_beam_dir`|false|float|degrees|Angle of maximum antenna gain from horizontal.|
+|`polarization`|false|float|string|E.g. `Vertical`, `Horizontal`, `Slant-45`, `Left-Hand Circular`, `Right-Hand Circular`.|
 
 ##### Dynamic DEU Settings Object
 The Dynamic DEU Settings object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`attenuation`|false|float|dB|Attenuation of DEU|
+|`attenuation`|false|float|dB|Attenuation of DEU.|
 
 ##### Dynamic SCU Settings Object
 The Dynamic SCU Settings object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_path_#`|false|float|degrees|Angle of maximum antenna gain from North|
+|`rf_path_#`|false|float|degrees|Angle of maximum antenna gain from North.|
 
 #### 4.3.2 Measurement Types
 The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. They are listed in alphabetical order.  
@@ -221,9 +221,9 @@ The Calibrations object array holds calibration objects:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`type`|true|string||`y-factor cal`, etc. |
+|`type`|true|string||They method of calibration. E.g.`y-factor cal`.|
 |`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
-|`calibration_dictionary`|false|array|dB|A list of attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
+|`calibration_dictionary`|false|array|dB|A list of attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](#annotation-segment-objects).|   
 
 An example `calibration_dictionary`, where "1" and "2" are attenuation values:
 ```
@@ -242,32 +242,32 @@ The Single Frequency FFT object requires the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`number_of_samples_in_fft`|true|integer||Number of samples in FFT (n) to calcluate delta_f = samplerate/n|
-|`window`|true|string||`Blackman-Harris`, `Flattop`, `Gaussian_a3.5`, `Gaussian_a4`, `Gauss Top`, `Hamming`, `Hanning`, `Rectangular`|
+|`number_of_samples_in_fft`|true|integer||Number of samples in FFT (n) to calcluate delta_f = samplerate/n.|
+|`window`|true|string||E.g. `Blackman-Harris`, `Flattop`, `Gaussian_a3.5`, `Gaussian_a4`, `Gauss Top`, `Hamming`, `Hanning`, `Rectangular`.|
 |`equivalent_noise_bandwidth`|false|float|Hz||
-|`detector`|true|string||`sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`|
-|`number_of_ffts`|true|integer||Number of FFTs to be integrated over by detector|
+|`detector`|true|string||E.g. `sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`.|
+|`number_of_ffts`|true|integer||Number of FFTs to be integrated over by detector.|
 
 ##### Spectrum Analyzer Swept Frequency Object
 The Spectrum Analyzer Swept Frequency object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`frequency_start`|true|float|Hz|First frequency of scan|
-|`frequency_stop`|true|float|Hz|Last frequency of scan|
-|`frequency_step`|true|float|Hz|Frequency step of scan|
-|`dwell_time`|true|float|seconds|Integration time of detector at each frequency step|
-|`resolution_bandwidth`|true|float|Hz|Resolution bandwidth|
-|`video_bandwidth`|true|float|Hz|Video bandwidth|
+|`frequency_start`|true|float|Hz|First frequency of scan.|
+|`frequency_stop`|true|float|Hz|Last frequency of scan.|
+|`frequency_step`|true|float|Hz|Frequency step of scan.|
+|`dwell_time`|true|float|seconds|Integration time of detector at each frequency step.|
+|`resolution_bandwidth`|true|float|Hz|Resolution bandwidth.|
+|`video_bandwidth`|true|float|Hz|Video bandwidth.|
 
 ##### Stepped Frequency FFT Object
 The Stepped Frequency FFT object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`center_frequency_start`|true|float|Hz|First center frequency of scan|
-|`center_frequency_stop`|true|float|Hz|Last center frequency of scan|
-|`center_frequency_step`|true|float|Hz|Center frequency step of scan|
+|`center_frequency_start`|true|float|Hz|First center frequency of scan.|
+|`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
+|`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
 |`single_frequency_fft`|true|object|||
 
 ## 5. Index
@@ -279,6 +279,7 @@ The Stepped Frequency FFT object requires the following name/value pairs:
 [Control Plane](#3-control-plane)  
 [Data Extraction Unit Object (DEU)](#data-extraction-unit-object-deu)  
 [Data Plane](#4-data-plane)  
+[DEU](#data-extraction-unit-object-deu)
 [Dynamic Antenna Settings Object](#dynamic-antenna-settings-object)  
 [Dynamic DEU Settings Object](#dynamic-deu-settings-object)  
 [Dynamic SCU Settings Object](#dynamic-scu-settings-object)  
@@ -286,7 +287,8 @@ The Stepped Frequency FFT object requires the following name/value pairs:
 [Global](#41-global)  
 [Measurement Types](#432-measurement-types)    
 [RF Path # Object](#rf-path--object)  
-[Schedule Entry Object](#31-schedule-entry-object)  
+[Schedule Entry Object](#31-schedule-entry-object)
+[SCU](#signal-conditioning-unit-object-scu)  
 [Sensor Definition Object](#411-sensor-definition-object)  
 [Signal Conditioning Unit Object (SCU)](#signal-conditioning-unit-object-scu)  
 [Single Frequency FFT Object](#single-frequency-fft-object)  
