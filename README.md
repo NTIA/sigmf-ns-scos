@@ -96,7 +96,7 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`sensor_definition`|false|object|N/A|Describes the sensor model components. See [Sensor Definition Object](#-sensor-definition-object) definition. This object is RECOMMENDED.|
+|`sensor_definition`|false|object|N/A|Describes the sensor model components. See [Sensor Definition Object](#411-sensor-definition-object) definition. This object is RECOMMENDED.|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
 |`schedule_entry`|false|object|N/A|See [Schedule Entry Object](#31-schedule-entry-object) definition.|
