@@ -223,7 +223,7 @@ The Calibrations object array holds calibration objects:
 |----|--------------|-------|-------|-----------|
 |`type`|true|string||They method of calibration. E.g.`y-factor cal`.|
 |`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
-|`calibration_dictionary`|false|array|dB|A list of attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](#annotation-segment-objects).|   
+|`calibration_dictionary`|false|array|dB|A list of attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
 
 An example `calibration_dictionary`, where "1" and "2" are attenuation values:
 ```
