@@ -6,7 +6,6 @@ Version 0.1
 ## Table of Contents
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
-**Table of Contents**
 
 - [SCOS Transfer Specification](#scos-transfer-specification)
     - [Abstract](#abstract)
