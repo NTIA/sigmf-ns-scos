@@ -78,59 +78,48 @@ The `sensor_definition` object requires the following additional name/value pair
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`antenna`|true|object|N/A|See [Antenna](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#52-antenna) object definition.|
-|`signal_conditioning_unit`|true|object|N/A|See [Signal Conditioning Unit](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#511-signal-conditioning-unit) object definition.|
+|`signal_conditioning_unit`|false|object|N/A|See [Signal Conditioning Unit](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#511-signal-conditioning-unit) object definition.|
 |`data_extraction_unit`|true|object|N/A|See [Data Extraction Unit](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#54-data-extraction-unit) object definition.|
-|`host_controller`|false|object|N/A|See [Host Controller](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#56-host-controller) object definition.|
+|`host_controller`|false|string|N/A|Description of host computer. E.g. Make, model, and configuration.|
 
 ##### Antenna Object
 The `antenna` object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`model`||string|N/A||
-|`low_frequency`||float|Hz||
-|`high_frequency`||float|Hz||
-|`gain`||float|dB||
-|`horizontal_beam_width`||float|degrees||
-|`vertical_beam_width`||float|degrees||
-|`cross_polar_discrimination`||float|||
-|`voltage_standing_wave_radio`||float|volts||
-|`cable_loss`||float|dB||
-|`steerable`||boolean|N/A||
-|`mobile`||boolean|N/A||
+|`model`|true|string|N/A|Model number of antenna.|
+|`low_frequency`|false|float|Hz||
+|`high_frequency`|false|float|Hz||
+|`gain`|false|float|dB||
+|`horizontal_beam_width`|false|float|degrees||
+|`vertical_beam_width`|false|float|degrees||
+|`cross_polar_discrimination`|false|float|||
+|`voltage_standing_wave_radio`|false|float|volts||
+|`cable_loss`|false|float|dB||
+|`steerable`|false|boolean|N/A||
+|`mobile`|false|boolean|N/A||
 
-##### Data Extraction Unit Object
+##### Data Extraction Unit Object (DEU)
 The `data_extraction_unit` object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`make`|false|string||`Ettus`, `Keysight`, `Tektronix`|
-|`model`|false|string||`N210`, `B200`, `N6841A`, `B206B`|
-|`low_frequency`|false|float|Hz|Low frequency of operational range of DEU|
-|`high_frequency`||float|Hz|High frequency of operational range of DEU|
-|`noise_figure`||float|dB|Noise figure of DEU|
-|`max_power`||float|dB|Maximum power of DEU|
+|`make`|true|string||Make of DEU. E.g. `Ettus`, `Keysight`, `Tektronix`.|
+|`model`|true|string||Model of DEU. E.g. `N210`, `B200`, `N6841A`, `B206B`.|
+|`low_frequency`|false|float|Hz|Low frequency of operational range of DEU.|
+|`high_frequency`|false|float|Hz|High frequency of operational range of DEU.|
+|`noise_figure`|false|float|dB|Noise figure of DEU.|
+|`max_power`|false|float|dB|Maximum input power of DEU.|
 
-##### Host Controller Object
-The `host_controller` object requires the following additional name/value pairs
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`software_version`||string|N/A||
-|`cpu`||string|N/A||
-|`memory`||integer|GB||
-|`storage_size`||integer|GB||
-
-##### Signal Conditioning Unit Object
+##### Signal Conditioning Unit Object (SCU)
 The `signal_conditioning_unit` object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`number rf_paths`|false|integer||Number of RF paths in SEU|
-|`rf_path_spec`|false||object||Specification of RF pathsin SEU|
+|`rf_path_specs`|false|array|N/A|Array of RF paths objects in SCU|
 
 ##### RF Path # Object
-The `number_rf_path` object requires the following additional name/value pairs
+Each `RfPathSpec` object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -270,7 +259,6 @@ The `stepped_frequency_fft` object requires the following name/value pairs:
 [Dynamic Sensor Settings](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#431-dynamic-sensor-settings)  
 [Single Frequency FFT Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#single-frequency-fft-object)  
 [Global](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#41-global)  
-[Host Controller Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#host-controller-object)  
 [Measurement Types](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#432-measurement-types)  
 [Power Delay Profile Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#power-delay-profile-object)  
 [RF Path # Object](https://github.com/NTIA/SCOS-Transfer-Spec/blob/master/README.md#rf-path--object)  
