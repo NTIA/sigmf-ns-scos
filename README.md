@@ -287,7 +287,7 @@ The Stepped Frequency FFT object requires the following name/value pairs:
 [Measurement Types](#432-measurement-types)    
 [RF Path # Object](#rf-path--object)  
 [Schedule Entry Object](#31-schedule-entry-object)  
-[Sensor Definition Object](411-sensor-definition-object)  
+[Sensor Definition Object](#411-sensor-definition-object)  
 [Signal Conditioning Unit Object](#signal-conditioning-unit-object-scu)
 [Single Frequency FFT Object](#single-frequency-fft-object)
 [Spectrum Analyzer Swept Frequency Object]#spectrum-analyzer-swept-frequency-object)  
