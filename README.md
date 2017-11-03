@@ -1,5 +1,5 @@
 # SCOS Transfer Specification
-Version 1.0
+Version 0.1
 
 ## Abstract
 
@@ -112,14 +112,14 @@ The `data_extraction_unit` object requires the following additional name/value p
 |`max_power`|false|float|dB|Maximum input power of DEU.|
 
 ##### Signal Conditioning Unit Object (SCU)
-The `signal_conditioning_unit` object requires the following additional name/value pairs
+The Signal Conditioning Unit object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`rf_path_specs`|false|array|N/A|Array of RF paths objects in SCU|
 
 ##### RF Path # Object
-Each `RfPathSpec` object requires the following additional name/value pairs
+Each RF Path Spec object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -142,17 +142,16 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`altitude`|false|float|meters|The height of the antenna above sea level.|
-|`environment`||string||A description of the environment where antenna is mounted: `indoor` or `outdoor`.|
+|`environment`|false|string||A description of the environment where antenna is mounted. E.g. `indoor` or `outdoor`.|
 |`dynamic_antenna_settings`|false|object||Dynamic parameters associated with the antenna attached to the sensor|
 |`dynamic_SCU_settings`|false|object||attenuation of Signal Conditioning Unit|
 |`dynamic_DEU_settings`|false|object||attenuation of Data Extraction Unit|
-|`system_to_detect`||string||The system that the measurement is designed to detect: `radar–SPN43`, `lte` or `none`.
-|`data_sensitivity`||string||The sensitivity of the data captured: `Low`, `Medium` or  `High`
-|`measurement_type`||object||The type of measurement acquired: [`single_frequency_fft`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#55-single-frequency-fft), [`stepped_frequency_fft`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#513-stepped-frequency-fft), [`spectrum_analyzer`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#512-spectrum-analyzer), [`calibration`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#53-calibration) or [`power_delay_profile`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#57-power-delay-profile)|
-|`temperature`||float|celsius||
-|`overload_flag`||boolean||Flag indicator of system signal overload.|
-|`detected_system_noise_powers`||float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
-|`processed`||boolean||If `true` the data is measured powers, as opposed to `false` indicating raw measured powers|
+|`system_to_detect`|false|string||The system that the measurement is designed to detect. E.g. `radar–SPN43`, `lte` or `none`.
+|`data_sensitivity`|false|string||The sensitivity of the data captured. E.g. `Low`, `Moderate` or  `High`
+|`measurement_type`|true|object||The type of measurement acquired: [`single_frequency_fft`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#55-single-frequency-fft), [`stepped_frequency_fft`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#513-stepped-frequency-fft), [`spectrum_analyzer`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#512-spectrum-analyzer), [`calibration`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#53-calibration) or [`power_delay_profile`](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#57-power-delay-profile)|
+|`temperature`|false|float|celsius||
+|`overload_flag`|false|boolean||Flag indicator of system signal overload.|
+|`detected_system_noise_powers`|false|float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
 
 #### 4.3.1 Dynamic Sensor Settings
 The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, SCU, and DEU. They are listed in alphabetical order.  
