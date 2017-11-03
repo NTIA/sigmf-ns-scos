@@ -111,9 +111,9 @@ The Sensor Definition object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`antenna`|true|object|N/A|See [Antenna Object](#antenna-oject) definition.|
-|`signal_conditioning_unit`|false|object|N/A|See [Signal Conditioning Unit Object](#signal-conditioning-unit-object) definition.|
-|`data_extraction_unit`|true|object|N/A|See [Data Extraction Unit Object](#data-extraction-unit-object) definition.|
+|`antenna`|true|object|N/A|See [Antenna Object](#antenna-object) definition.|
+|`signal_conditioning_unit`|false|object|N/A|See [Signal Conditioning Unit Object](#signal-conditioning-unit-object-scu) definition.|
+|`data_extraction_unit`|true|object|N/A|See [Data Extraction Unit Object](#data-extraction-unit-object-deu) definition.|
 |`host_controller`|false|string|N/A|Description of host computer. E.g. Make, model, and configuration.|
 
 ##### Antenna Object
