@@ -187,8 +187,8 @@ The `calibrations` array holds calibration objects:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`type`|false|string||`y-factor cal`, etc. |
-|`last_time_performed`|false|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
+|`type`|true|string||`y-factor cal`, etc. |
+|`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
 |`calibration_dictionary`|false|array|dB|A list of attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
 
 An example `calibration_dictionary`, where "1" and "2" are attenuation values:
@@ -213,13 +213,6 @@ The `single_frequency_fft` object requires the following name/value pairs:
 |`equivalent_noise_bandwidth`|false|float|Hz||
 |`detector`|true|string||`sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`|
 |`number_of_ffts`|true|integer||Number of FFTs to be integrated over by detector|
-
-##### Power Delay Profile Object
-The `power_delay_profile` object requires the following name/value pairs:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|||||
 
 ##### Spectrum Analyzer Swept Frequency Object
 The `spectrum_analyzer_swept_frequency` object requires the following name/value pairs:  
