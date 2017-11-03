@@ -3,6 +3,24 @@ Version 0.1
 
 ## Abstract
 
+## Table of Contents
+
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
+**Table of Contents**
+
+- [SCOS Transfer Specification](#scos-transfer-specification)
+    - [Abstract](#abstract)
+    - [Table of Contents](#table-of-contents)
+    - [1. Description](#1-description)
+    - [2. Conventions Used in this Document](#conventions-used-in-this-document)
+    - [3. Control Plane](#control-plane)
+        - [3.1 Schedule Entry Object](#3-1-schedule-entry-object)
+        - [3.2 Action Object](#3-2-action-object)
+    - [4. Data Plane](#4-data-plane)
+        - [4.1 Global](#4-1-global)
+
+<!-- markdown-toc end -->
+
 ## 1. Description
 This transfer specification defines the controls and data format used within the Spectrum Characterization and Occupancy Sensing (SCOS) system. This system is an NTIA implementation of the [IEEE 802.22.3 draft standard](http://www.ieee802.org/22/P802_22_3_PAR_Detail_Approved.pdf), and draws upon the previous work of NIST and NTIA on the [MSOD System](https://github.com/usnistgov/SpectrumBrowser), while fully implementing the [SigMF Specification](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md) for the Data Plane. The goal is to standardize control method and data transfer format for “time share” access to a networked fleet of sensors. Use cases require a solid solution for basic sensor control and RF data collection with flexibility to incorporate new sensing solutions and metrics in the future.
 
