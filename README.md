@@ -37,22 +37,22 @@ The `schedule_entry` object requires the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`id`|true|integer|N/A|The unique identification number assigned to the schedule entry.|
+|`name`|true|string|N/A|The unique identification string assigned to the schedule entry.|
 |`start`|false|integer|seconds|Absolute start time of the schedule in [Unix time](https://en.wikipedia.org/wiki/Unix_time).|
 |`relative_stop`|false|integer|seconds|Stop time of the schedule relative to `start` time.|
 |`stop`|false|integer|seconds|Absolute stop time of the schedule in [Unix time](https://en.wikipedia.org/wiki/Unix_time).|
 |`interval`|false|integer|seconds|Interval time between instances of the `action` being performed.|
 |`priority`|false|integer|N/A|Priority of the schedule, similar to applying [nice](https://en.wikipedia.org/wiki/Nice_(Unix)). Lower numbers are higher priority.|
-|`action`|true|object|N/A|See [Action](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#51-action) object definition.|
+|`action`|true|string|N/A|Name of action to be performed. See [Action Object](https://github.com/NTIA/SCOS/blob/master/documents/transfer-spec/SCOSTransferSpec.md#51-action) definition.|
 
 ### 3.2 Action Object
 The `action` object requires the following name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`name`||string|N/A||
-|`summary`||string|N/A||
-|`description`||string|N/A||
+|`name`|true|string|N/A|The unique identification string assigned to the action.|
+|`summary`|false|string|N/A|A succinct description of the action. Not required, but strongly recommended.|
+|`description`|false|string|N/A|A full description of the action. Not required, but strongly recommended.|
 
 ## 4. Data Plane
 The SCOS specification uses and is fully compliant with the SigMF Specification. Building upon the SigMF [core namespace](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#namespaces), the specification is enhanced through the implementation of a `scos` namespace, the details of which follow.  
