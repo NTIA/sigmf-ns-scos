@@ -121,17 +121,17 @@ The Antenna object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`model`|true|string|N/A|Model number of antenna.|
-|`low_frequency`|false|float|Hz||
-|`high_frequency`|false|float|Hz||
-|`gain`|false|float|dB||
-|`horizontal_beam_width`|false|float|degrees||
-|`vertical_beam_width`|false|float|degrees||
-|`cross_polar_discrimination`|false|float|||
-|`voltage_standing_wave_radio`|false|float|volts||
-|`cable_loss`|false|float|dB||
-|`steerable`|false|boolean|N/A||
-|`mobile`|false|boolean|N/A||
+|`model`|true|string|N/A|Make of model number of the antenna. E.g. `AAC SPBODA-1080_NFi`, `Alpha AW3232`.|
+|`low_frequency`|false|float|Hz|Low frequency of operational range.|
+|`high_frequency`|false|float|Hz|High frequency of operational range.|
+|`gain`|false|float|dB|Antenna gain.|
+|`horizontal_beam_width`|false|float|degrees|Horizontal 3-dB beamwidth.|
+|`vertical_beam_width`|false|float|degrees|Vertical 3-dB beamwidth.|
+|`cross_polar_discrimination`|false|float||Cross-polarization discrimination.|
+|`voltage_standing_wave_radio`|false|float|volts|Voltage standing wave ratio.|
+|`cable_loss`|false|float|dB|Cable loss for cable connecting antenna and preselector.|
+|`steerable`|false|boolean|N/A|Defines if the antenna is steerable or not.|
+|`mobile`|false|boolean|N/A|Defines is the antenn is mobile or not.|
 
 ##### Data Extraction Unit Object (DEU)
 The Data Extraction Unit object requires the following additional name/value pairs
@@ -195,8 +195,8 @@ The Dynamic Antenna Settings object requires the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`azimuth_beam_dir`|false|float|degrees|Angle of maximum antenna gain from North.|
-|`elevation_beam_dir`|false|float|degrees|Angle of maximum antenna gain from horizontal.|
+|`azimuth_beam_dir`|false|float|degrees|Direction of main beam in azimuthal plane from North.|
+|`elevation_beam_dir`|false|float|degrees|Direction of main beam in elevation plane  from horizontal.|
 |`polarization`|false|float|string|E.g. `Vertical`, `Horizontal`, `Slant-45`, `Left-Hand Circular`, `Right-Hand Circular`.|
 
 ##### Dynamic DEU Settings Object
