@@ -25,15 +25,16 @@ The SCOS Transfer Specification defines a standard for the controls and data for
                 - [RF Path Object](#rf-path--object)
         - [4.2 Captures](#42-captures)
         - [4.3 Annotations](#43-annotations)
-            - [4.3.1 Dynamic Sensor Settings](#431-dynamic-sensor-settings)
-                - [Dynamic Antenna Settings Object](#dynamic-antenna-settings-object)
-                - [Dynamic DEU Settings Object](#dynamic-deu-settings-object)
-                - [Dynamic SCU Settings Object](#dynamic-scu-settings-object)
-            - [4.3.2 Measurement Types](#432-measurement-types)
+            - [4.3.1 Measurement Types](#431-measurement-types)
                 - [Calibrations Object](#calibrations-object)
                 - [Single Frequency FFT Object](#single-frequency-fft-object)
                 - [Spectrum Analyzer Swept Frequency Object](#spectrum-analyzer-swept-frequency-object)
                 - [Stepped Frequency FFT Object](#stepped-frequency-fft-object)
+            - [4.3.2 Dynamic Sensor Settings](#432-dynamic-sensor-settings)
+                - [Dynamic Antenna Settings Object](#dynamic-antenna-settings-object)
+                - [Dynamic DEU Settings Object](#dynamic-deu-settings-object)
+                - [Dynamic SCU Settings Object](#dynamic-scu-settings-object)
+            - [4.3.3 System to Detect Object](#433-system-to-detect-object)
     - [5. Index](#5-index)
 
 <!-- markdown-toc end -->
@@ -128,7 +129,7 @@ The Antenna object requires the following additional name/value pairs
 |`gain`|false|float|dB|Antenna gain.|
 |`horizontal_beam_width`|false|float|degrees|Horizontal 3-dB beamwidth.|
 |`vertical_beam_width`|false|float|degrees|Vertical 3-dB beamwidth.|
-|`cross_polar_discrimination`|false|float||Cross-polarization discrimination.|
+|`cross_polar_discrimination`|false|float|N/A|Cross-polarization discrimination.|
 |`voltage_standing_wave_radio`|false|float|volts|Voltage standing wave ratio.|
 |`cable_loss`|false|float|dB|Cable loss for cable connecting antenna and preselector.|
 |`steerable`|false|boolean|N/A|Defines if the antenna is steerable or not.|
@@ -139,8 +140,8 @@ The Data Extraction Unit object requires the following additional name/value pai
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`make`|true|string||Make of DEU. E.g. `Ettus`, `Keysight`, `Tektronix`.|
-|`model`|true|string||Model of DEU. E.g. `N210`, `B200`, `N6841A`, `B206B`.|
+|`make`|true|string|N/A|Make of DEU. E.g. `Ettus`, `Keysight`, `Tektronix`.|
+|`model`|true|string|N/A|Model of DEU. E.g. `N210`, `B200`, `N6841A`, `B206B`.|
 |`low_frequency`|false|float|Hz|Low frequency of operational range of DEU.|
 |`high_frequency`|false|float|Hz|High frequency of operational range of DEU.|
 |`noise_figure`|false|float|dB|Noise figure of DEU.|
@@ -158,14 +159,14 @@ Each RF Path Spec object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_path_number`|false|integer||RF path number.|
+|`rf_path_number`|false|integer|N/A|RF path number.|
 |`low_frequency_passband`|false|float|Hz|Low frequency of filter 1-dB passband.|
 |`high_frequency_passband`|false|float|Hz|High frequency of filter 1-dB passband.|
 |`low_frequency_stopband`|false|float|Hz|Low frequency of filter 60-dB stopband.|
 |`high_frequency_stopband`|false|float|Hz|High frequency of filter 60-dB stopband.|
 |`lna_gain`|false|float|dB|Gain of low noise amplifier.|
 |`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier.|
-|`cal_source_type`|false|string||`calibrated noise source`.|
+|`cal_source_type`|false|string|N/A|`calibrated noise source`.|
 |`cal_source_ENR`|false|float|dB|Excess noise ratio of calibrated noise source at frequency of RF path.|
 
 ### 4.2 Captures
@@ -176,19 +177,76 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`altitude`|false|float|meters|The height of the antenna above sea level.|
-|`environment`|false|string||A description of the environment where antenna is mounted. E.g. `indoor` or `outdoor`.|
-|`dynamic_antenna_settings`|false|object||Dynamic parameters associated with the antenna attached to the sensor.|
-|`dynamic_SCU_settings`|false|object||attenuation of SCU.|
-|`dynamic_DEU_settings`|false|object||attenuation of DEU.|
-|`system_to_detect`|false|string||The system that the measurement is designed to detect. E.g. `radar–SPN43`, `lte` or `none`.|
-|`data_sensitivity`|false|string||The sensitivity of the data captured. E.g. `Low`, `Moderate` or  `High`.|
-|`measurement_type`|true|object||The type of measurement acquired: [Single Frequency FFT](#single-frequency-fft-object), [Stepped Frequency FFT](#stepped-frequency-fft-object), [Spectrum Analyzer Swept Frequency](#spectrum-analyzer-swept-frequency-object) or [Calibration](#calibrations-object).|
-|`temperature`|false|float|celsius|Environmental temperature.|
-|`overload_flag`|false|boolean||Flag indicator of system signal overload.|
+|`altitude`|false|float|meters|The height of the antenna above mean sea level.|
+|`environment`|false|string|N/A|A description of the environment where antenna is mounted. E.g. `indoor` or `outdoor`.|
+|`measurement_type`|true|object|N/A|The type of measurement acquired: [Single Frequency FFT](#single-frequency-fft-object), [Stepped Frequency FFT](#stepped-frequency-fft-object), [Spectrum Analyzer Swept Frequency](#spectrum-analyzer-swept-frequency-object) or [Calibration](#calibrations-object).|
+|`system_to_detect`|false|object|N/A|The system that the measurement is designed to detect.|
+|`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `Low`, `Moderate` or  `High`.|
+|`dynamic_antenna_settings`|false|object|N/A|Dynamic parameters associated with the antenna attached to the sensor.|
+|`dynamic_SCU_settings`|false|object|N/A|attenuation of SCU.|
+|`dynamic_DEU_settings`|false|object|N/A|attenuation of DEU.|
 |`detected_system_noise_powers`|false|float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
+|`temperature`|false|float|celsius|Environmental temperature.|
+|`overload_flag`|false|boolean|N/A|Flag indicator of system signal overload.|
 
-#### 4.3.1 Dynamic Sensor Settings
+#### 4.3.1 Measurement Types
+The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. They are listed in alphabetical order.  
+
+##### Calibrations Object
+The Calibrations object array holds calibration objects:  
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`type`|true|string|N/A|They method of calibration. E.g.`y-factor cal`.|
+|`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
+|`calibration_dictionary`|false|array|dB|A list of attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
+
+An example `calibration_dictionary`, where "1" and "2" are attenuation values:
+```
+{ 1: { "gain" : [],
+       "noise_figure" : []
+     },
+  2: { "gain" : [],
+       "noise_figure" : []
+     },
+  ...
+}
+```
+
+##### Single Frequency FFT Object
+The Single Frequency FFT object requires the following name/value pairs:  
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`number_of_samples_in_fft`|true|integer|N/A|Number of samples in FFT (n) to calcluate delta_f = samplerate/n.|
+|`window`|true|string|N/A|E.g. `Blackman-Harris`, `Flattop`, `Gaussian_a3.5`, `Gaussian_a4`, `Gauss Top`, `Hamming`, `Hanning`, `Rectangular`.|
+|`equivalent_noise_bandwidth`|false|float|Hz||
+|`detector`|true|string|N/A|E.g. `sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`.|
+|`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
+
+##### Spectrum Analyzer Swept Frequency Object
+The Spectrum Analyzer Swept Frequency object requires the following name/value pairs:  
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`frequency_start`|true|float|Hz|First frequency of scan.|
+|`frequency_stop`|true|float|Hz|Last frequency of scan.|
+|`frequency_step`|true|float|Hz|Frequency step of scan.|
+|`dwell_time`|true|float|seconds|Integration time of detector at each frequency step.|
+|`resolution_bandwidth`|true|float|Hz|Resolution bandwidth.|
+|`video_bandwidth`|true|float|Hz|Video bandwidth.|
+
+##### Stepped Frequency FFT Object
+The Stepped Frequency FFT object requires the following name/value pairs:  
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`center_frequency_start`|true|float|Hz|First center frequency of scan.|
+|`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
+|`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
+|`single_frequency_fft`|true|object|N/A|See [Single Freuqency FFT Object](#single-frequency-fft-object)|
+
+#### 4.3.2 Dynamic Sensor Settings
 The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, SCU, and DEU. They are listed in alphabetical order.  
 
 ##### Dynamic Antenna Settings Object
@@ -214,62 +272,17 @@ The Dynamic SCU Settings object requires the following name/value pairs:
 |----|--------------|-------|-------|-----------|
 |`rf_path_#`|false|float|degrees|Angle of maximum antenna gain from North.|
 
-#### 4.3.2 Measurement Types
-The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. They are listed in alphabetical order.  
-
-##### Calibrations Object
-The Calibrations object array holds calibration objects:  
+#### 4.3.3 System to Detect Object
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`type`|true|string||They method of calibration. E.g.`y-factor cal`.|
-|`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
-|`calibration_dictionary`|false|array|dB|A list of attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
-
-An example `calibration_dictionary`, where "1" and "2" are attenuation values:
-```
-{ 1: { "gain" : [],
-       "noise_figure" : []
-     },
-  2: { "gain" : [],
-       "noise_figure" : []
-     },
-  ...
-}
-```
-
-##### Single Frequency FFT Object
-The Single Frequency FFT object requires the following name/value pairs:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`number_of_samples_in_fft`|true|integer||Number of samples in FFT (n) to calcluate delta_f = samplerate/n.|
-|`window`|true|string||E.g. `Blackman-Harris`, `Flattop`, `Gaussian_a3.5`, `Gaussian_a4`, `Gauss Top`, `Hamming`, `Hanning`, `Rectangular`.|
-|`equivalent_noise_bandwidth`|false|float|Hz||
-|`detector`|true|string||E.g. `sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`.|
-|`number_of_ffts`|true|integer||Number of FFTs to be integrated over by detector.|
-
-##### Spectrum Analyzer Swept Frequency Object
-The Spectrum Analyzer Swept Frequency object requires the following name/value pairs:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`frequency_start`|true|float|Hz|First frequency of scan.|
-|`frequency_stop`|true|float|Hz|Last frequency of scan.|
-|`frequency_step`|true|float|Hz|Frequency step of scan.|
-|`dwell_time`|true|float|seconds|Integration time of detector at each frequency step.|
-|`resolution_bandwidth`|true|float|Hz|Resolution bandwidth.|
-|`video_bandwidth`|true|float|Hz|Video bandwidth.|
-
-##### Stepped Frequency FFT Object
-The Stepped Frequency FFT object requires the following name/value pairs:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`center_frequency_start`|true|float|Hz|First center frequency of scan.|
-|`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
-|`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
-|`single_frequency_fft`|true|object|||
+|`system_name`|false|string|N/A|Name of system to be detected.|
+|`transmit_power`|false|float|dBm|Transmitter power going into antenna.|
+|`antenna_gain`|false|float|dB|Antenna gain.|
+|`signal_type`|false|string|N/A|Type of signal, e.g., pulse
+|`latitude`|false|float|decimal degrees|Latitude.|
+|`longitude`|false|float|decimal degrees|Longitude.|
+|`altitude`|false|float|meters|Altitude above mean sea level.|
 
 ## 5. Index
 [Action Object](#32-action-object)  
@@ -284,9 +297,9 @@ The Stepped Frequency FFT object requires the following name/value pairs:
 [Dynamic Antenna Settings Object](#dynamic-antenna-settings-object)  
 [Dynamic DEU Settings Object](#dynamic-deu-settings-object)  
 [Dynamic SCU Settings Object](#dynamic-scu-settings-object)  
-[Dynamic Sensor Settings](#431-dynamic-sensor-settings)    
+[Dynamic Sensor Settings](#432-dynamic-sensor-settings)    
 [Global](#41-global)  
-[Measurement Types](#432-measurement-types)    
+[Measurement Types](#431-measurement-types)    
 [RF Path # Object](#rf-path--object)  
 [Schedule Entry Object](#31-schedule-entry-object)
 [SCU](#signal-conditioning-unit-object-scu)  
@@ -295,3 +308,4 @@ The Stepped Frequency FFT object requires the following name/value pairs:
 [Single Frequency FFT Object](#single-frequency-fft-object)  
 [Spectrum Analyzer Swept Frequency Object](#spectrum-analyzer-swept-frequency-object)  
 [Stepped Frequency FFT Object](#stepped-frequency-fft-object)  
+[System to Detect Object](#433-system-to-detect-object)
