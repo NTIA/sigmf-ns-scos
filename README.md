@@ -244,7 +244,7 @@ The Stepped Frequency FFT object requires the following name/value pairs:
 |`center_frequency_start`|true|float|Hz|First center frequency of scan.|
 |`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
 |`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
-|`single_frequency_fft`|true|object|N/A|See [Single Freuqency FFT Object](#single-frequency-fft-object)|
+|`single_frequency_fft`|true|object|N/A|See [Single Frequency FFT Object](#single-frequency-fft-object)|
 
 #### 4.3.2 Dynamic Sensor Settings
 The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, SCU, and DEU. They are listed in alphabetical order.  
