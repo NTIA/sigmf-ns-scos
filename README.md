@@ -130,7 +130,7 @@ The Antenna object requires the following additional name/value pairs
 |`horizontal_beam_width`|false|float|degrees|Horizontal 3-dB beamwidth.|
 |`vertical_beam_width`|false|float|degrees|Vertical 3-dB beamwidth.|
 |`cross_polar_discrimination`|false|float|N/A|Cross-polarization discrimination.|
-|`voltage_standing_wave_radio`|false|float|volts|Voltage standing wave ratio.|
+|`voltage_standing_wave_ratio`|false|float|volts|Voltage standing wave ratio.|
 |`cable_loss`|false|float|dB|Cable loss for cable connecting antenna and preselector.|
 |`steerable`|false|boolean|N/A|Defines if the antenna is steerable or not.|
 |`mobile`|false|boolean|N/A|Defines is the antenn is mobile or not.|
