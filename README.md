@@ -272,7 +272,7 @@ The DynamicSCUSettings object requires the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_path_#`|false|float|degrees|SCU RF path number.|
+|`rf_path_number`|false|integer|N/A|SCU RF path number.|
 
 #### 4.3.3 SystemToDetect Object
 
