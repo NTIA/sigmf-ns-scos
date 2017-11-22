@@ -222,6 +222,8 @@ The SingleFrequencyFFT object requires the following name/value pairs:
 |`equivalent_noise_bandwidth`|false|float|Hz||
 |`detector`|true|string|N/A|E.g. `sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`.|
 |`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
+|`units`|true|string|N/A|Data units, e.g., `dBm`, `watts`, `volts`.|
+|`reference`|false|integer|N/A|Data reference point, e.g., `DEU input`, `Antenna output`, `Output of isotropic antenna`.|
 
 ##### SpectrumAnalyzerSweptFrequency Object
 The SpectrumAnalyzerSweptFrequency object requires the following name/value pairs:  
@@ -234,6 +236,8 @@ The SpectrumAnalyzerSweptFrequency object requires the following name/value pair
 |`dwell_time`|true|float|seconds|Integration time of detector at each frequency step.|
 |`resolution_bandwidth`|true|float|Hz|Resolution bandwidth.|
 |`video_bandwidth`|true|float|Hz|Video bandwidth.|
+|`units`|true|string|N/A|Data units, e.g., `dBm`, `watts`, `volts`.|
+|`reference`|false|integer|N/A|Data reference point, e.g., `DEU input`, `Antenna output`, `Output of isotropic antenna`.|
 
 ##### SteppedFrequencyFFT Object
 The SteppedFrequencyFFT object requires the following name/value pairs:  
