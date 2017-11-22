@@ -128,7 +128,6 @@ The Antenna object requires the following additional name/value pairs
 |`low_frequency`|false|float|Hz|Low frequency of operational range.|
 |`high_frequency`|false|float|Hz|High frequency of operational range.|
 |`gain`|false|float|dBi|Antenna gain in direction of maximum radiation or reception.|
-|`gain`|false|float|dBi|Antenna gain in direction of maximum radiation or reception.|
 |`horizontal_gain_pattern`|false|array|dBi|Antenna gain pattern in horizontal plane.|
 |`vertical_gain_pattern`|false|array|dBi|Antenna gain pattern in vertical plane.|
 |`horizontal_beam_width`|false|float|degrees|Horizontal 3-dB beamwidth.|
