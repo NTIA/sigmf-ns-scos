@@ -20,7 +20,7 @@ The SCOS Transfer Specification defines a standard for the controls and data for
         - [4.1 Global](#41-global)
             - [4.1.1 SensorDefinition Object](#411-sensordefinition-object)
                 - [Antenna Object](#antenna-object)
-                - [DataExtrationUnit Object](#dataextrationunit-object-deu)
+                - [DataExtractionUnit Object](#dataextractionunit-object-deu)
                 - [SignalConditioningUnit Object](#signalconditioningunit-object-scu)
                 - [RFPath Object](#rfpath--object)
         - [4.2 Captures](#42-captures)
