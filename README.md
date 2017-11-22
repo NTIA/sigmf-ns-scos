@@ -98,7 +98,7 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`sensor_definition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
+|`SensorDefinition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
 |`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#31-scheduleentry-object) definition.|
@@ -113,9 +113,9 @@ The SensorDefinition object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`antenna`|true|object|N/A|See [Antenna Object](#antenna-object) definition.|
-|`signal_conditioning_unit`|false|object|N/A|See [SignalConditioningUnit Object](#signalconditioningunit-object-scu) definition.|
-|`data_extraction_unit`|true|object|N/A|See [DataExtractionUnit Object](#dataextractionunit-object-deu) definition.|
+|`Antenna`|true|object|N/A|See [Antenna Object](#antenna-object) definition.|
+|`SignalConditioningUnit`|false|object|N/A|See [SignalConditioningUnit Object](#signalconditioningunit-object-scu) definition.|
+|`DataExtractionUnit`|true|object|N/A|See [DataExtractionUnit Object](#dataextractionunit-object-deu) definition.|
 |`host_controller`|false|string|N/A|Description of host computer. E.g. Make, model, and configuration.|
 
 ##### Antenna Object
