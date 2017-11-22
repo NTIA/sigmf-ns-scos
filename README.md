@@ -154,7 +154,7 @@ The SignalConditioningUnit object requires the following additional name/value p
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_path_specs`|false|array|N/A|Array of RF paths objects in SCU.|
+|`rf_path_specs`|false|array|N/A|Specication of SCU RF paths via [RFPath Objects](#rfpath-object).|
 
 ##### RFPath Object
 Each RFPath object requires the following additional name/value pairs
