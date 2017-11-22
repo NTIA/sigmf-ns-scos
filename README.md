@@ -197,7 +197,7 @@ The SingleFrequencyFFT object requires the following name/value pairs:
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`number_of_samples_in_fft`|true|integer|N/A|Number of samples in FFT (n) to calcluate delta_f = samplerate/n.|
-|`window`|true|string|N/A|E.g. `Blackman-Harris`, `Flattop`, `Gaussian_a3.5`, `Gaussian_a4`, `Gauss Top`, `Hamming`, `Hanning`, `Rectangular`.|
+|`window`|true|string|N/A|E.g. `Blackman-Harris`, `Flattop`, `Gaussian_a3.5`, `Gauss Top`, `Hamming`, `Hanning`, `Rectangular`.|
 |`equivalent_noise_bandwidth`|false|float|Hz||
 |`detector`|true|string|N/A|E.g. `sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`.|
 |`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
