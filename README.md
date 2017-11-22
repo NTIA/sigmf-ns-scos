@@ -309,5 +309,5 @@ The DynamicSCUSettings object requires the following name/value pairs:
 [SingleFrequencyFFT Object](#singlefrequencyfft-object)  
 [SpectrumAnalyzerSweptFrequency Object](#spectrumanalyzersweptfrequency-object)  
 [SteppedFrequencyFFT Object](#steppedfrequencyfft-object)  
-[SystemToDetect Object](#433-systemtodetect-object)
+[SystemToDetect Object](#433-systemtodetect-object)  
 [YFactorCalibration Object](#yfactorcalibration-object)  
