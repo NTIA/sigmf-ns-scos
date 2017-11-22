@@ -105,7 +105,7 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schdeule_entry`.|
 
 #### 4.1.1 SensorDefinition Object
-Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Signal Conditioning Unit (SCU), Data Extraction Unit (DEU), and Host Controller (HC). Sensor implementations are not required to have each component, but metadata must specify the presence, model numbers, and operational parameters associated with each.
+Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Signal Conditioning Unit (SCU), Data Extraction Unit (DEU), and Host Controller. Sensor implementations are not required to have each component, but metadata must specify the presence, model numbers, and operational parameters associated with each.
 
 The following global objects are used within the `scos` SigMF name space to define the sensor.
 
@@ -135,7 +135,7 @@ The Antenna object requires the following additional name/value pairs
 |`steerable`|false|boolean|N/A|Defines if the antenna is steerable or not.|
 |`mobile`|false|boolean|N/A|Defines is the antenn is mobile or not.|
 
-##### DataExtractionUnit Object (DEU)
+##### DataExtractionUnit Object
 The DataExtractionUnit object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
@@ -147,7 +147,7 @@ The DataExtractionUnit object requires the following additional name/value pairs
 |`noise_figure`|false|float|dB|Noise figure of DEU.|
 |`max_power`|false|float|dB|Maximum input power of DEU.|
 
-##### SignalConditioningUnit Object (SCU)
+##### SignalConditioningUnit Object
 The SignalConditioningUnit object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
