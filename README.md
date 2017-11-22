@@ -301,7 +301,7 @@ The DynamicSCUSettings object requires the following name/value pairs:
 [Global](#41-global)  
 [Measurement Types](#431-measurement-types)    
 [RFPath Object](#rfpath-object)  
-[ScheduleEntry Object](#31-scheduleentry-object)
+[ScheduleEntry Object](#31-scheduleentry-object)  
 [SCU](#signalconditioningunit-object-scu)  
 [SensorDefinition Object](#411-sensordefinition-object)  
 [SignalConditioningUnit Object (SCU)](#signalconditioningunit-object-scu)  
