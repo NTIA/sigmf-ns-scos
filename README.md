@@ -124,7 +124,7 @@ The Antenna object requires the following additional name/value pairs
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`model`|true|string|N/A|Antenna make and model number. E.g. `AAC SPBODA-1080_NFi`, `Alpha AW3232`.|
-|`type`|false|string|N/A|Antenna type. E.g. `dipole`, `biconical`, `monopole`, `Conical monopole`.|
+|`type`|false|string|N/A|Antenna type. E.g. `dipole`, `biconical`, `monopole`, `conical monopole`.|
 |`low_frequency`|false|float|Hz|Low frequency of operational range.|
 |`high_frequency`|false|float|Hz|High frequency of operational range.|
 |`gain`|false|float|dBi|Antenna gain in direction of maximum radiation or reception.|
@@ -168,7 +168,7 @@ Each RFPath object requires the following additional name/value pairs
 |`high_frequency_stopband`|false|float|Hz|High frequency of filter 60-dB stopband.|
 |`lna_gain`|false|float|dB|Gain of low noise amplifier.|
 |`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier.|
-|`cal_source_type`|false|string|N/A|`calibrated noise source`.|
+|`cal_source_type`|false|string|N/A|E.g., `calibrated noise source`.|
 |`cal_source_ENR`|false|float|dB|Excess noise ratio of calibrated noise source at frequency of RF path.|
 
 ### 4.2 Captures
@@ -285,8 +285,8 @@ The DynamicSCUSettings object requires the following name/value pairs:
 |`transmit_power`|false|float|dBm|Transmitter power going into antenna.|
 |`antenna_gain`|false|float|dB|Antenna gain.|
 |`signal_type`|false|string|N/A|Type of signal, e.g., pulse
-|`latitude`|false|float|decimal degrees|Latitude.|
-|`longitude`|false|float|decimal degrees|Longitude.|
+|`latitude`|false|float|degrees|Latitude.|
+|`longitude`|false|float|degrees|Longitude.|
 |`altitude`|false|float|meters|Altitude above mean sea level.|
 
 ## 5. Index
