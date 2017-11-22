@@ -123,10 +123,14 @@ The Antenna object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`model`|true|string|N/A|Make and model number of the antenna. E.g. `AAC SPBODA-1080_NFi`, `Alpha AW3232`.|
+|`model`|true|string|N/A|Antenna make and model number. E.g. `AAC SPBODA-1080_NFi`, `Alpha AW3232`.|
+|`type`|false|string|N/A|Antenna type. E.g. `dipole`, `biconical`, `monopole`, `Conical monopole`.|
 |`low_frequency`|false|float|Hz|Low frequency of operational range.|
 |`high_frequency`|false|float|Hz|High frequency of operational range.|
-|`gain`|false|float|dB|Antenna gain.|
+|`gain`|false|float|dBi|Antenna gain in direction of maximum radiation or reception.|
+|`gain`|false|float|dBi|Antenna gain in direction of maximum radiation or reception.|
+|`horizontal_gain_pattern`|false|array|dBi|Antenna gain pattern in horizontal plane.|
+|`vertical_gain_pattern`|false|array|dBi|Antenna gain pattern in vertical plane.|
 |`horizontal_beam_width`|false|float|degrees|Horizontal 3-dB beamwidth.|
 |`vertical_beam_width`|false|float|degrees|Vertical 3-dB beamwidth.|
 |`cross_polar_discrimination`|false|float|N/A|Cross-polarization discrimination.|
