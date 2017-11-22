@@ -259,8 +259,8 @@ The DynamicAntennaSettings object requires the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`azimuth_beam_dir`|false|float|degrees|Direction of main beam in azimuthal plane from North.|
-|`elevation_beam_dir`|false|float|degrees|Direction of main beam in elevation plane  from horizontal.|
+|`azimuth_angle`|false|float|degrees|Angle of main beam in azimuthal plane from North.|
+|`elevation_angle`|false|float|degrees|Angle of main beam in elevation plane from horizontal.|
 |`polarization`|false|float|string|E.g. `Vertical`, `Horizontal`, `Slant-45`, `Left-Hand Circular`, `Right-Hand Circular`.|
 
 ##### DynamicDEUSettings Object
