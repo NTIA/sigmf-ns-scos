@@ -201,7 +201,7 @@ Single-frequency FFT measurement is a standard software-defined radio measuremen
 |----|--------------|-------|-------|-----------|
 |`number_of_samples_in_fft`|true|integer|N/A|Number of samples in FFT (n) to calcluate delta_f = samplerate/n.|
 |`window`|true|string|N/A|E.g. `Blackman-Harris`, `Flattop`, `Gaussian_a3.5`, `Gauss Top`, `Hamming`, `Hanning`, `Rectangular`.|
-|`equivalent_noise_bandwidth`|false|float|Hz|Bandwidth of a brickwall filter that has same integrated noise power as that of an actual filter.|
+|`equivalent_noise_bandwidth`|false|float|Hz|Bandwidth of brickwall filter that has same integrated noise power as that of the actual filter.|
 |`detector`|true|string|N/A|E.g. `sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`.|
 |`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
 |`units`|true|string|N/A|Data units, e.g., `dBm`, `watts`, `volts`.|
