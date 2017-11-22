@@ -184,9 +184,9 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |`measurement_type`|true|object|N/A|The type of measurement acquired: [SingleFrequencyFFT](#singlefrequencyfft-object), [SteppedFrequencyFFT](#steppedfrequencyfft-object), [SweptTuned](#swepttuned-object) or [YFactorCalibration](#yfactorcalibration-object).|
 |`SystemToDetect`|false|object|N/A|The system that the measurement is designed to detect. See [SystemToDetect Object](#433-systemtodetect-object) definition.|
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `Low`, `Moderate` or  `High`.|
-|`DynamicAntennaSettings`|false|object|N/A|Dynamic parameters associated with the antenna attached to the sensor. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
-|`DynamicSCUSettings`|false|object|N/A|Attenuation of SCU. See [DynamicSCUSettings Object](#dynamicscusettings-object) definition.|
-|`DynamicDEUSettings`|false|object|N/A|Attenuation of DEU. See [DynamicDEUSettings Object](#dynamicdeusettings-object) definition.|
+|`DynamicAntennaSettings`|false|object|N/A|Dynamic parameters associated with the antenna. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
+|`DynamicSCUSettings`|false|object|N/A|Dynamic parameters associated with the SCU. See [DynamicSCUSettings Object](#dynamicscusettings-object) definition.|
+|`DynamicDEUSettings`|false|object|N/A|Dynamic parameters associated with the DEU. See [DynamicDEUSettings Object](#dynamicdeusettings-object) definition.|
 |`detected_system_noise_powers`|false|float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
 |`temperature`|false|float|celsius|Environmental temperature.|
 |`overload_flag`|false|boolean|N/A|Flag indicator of system signal overload.|
