@@ -14,27 +14,27 @@ The SCOS Transfer Specification defines a standard for the controls and data for
     - [1. Description](#1-description)
     - [2. Conventions Used in this Document](#2-conventions-used-in-this-document)
     - [3. Control Plane](#3-control-plane)
-        - [3.1 Schedule Entry Object](#31-schedule-entry-object)
+        - [3.1 ScheduleEntry Object](#31-scheduleentry-object)
         - [3.2 Action Object](#32-action-object)
     - [4. Data Plane](#4-data-plane)
         - [4.1 Global](#41-global)
-            - [4.1.1 Sensor Definition Object](#411-sensor-definition-object)
+            - [4.1.1 SensorDefinition Object](#411-sensordefinition-object)
                 - [Antenna Object](#antenna-object)
-                - [Data Extration Unit Object](#data-extration-unit-object-deu)
-                - [Signal Conditioning Unit Object](#signal-conditioning-unit-object-scu)
-                - [RF Path Object](#rf-path--object)
+                - [DataExtrationUnit Object](#dataextrationunit-object-deu)
+                - [SignalConditioningUnit Object](#signalconditioningunit-object-scu)
+                - [RFPath Object](#rfpath--object)
         - [4.2 Captures](#42-captures)
         - [4.3 Annotations](#43-annotations)
             - [4.3.1 Measurement Types](#431-measurement-types)
                 - [Calibrations Object](#calibrations-object)
-                - [Single Frequency FFT Object](#single-frequency-fft-object)
-                - [Spectrum Analyzer Swept Frequency Object](#spectrum-analyzer-swept-frequency-object)
-                - [Stepped Frequency FFT Object](#stepped-frequency-fft-object)
+                - [SingleFrequencyFFT Object](#singlefrequencyfft-object)
+                - [SpectrumAnalyzerSweptFrequency Object](#spectrumanalyzersweptfrequency-object)
+                - [SteppedFrequencyFFT Object](#steppedfrequencyfft-object)
             - [4.3.2 Dynamic Sensor Settings](#432-dynamic-sensor-settings)
-                - [Dynamic Antenna Settings Object](#dynamic-antenna-settings-object)
-                - [Dynamic DEU Settings Object](#dynamic-deu-settings-object)
-                - [Dynamic SCU Settings Object](#dynamic-scu-settings-object)
-            - [4.3.3 System to Detect Object](#433-system-to-detect-object)
+                - [DynamicAntennaSettings Object](#dynamicantennasettings-object)
+                - [DynamicDEUSettings Object](#dynamicdeusettings-object)
+                - [DynamicSCUSettings Object](#dynamicscusettings-object)
+            - [4.3.3 SystemToDetect Object](#433-systemtodetect-object)
     - [5. Index](#5-index)
 
 <!-- markdown-toc end -->
@@ -68,8 +68,8 @@ Actions are functions that the sensor owner implements and exposes. Actions can 
 
 The following objects are used within the `scos` SigMF name space in the Control and Data planes.
 
-### 3.1 Schedule Entry Object
-The Schedule Entry object requires the following name/value pairs:
+### 3.1 ScheduleEntry Object
+The ScheduleEntry object requires the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -98,24 +98,24 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`sensor_definition`|false|object|N/A|Describes the sensor model components. See [Sensor Definition Object](#411-sensor-definition-object) definition. This object is RECOMMENDED.|
+|`sensor_definition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
-|`schedule_entry`|false|object|N/A|See [Schedule Entry Object](#31-schedule-entry-object) definition.|
+|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#31-scheduleentry-object) definition.|
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schdeule_entry`.|
 
-#### 4.1.1 Sensor Definition Object
+#### 4.1.1 SensorDefinition Object
 Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Signal Conditioning Unit (SCU), Data Extraction Unit (DEU), and Host Controller (HC). Sensor implementations are not required to have each component, but metadata must specify the presence, model numbers, and operational parameters associated with each.
 
 The following global objects are used within the `scos` SigMF name space to define the sensor.
 
-The Sensor Definition object requires the following additional name/value pairs:
+The SensorDefinition object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`antenna`|true|object|N/A|See [Antenna Object](#antenna-object) definition.|
-|`signal_conditioning_unit`|false|object|N/A|See [Signal Conditioning Unit Object](#signal-conditioning-unit-object-scu) definition.|
-|`data_extraction_unit`|true|object|N/A|See [Data Extraction Unit Object](#data-extraction-unit-object-deu) definition.|
+|`signal_conditioning_unit`|false|object|N/A|See [SignalConditioningUnit Object](#signalconditioningunit-object-scu) definition.|
+|`data_extraction_unit`|true|object|N/A|See [DataExtractionUnit Object](#dataextractionunit-object-deu) definition.|
 |`host_controller`|false|string|N/A|Description of host computer. E.g. Make, model, and configuration.|
 
 ##### Antenna Object
@@ -135,8 +135,8 @@ The Antenna object requires the following additional name/value pairs
 |`steerable`|false|boolean|N/A|Defines if the antenna is steerable or not.|
 |`mobile`|false|boolean|N/A|Defines is the antenn is mobile or not.|
 
-##### Data Extraction Unit Object (DEU)
-The Data Extraction Unit object requires the following additional name/value pairs
+##### DataExtractionUnit Object (DEU)
+The DataExtractionUnit object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -147,15 +147,15 @@ The Data Extraction Unit object requires the following additional name/value pai
 |`noise_figure`|false|float|dB|Noise figure of DEU.|
 |`max_power`|false|float|dB|Maximum input power of DEU.|
 
-##### Signal Conditioning Unit Object (SCU)
-The Signal Conditioning Unit object requires the following additional name/value pairs
+##### SignalConditioningUnit Object (SCU)
+The SignalConditioningUnit object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`rf_path_specs`|false|array|N/A|Array of RF paths objects in SCU.|
 
-##### RF Path Object
-Each RF Path Spec object requires the following additional name/value pairs
+##### RFPath Object
+Each RFPath object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -179,7 +179,7 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |----|--------------|-------|-------|-----------|
 |`altitude`|false|float|meters|The height of the antenna above mean sea level.|
 |`environment`|false|string|N/A|A description of the environment where antenna is mounted. E.g. `indoor` or `outdoor`.|
-|`measurement_type`|true|object|N/A|The type of measurement acquired: [Single Frequency FFT](#single-frequency-fft-object), [Stepped Frequency FFT](#stepped-frequency-fft-object), [Spectrum Analyzer Swept Frequency](#spectrum-analyzer-swept-frequency-object) or [Calibration](#calibrations-object).|
+|`measurement_type`|true|object|N/A|The type of measurement acquired: [SingleFrequencyFFT](#singlefrequencyfft-object), [SteppedFrequencyFFT](#steppedfrequencyfft-object), [SpectrumAnalyzerSweptFrequency](#spectrumanalyzersweptfrequency-object) or [Calibration](#calibrations-object).|
 |`system_to_detect`|false|object|N/A|The system that the measurement is designed to detect.|
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `Low`, `Moderate` or  `High`.|
 |`dynamic_antenna_settings`|false|object|N/A|Dynamic parameters associated with the antenna attached to the sensor.|
@@ -213,8 +213,8 @@ An example `calibration_dictionary`, where "1" and "2" are DEU attenuation value
 }
 ```
 
-##### Single Frequency FFT Object
-The Single Frequency FFT object requires the following name/value pairs:  
+##### SingleFrequencyFFT Object
+The SingleFrequencyFFT object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -224,8 +224,8 @@ The Single Frequency FFT object requires the following name/value pairs:
 |`detector`|true|string|N/A|E.g. `sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`.|
 |`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
 
-##### Spectrum Analyzer Swept Frequency Object
-The Spectrum Analyzer Swept Frequency object requires the following name/value pairs:  
+##### SpectrumAnalyzerSweptFrequency Object
+The SpectrumAnalyzerSweptFrequency object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -236,21 +236,21 @@ The Spectrum Analyzer Swept Frequency object requires the following name/value p
 |`resolution_bandwidth`|true|float|Hz|Resolution bandwidth.|
 |`video_bandwidth`|true|float|Hz|Video bandwidth.|
 
-##### Stepped Frequency FFT Object
-The Stepped Frequency FFT object requires the following name/value pairs:  
+##### SteppedFrequencyFFT Object
+The SteppedFrequencyFFT object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`center_frequency_start`|true|float|Hz|First center frequency of scan.|
 |`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
 |`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
-|`single_frequency_fft`|true|object|N/A|See [Single Frequency FFT Object](#single-frequency-fft-object) definition.|
+|`single_frequency_fft`|true|object|N/A|See [SingleFrequencyFFT Object](#singlefrequencyfft-object) definition.|
 
 #### 4.3.2 Dynamic Sensor Settings
 The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, SCU, and DEU. They are listed in alphabetical order.  
 
-##### Dynamic Antenna Settings Object
-The Dynamic Antenna Settings object requires the following name/value pairs:  
+##### DynamicAntennaSettings Object
+The DynamicAntennaSettings object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -258,21 +258,21 @@ The Dynamic Antenna Settings object requires the following name/value pairs:
 |`elevation_beam_dir`|false|float|degrees|Direction of main beam in elevation plane  from horizontal.|
 |`polarization`|false|float|string|E.g. `Vertical`, `Horizontal`, `Slant-45`, `Left-Hand Circular`, `Right-Hand Circular`.|
 
-##### Dynamic DEU Settings Object
-The Dynamic DEU Settings object requires the following name/value pairs:  
+##### DynamicDEUSettings Object
+The DynamicDEUSettings object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`attenuation`|false|float|dB|Attenuation of DEU.|
 
-##### Dynamic SCU Settings Object
-The Dynamic SCU Settings object requires the following name/value pairs:  
+##### DynamicSCUSettings Object
+The DynamicSCUSettings object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`rf_path_#`|false|float|degrees|Angle of maximum antenna gain from North.|
 
-#### 4.3.3 System to Detect Object
+#### 4.3.3 SystemToDetect Object
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -291,21 +291,21 @@ The Dynamic SCU Settings object requires the following name/value pairs:
 [Calibrations Object](#calibrations-object)  
 [Captures](#42-captures)  
 [Control Plane](#3-control-plane)  
-[Data Extraction Unit Object (DEU)](#data-extraction-unit-object-deu)  
+[DataExtractionUnit Object (DEU)](#dataextractionunit-object-deu)  
 [Data Plane](#4-data-plane)  
-[DEU](#data-extraction-unit-object-deu)
-[Dynamic Antenna Settings Object](#dynamic-antenna-settings-object)  
-[Dynamic DEU Settings Object](#dynamic-deu-settings-object)  
-[Dynamic SCU Settings Object](#dynamic-scu-settings-object)  
+[DEU](#dataextractionunit-object-deu)
+[DynamicAntennaSettings Object](#dynamicantennasettings-object)  
+[DynamicDEUSettings Object](#dynamicdeusettings-object)  
+[DynamicSCUSettings Object](#dynamicscusettings-object)  
 [Dynamic Sensor Settings](#432-dynamic-sensor-settings)    
 [Global](#41-global)  
 [Measurement Types](#431-measurement-types)    
-[RF Path # Object](#rf-path--object)  
-[Schedule Entry Object](#31-schedule-entry-object)
-[SCU](#signal-conditioning-unit-object-scu)  
-[Sensor Definition Object](#411-sensor-definition-object)  
-[Signal Conditioning Unit Object (SCU)](#signal-conditioning-unit-object-scu)  
-[Single Frequency FFT Object](#single-frequency-fft-object)  
-[Spectrum Analyzer Swept Frequency Object](#spectrum-analyzer-swept-frequency-object)  
-[Stepped Frequency FFT Object](#stepped-frequency-fft-object)  
-[System to Detect Object](#433-system-to-detect-object)
+[RFPath # Object](#rfpath--object)  
+[ScheduleEntry Object](#31-scheduleentry-object)
+[SCU](#signalconditioningunit-object-scu)  
+[SensorDefinition Object](#411-sensordefinition-object)  
+[SignalConditioningUnit Object (SCU)](#signalconditioningunit-object-scu)  
+[SingleFrequencyFFT Object](#singlefrequencyfft-object)  
+[SpectrumAnalyzerSweptFrequency Object](#spectrumanalyzersweptfrequency-object)  
+[SteppedFrequencyFFT Object](#steppedfrequencyfft-object)  
+[SystemToDetect Object](#433-systemtodetect-object)
