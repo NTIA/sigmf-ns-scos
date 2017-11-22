@@ -20,8 +20,8 @@ The SCOS Transfer Specification defines a standard for the controls and data for
         - [4.1 Global](#41-global)
             - [4.1.1 SensorDefinition Object](#411-sensordefinition-object)
                 - [Antenna Object](#antenna-object)
-                - [DataExtractionUnit Object](#dataextractionunit-object-deu)
-                - [SignalConditioningUnit Object](#signalconditioningunit-object-scu)
+                - [DataExtractionUnit Object](#dataextractionunit-object)
+                - [SignalConditioningUnit Object](#signalconditioningunit-object)
                 - [RFPath Object](#rfpath-object)
         - [4.2 Captures](#42-captures)
         - [4.3 Annotations](#43-annotations)
@@ -114,8 +114,8 @@ The SensorDefinition object requires the following additional name/value pairs:
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`Antenna`|true|object|N/A|See [Antenna Object](#antenna-object) definition.|
-|`SignalConditioningUnit`|false|object|N/A|See [SignalConditioningUnit Object](#signalconditioningunit-object-scu) definition.|
-|`DataExtractionUnit`|true|object|N/A|See [DataExtractionUnit Object](#dataextractionunit-object-deu) definition.|
+|`SignalConditioningUnit`|false|object|N/A|See [SignalConditioningUnit Object](#signalconditioningunit-object) definition.|
+|`DataExtractionUnit`|true|object|N/A|See [DataExtractionUnit Object](#dataextractionunit-object) definition.|
 |`host_controller`|false|string|N/A|Description of host computer. E.g. Make, model, and configuration.|
 
 ##### Antenna Object
@@ -295,9 +295,9 @@ The DynamicSCUSettings object requires the following name/value pairs:
 [Antenna Object](#antenna-object)  
 [Captures](#42-captures)  
 [Control Plane](#3-control-plane)  
-[DataExtractionUnit Object (DEU)](#dataextractionunit-object-deu)  
+[DataExtractionUnit Object (DEU)](#dataextractionunit-object)  
 [Data Plane](#4-data-plane)  
-[DEU](#dataextractionunit-object-deu)
+[DEU](#dataextractionunit-object)
 [DynamicAntennaSettings Object](#dynamicantennasettings-object)  
 [DynamicDEUSettings Object](#dynamicdeusettings-object)  
 [DynamicSCUSettings Object](#dynamicscusettings-object)  
@@ -306,9 +306,9 @@ The DynamicSCUSettings object requires the following name/value pairs:
 [Measurement Types](#431-measurement-types)    
 [RFPath Object](#rfpath-object)  
 [ScheduleEntry Object](#31-scheduleentry-object)  
-[SCU](#signalconditioningunit-object-scu)  
+[SCU](#signalconditioningunit-object)  
 [SensorDefinition Object](#411-sensordefinition-object)  
-[SignalConditioningUnit Object (SCU)](#signalconditioningunit-object-scu)  
+[SignalConditioningUnit Object (SCU)](#signalconditioningunit-object)  
 [SingleFrequencyFFT Object](#singlefrequencyfft-object)  
 [SpectrumAnalyzerSweptFrequency Object](#spectrumanalyzersweptfrequency-object)  
 [SteppedFrequencyFFT Object](#steppedfrequencyfft-object)  
