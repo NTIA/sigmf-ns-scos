@@ -283,7 +283,7 @@ The DynamicSCUSettings object requires the following name/value pairs:
 |----|--------------|-------|-------|-----------|
 |`system_name`|false|string|N/A|Name of system to be detected.|
 |`transmit_power`|false|float|dBm|Transmitter power going into antenna.|
-|`antenna_gain`|false|float|dB|Antenna gain.|
+|`antenna_gain`|false|float|dBi|Antenna gain.|
 |`signal_type`|false|string|N/A|Type of signal, e.g., pulse
 |`latitude`|false|float|degrees|Latitude.|
 |`longitude`|false|float|degrees|Longitude.|
