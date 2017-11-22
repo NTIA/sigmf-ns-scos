@@ -101,7 +101,7 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 |`SensorDefinition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
-|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#31-scheduleentry-object) definition.|
+|`ScheduleEntry`|false|object|N/A|See [ScheduleEntry Object](#31-scheduleentry-object) definition.|
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schdeule_entry`.|
 
 #### 4.1.1 SensorDefinition Object
@@ -182,11 +182,11 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |`altitude`|false|float|meters|The height of the antenna above mean sea level.|
 |`environment`|false|string|N/A|A description of the environment where antenna is mounted. E.g. `indoor` or `outdoor`.|
 |`measurement_type`|true|object|N/A|The type of measurement acquired: [SingleFrequencyFFT](#singlefrequencyfft-object), [SteppedFrequencyFFT](#steppedfrequencyfft-object), [SpectrumAnalyzerSweptFrequency](#spectrumanalyzersweptfrequency-object) or [Calibration](#calibrations-object).|
-|`system_to_detect`|false|object|N/A|The system that the measurement is designed to detect.|
+|`system_to_detect`|false|string|N/A|The system that the measurement is designed to detect.|
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `Low`, `Moderate` or  `High`.|
-|`dynamic_antenna_settings`|false|object|N/A|Dynamic parameters associated with the antenna attached to the sensor.|
-|`dynamic_SCU_settings`|false|object|N/A|attenuation of SCU.|
-|`dynamic_DEU_settings`|false|object|N/A|attenuation of DEU.|
+|`DynamicAntennaSettings`|false|object|N/A|Dynamic parameters associated with the antenna attached to the sensor. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
+|`DynamicSCUSettings`|false|object|N/A|Attenuation of SCU. See [DynamicSCUSettings Object](#dynamicscusettings-object) definition.|
+|`DynamicDEUSettings`|false|object|N/A|Attenuation of DEU. See [DynamicDEUSettings Object](#dynamicdeusettings-object) definition.|
 |`detected_system_noise_powers`|false|float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
 |`temperature`|false|float|celsius|Environmental temperature.|
 |`overload_flag`|false|boolean|N/A|Flag indicator of system signal overload.|
@@ -229,7 +229,7 @@ The SteppedFrequencyFFT object requires the following name/value pairs:
 |`center_frequency_start`|true|float|Hz|First center frequency of scan.|
 |`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
 |`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
-|`single_frequency_fft`|true|object|N/A|See [SingleFrequencyFFT Object](#singlefrequencyfft-object) definition.|
+|`SingleFrequencyFFT`|true|object|N/A|See [SingleFrequencyFFT Object](#singlefrequencyfft-object) definition.|
 
 ##### YFactorCalibration Object
 The YFactorCalibration object requires the following:  
