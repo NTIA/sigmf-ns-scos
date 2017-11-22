@@ -191,26 +191,6 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 #### 4.3.1 Measurement Types
 The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. They are listed in alphabetical order.  
 
-##### YFactorCalibration Object
-The YFactorCalibration object requires the following:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
-|`calibration_dictionary`|false|array|dB|A list of DEU attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
-
-An example `calibration_dictionary`, where "1" and "2" are DEU attenuation values:
-```
-{ 1: { "gain" : [],
-       "noise_figure" : []
-     },
-  2: { "gain" : [],
-       "noise_figure" : []
-     },
-  ...
-}
-```
-
 ##### SingleFrequencyFFT Object
 The SingleFrequencyFFT object requires the following name/value pairs:  
 
@@ -247,6 +227,26 @@ The SteppedFrequencyFFT object requires the following name/value pairs:
 |`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
 |`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
 |`single_frequency_fft`|true|object|N/A|See [SingleFrequencyFFT Object](#singlefrequencyfft-object) definition.|
+
+##### YFactorCalibration Object
+The YFactorCalibration object requires the following:  
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
+|`calibration_dictionary`|false|array|dB|A list of DEU attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
+
+An example `calibration_dictionary`, where "1" and "2" are DEU attenuation values:
+```
+{ 1: { "gain" : [],
+       "noise_figure" : []
+     },
+  2: { "gain" : [],
+       "noise_figure" : []
+     },
+  ...
+}
+```
 
 #### 4.3.2 Dynamic Sensor Settings
 The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, SCU, and DEU. They are listed in alphabetical order.  
