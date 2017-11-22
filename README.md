@@ -191,12 +191,11 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 #### 4.3.1 Measurement Types
 The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. They are listed in alphabetical order.  
 
-##### Calibrations Object
-The Calibrations object array holds calibration objects:  
+##### YFactorCalibration Object
+The YFactorCalibration object requires the following:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`type`|true|string|N/A|They method of calibration. E.g.`y-factor cal`.|
 |`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
 |`calibration_dictionary`|false|array|dB|A list of DEU attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
 
@@ -291,7 +290,6 @@ The DynamicSCUSettings object requires the following name/value pairs:
 [Action Object](#32-action-object)  
 [Annotations](#43-annotations)  
 [Antenna Object](#antenna-object)  
-[Calibrations Object](#calibrations-object)  
 [Captures](#42-captures)  
 [Control Plane](#3-control-plane)  
 [DataExtractionUnit Object (DEU)](#dataextractionunit-object-deu)  
@@ -312,3 +310,4 @@ The DynamicSCUSettings object requires the following name/value pairs:
 [SpectrumAnalyzerSweptFrequency Object](#spectrumanalyzersweptfrequency-object)  
 [SteppedFrequencyFFT Object](#steppedfrequencyfft-object)  
 [SystemToDetect Object](#433-systemtodetect-object)
+[YFactorCalibration Object](#yfactorcalibration-object)  
