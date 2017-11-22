@@ -123,7 +123,7 @@ The Antenna object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`model`|true|string|N/A|Make of model number of the antenna. E.g. `AAC SPBODA-1080_NFi`, `Alpha AW3232`.|
+|`model`|true|string|N/A|Make and model number of the antenna. E.g. `AAC SPBODA-1080_NFi`, `Alpha AW3232`.|
 |`low_frequency`|false|float|Hz|Low frequency of operational range.|
 |`high_frequency`|false|float|Hz|High frequency of operational range.|
 |`gain`|false|float|dB|Antenna gain.|
@@ -140,8 +140,7 @@ The DataExtractionUnit object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`make`|true|string|N/A|Make of DEU. E.g. `Ettus`, `Keysight`, `Tektronix`.|
-|`model`|true|string|N/A|Model of DEU. E.g. `N210`, `B200`, `N6841A`, `B206B`.|
+|`model`|true|string|N/A|Make and model of DEU. E.g. `Ettus N210`, `Ettus B200`, `Keysight N6841A`, `Tektronix B206B`.|
 |`low_frequency`|false|float|Hz|Low frequency of operational range of DEU.|
 |`high_frequency`|false|float|Hz|High frequency of operational range of DEU.|
 |`noise_figure`|false|float|dB|Noise figure of DEU.|
