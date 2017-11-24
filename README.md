@@ -205,7 +205,7 @@ Single-frequency FFT detection is a standard software-defined radio measurement.
 |`detector`|true|string|N/A|E.g. `sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`.|
 |`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
 |`units`|true|string|N/A|Data units, e.g., `dBm`, `watts`, `volts`.|
-|`reference`|false|integer|N/A|Data reference point, e.g., `DEU input`, `Antenna output`, `Output of isotropic antenna`.|
+|`reference`|false|string|N/A|Data reference point, e.g., `DEU input`, `Antenna output`, `Output of isotropic antenna`.|
 
 ##### SteppedFrequencyFFTDetection Object
 The SteppedFrequencyFFTDetection object requires the following name/value pairs:  
@@ -229,7 +229,7 @@ Swept-tuned detection is a standard spectrum analyzer measurement. The SweptTune
 |`resolution_bandwidth`|true|float|Hz|Resolution bandwidth.|
 |`video_bandwidth`|true|float|Hz|Video bandwidth.|
 |`units`|true|string|N/A|Data units, e.g., `dBm`, `watts`, `volts`.|
-|`reference`|false|integer|N/A|Data reference point, e.g., `DEU input`, `Antenna output`, `Output of isotropic antenna`.|
+|`reference`|false|string|N/A|Data reference point, e.g., `DEU input`, `Antenna output`, `Output of isotropic antenna`.|
 
 ##### YFactorCalibration Object
 The YFactorCalibration object requires the following:  
