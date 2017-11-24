@@ -105,9 +105,7 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schdeule_entry`.|
 
 #### 4.1.1 SensorDefinition Object
-Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Signal Conditioning Unit (SCU), Data Extraction Unit (DEU), and Host Controller. Sensor implementations are not required to have each component, but metadata must specify the presence, model numbers, and operational parameters associated with each.
-
-The following global objects are used within the `scos` SigMF name space to define the sensor.
+Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Signal Conditioning Unit (SCU), Data Extraction Unit (DEU), and Host Controller. The antenna converts electromagnetic energy to a voltage. SCU (or preselector) can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. DEU (e.g., software defined radio) provides tuning, downcoversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata must specify the presence, model numbers, and operational parameters associated with each.
 
 The SensorDefinition object requires the following additional name/value pairs:
 
