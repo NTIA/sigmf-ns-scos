@@ -123,8 +123,8 @@ The Antenna object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`model`|true|string|N/A|Antenna make and model number. E.g. `AAC SPBODA-1080_NFi`, `Alpha AW3232`.|
-|`type`|false|string|N/A|Antenna type. E.g. `dipole`, `biconical`, `monopole`, `conical monopole`.|
+|`model`|true|string|N/A|Antenna make and model number. E.g. `"ARA CSB-16"`, `"L-com HG3512UP-NF"`.|
+|`type`|false|string|N/A|Antenna type. E.g. `"dipole"`, `"biconical"`, `"monopole"`, `"conical monopole"`.|
 |`low_frequency`|false|float|Hz|Low frequency of operational range.|
 |`high_frequency`|false|float|Hz|High frequency of operational range.|
 |`gain`|false|float|dBi|Antenna gain in direction of maximum radiation or reception.|
@@ -143,7 +143,7 @@ The DataExtractionUnit object requires the following additional name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`model`|true|string|N/A|Make and model of DEU. E.g. `Ettus N210`, `Ettus B200`, `Keysight N6841A`, `Tektronix B206B`.|
+|`model`|true|string|N/A|Make and model of DEU. E.g. `"Ettus N210"`, `"Ettus B200"`, `"Keysight N6841A"`, `"Tektronix B206B"`.|
 |`low_frequency`|false|float|Hz|Low frequency of operational range of DEU.|
 |`high_frequency`|false|float|Hz|High frequency of operational range of DEU.|
 |`noise_figure`|false|float|dB|Noise figure of DEU.|
@@ -168,7 +168,7 @@ Each RFPath object requires the following additional name/value pairs
 |`high_frequency_stopband`|false|float|Hz|High frequency of filter 60-dB stopband.|
 |`lna_gain`|false|float|dB|Gain of low noise amplifier.|
 |`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier.|
-|`cal_source_type`|false|string|N/A|E.g., `calibrated noise source`.|
+|`cal_source_type`|false|string|N/A|E.g., `"calibrated noise source"`.|
 |`cal_source_ENR`|false|float|dB|Excess noise ratio of calibrated noise source at frequency of RF path.|
 
 ### 4.2 Captures
@@ -180,10 +180,10 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`altitude`|false|float|meters|The height of the antenna above mean sea level.|
-|`environment`|false|string|N/A|A description of the environment where antenna is mounted. E.g. `indoor` or `outdoor`.|
+|`environment`|false|string|N/A|A description of the environment where antenna is mounted. E.g. `"indoor"` or `"outdoor"`.|
 |`measurement_type`|true|object|N/A|The type of measurement acquired: [SingleFrequencyFFTDetection](#singlefrequencyfftdetection-object), [SteppedFrequencyFFTDetection](#steppedfrequencyfftdetection-object), [SweptTunedDetection](#swepttuneddetection-object) or [YFactorCalibration](#yfactorcalibration-object).|
 |`SystemToDetect`|false|object|N/A|The system that the measurement is designed to detect. See [SystemToDetect Object](#433-systemtodetect-object) definition.|
-|`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `Low`, `Moderate` or  `High`.|
+|`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `"low"`, `"moderate"` or  `"high"`.|
 |`DynamicAntennaSettings`|false|object|N/A|Dynamic parameters associated with the antenna. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
 |`DynamicSCUSettings`|false|object|N/A|Dynamic parameters associated with the SCU. See [DynamicSCUSettings Object](#dynamicscusettings-object) definition.|
 |`DynamicDEUSettings`|false|object|N/A|Dynamic parameters associated with the DEU. See [DynamicDEUSettings Object](#dynamicdeusettings-object) definition.|
@@ -200,12 +200,12 @@ Single-frequency FFT detection is a standard software-defined radio measurement.
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`number_of_samples_in_fft`|true|integer|N/A|Number of samples in FFT to calcluate delta_f = [`samplerate`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#global-object)/`number_of_samples_in_fft`.|
-|`window`|true|string|N/A|E.g. `Blackman-Harris`, `Flattop`, `Gaussian_a3.5`, `Gauss Top`, `Hamming`, `Hanning`, `Rectangular`.|
+|`window`|true|string|N/A|E.g. `"blackman-harris"`, `"flattop"`, `"gaussian_a3.5"`, `"gauss top"`, `"hamming"`, `"hanning"`, `"rectangular"`.|
 |`equivalent_noise_bandwidth`|false|float|Hz|Bandwidth of brickwall filter that has same integrated noise power as that of the actual filter.|
-|`detector`|true|string|N/A|E.g. `sample_iq`, `sample_power`, `mean_power`, `max_power`, `min_power`, `median_power`.|
+|`detector`|true|string|N/A|E.g. `"sample_iq"`, `"sample_power"`, `"mean_power"`, `"max_power"`, `"min_power"`, `"median_power"`.|
 |`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
-|`units`|true|string|N/A|Data units, e.g., `dBm`, `watts`, `volts`.|
-|`reference`|false|string|N/A|Data reference point, e.g., `DEU input`, `Antenna output`, `Output of isotropic antenna`.|
+|`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
+|`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 ##### SteppedFrequencyFFTDetection Object
 The SteppedFrequencyFFTDetection object requires the following name/value pairs:  
@@ -228,8 +228,8 @@ Swept-tuned detection is a standard spectrum analyzer measurement. The SweptTune
 |`dwell_time`|true|float|seconds|Integration time of detector at each frequency step.|
 |`resolution_bandwidth`|true|float|Hz|Resolution bandwidth.|
 |`video_bandwidth`|true|float|Hz|Video bandwidth.|
-|`units`|true|string|N/A|Data units, e.g., `dBm`, `watts`, `volts`.|
-|`reference`|false|string|N/A|Data reference point, e.g., `DEU input`, `Antenna output`, `Output of isotropic antenna`.|
+|`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
+|`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 ##### YFactorCalibration Object
 The YFactorCalibration object requires the following:  
@@ -238,6 +238,7 @@ The YFactorCalibration object requires the following:
 |----|--------------|-------|-------|-----------|
 |`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
 |`calibration_dictionary`|false|array|dB|A list of DEU attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
+|`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 An example `calibration_dictionary`, where "1" and "2" are DEU attenuation values:
 ```
@@ -261,7 +262,7 @@ The DynamicAntennaSettings object requires the following name/value pairs:
 |----|--------------|-------|-------|-----------|
 |`azimuth_angle`|false|float|degrees|Angle of main beam in azimuthal plane from North.|
 |`elevation_angle`|false|float|degrees|Angle of main beam in elevation plane from horizontal.|
-|`polarization`|false|float|string|E.g. `Vertical`, `Horizontal`, `Slant-45`, `Left-Hand Circular`, `Right-Hand Circular`.|
+|`polarization`|false|float|string|E.g. `"vertical"`, `"horizontal"`, `"slant-45"`, `"left-hand circular"`, `"right-hand circular"`.|
 
 ##### DynamicDEUSettings Object
 The DynamicDEUSettings object requires the following name/value pairs:  
@@ -285,7 +286,7 @@ The SystemToDetect object requires the following name/value pairs:
 |`system_name`|false|string|N/A|Name of system to be detected.|
 |`transmit_power`|false|float|dBm|Transmitter power going into antenna.|
 |`antenna_gain`|false|float|dBi|Antenna gain.|
-|`signal_type`|false|string|N/A|Type of signal, e.g., pulse
+|`signal_type`|false|string|N/A|Type of signal, e.g., '"pulsed"'
 |`latitude`|false|float|degrees|Latitude.|
 |`longitude`|false|float|degrees|Longitude.|
 |`altitude`|false|float|meters|Altitude above mean sea level.|
