@@ -215,7 +215,7 @@ The SteppedFrequencyFFTDetection object requires the following name/value pairs:
 |`center_frequency_start`|true|float|Hz|First center frequency of scan.|
 |`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
 |`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
-|`SingleFrequencyFFT`|true|object|N/A|See [SingleFrequencyFFT Object](#singlefrequencyfft-object) definition.|
+|`SingleFrequencyFFTDetection`|true|object|N/A|See [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object) definition.|
 
 ##### SweptTunedDetection Object
 Swept-tuned detection is a standard spectrum analyzer measurement. The SweptTunedDetection object requires the following name/value pairs:  
