@@ -26,9 +26,9 @@ The SCOS Transfer Specification defines a standard for the controls and data for
         - [4.2 Captures](#42-captures)
         - [4.3 Annotations](#43-annotations)
             - [4.3.1 Measurement Types](#431-measurement-types)
-                - [SingleFrequencyFFT Object](#singlefrequencyfft-object)
-                - [SweptTuned Object](#swepttuned-object)
-                - [SteppedFrequencyFFT Object](#steppedfrequencyfft-object)
+                - [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object)
+                - [SteppedFrequencyFFTDetection Object](#steppedfrequencyfftdetection-object)
+                - [SweptTunedDetection Object](#swepttuneddetection-object)
                 - [YFactorCalibration Object](#yfactorcalibration-object)
             - [4.3.2 Dynamic Sensor Settings](#432-dynamic-sensor-settings)
                 - [DynamicAntennaSettings Object](#dynamicantennasettings-object)
@@ -181,7 +181,7 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |----|--------------|-------|-------|-----------|
 |`altitude`|false|float|meters|The height of the antenna above mean sea level.|
 |`environment`|false|string|N/A|A description of the environment where antenna is mounted. E.g. `indoor` or `outdoor`.|
-|`measurement_type`|true|object|N/A|The type of measurement acquired: [SingleFrequencyFFT](#singlefrequencyfft-object), [SteppedFrequencyFFT](#steppedfrequencyfft-object), [SweptTuned](#swepttuned-object) or [YFactorCalibration](#yfactorcalibration-object).|
+|`measurement_type`|true|object|N/A|The type of measurement acquired: [SingleFrequencyFFTDetection](#singlefrequencyfftdetection-object), [SteppedFrequencyFFTDetection](#steppedfrequencyfftdetection-object), [SweptTunedDetection](#swepttuneddetection-object) or [YFactorCalibration](#yfactorcalibration-object).|
 |`SystemToDetect`|false|object|N/A|The system that the measurement is designed to detect. See [SystemToDetect Object](#433-systemtodetect-object) definition.|
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `Low`, `Moderate` or  `High`.|
 |`DynamicAntennaSettings`|false|object|N/A|Dynamic parameters associated with the antenna. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
@@ -192,10 +192,10 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |`overload_flag`|false|boolean|N/A|Flag indicator of system signal overload.|
 
 #### 4.3.1 Measurement Types
-The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. They are listed in alphabetical order.  
+The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. 
 
-##### SingleFrequencyFFT Object
-Single-frequency FFT measurement is a standard software-defined radio measurement. The SingleFrequencyFFT object requires the following name/value pairs:  
+##### SingleFrequencyFFTDetection Object
+Single-frequency FFT detection is a standard software-defined radio measurement. The SingleFrequencyFFTDetection object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -207,8 +207,18 @@ Single-frequency FFT measurement is a standard software-defined radio measuremen
 |`units`|true|string|N/A|Data units, e.g., `dBm`, `watts`, `volts`.|
 |`reference`|false|integer|N/A|Data reference point, e.g., `DEU input`, `Antenna output`, `Output of isotropic antenna`.|
 
-##### SweptTuned Object
-Swept-tuned measurements are standard spectrum analyzer measurements. The SweptTuned object requires the following name/value pairs:  
+##### SteppedFrequencyFFTDetection Object
+The SteppedFrequencyFFTDetection object requires the following name/value pairs:  
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`center_frequency_start`|true|float|Hz|First center frequency of scan.|
+|`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
+|`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
+|`SingleFrequencyFFT`|true|object|N/A|See [SingleFrequencyFFT Object](#singlefrequencyfft-object) definition.|
+
+##### SweptTunedDetection Object
+Swept-tuned detection is a standard spectrum analyzer measurement. The SweptTunedDetection object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -220,16 +230,6 @@ Swept-tuned measurements are standard spectrum analyzer measurements. The SweptT
 |`video_bandwidth`|true|float|Hz|Video bandwidth.|
 |`units`|true|string|N/A|Data units, e.g., `dBm`, `watts`, `volts`.|
 |`reference`|false|integer|N/A|Data reference point, e.g., `DEU input`, `Antenna output`, `Output of isotropic antenna`.|
-
-##### SteppedFrequencyFFT Object
-The SteppedFrequencyFFT object requires the following name/value pairs:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`center_frequency_start`|true|float|Hz|First center frequency of scan.|
-|`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
-|`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
-|`SingleFrequencyFFT`|true|object|N/A|See [SingleFrequencyFFT Object](#singlefrequencyfft-object) definition.|
 
 ##### YFactorCalibration Object
 The YFactorCalibration object requires the following:  
@@ -252,7 +252,7 @@ An example `calibration_dictionary`, where "1" and "2" are DEU attenuation value
 ```
 
 #### 4.3.2 Dynamic Sensor Settings
-The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, SCU, and DEU. They are listed in alphabetical order.  
+The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, SCU, and DEU.
 
 ##### DynamicAntennaSettings Object
 The DynamicAntennaSettings object requires the following name/value pairs:  
@@ -310,8 +310,8 @@ The SystemToDetect object requires the following name/value pairs:
 [SCU](#signalconditioningunit-object)  
 [SensorDefinition Object](#411-sensordefinition-object)  
 [SignalConditioningUnit Object](#signalconditioningunit-object)  
-[SingleFrequencyFFT Object](#singlefrequencyfft-object)  
-[SweptTuned Object](#swepttuned-object)  
-[SteppedFrequencyFFT Object](#steppedfrequencyfft-object)  
+[SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object)  
+[SteppedFrequencyFFTDetection Object](#steppedfrequencyfftdetection-object)  
+[SweptTunedDetection Object](#swepttuneddetection-object)  
 [SystemToDetect Object](#433-systemtodetect-object)  
 [YFactorCalibration Object](#yfactorcalibration-object)  
