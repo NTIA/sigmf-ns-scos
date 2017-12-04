@@ -71,7 +71,7 @@ A **task** represents an action at a _specific_ time. Therefore, a schedule entr
 The following objects are used within the `scos` SigMF name space in the Control and Data planes.
 
 ### 3.1 ScheduleEntry Object
-The ScheduleEntry object requires the following name/value pairs:
+The `ScheduleEntry` object requires the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -84,7 +84,7 @@ The ScheduleEntry object requires the following name/value pairs:
 |`action`|true|string|N/A|Name of action to be performed.|
 
 ### 3.2 Action Object
-The Action object requires the following name/value pairs
+The `Action` object requires the following name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -109,7 +109,7 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 #### 4.1.1 SensorDefinition Object
 Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Signal Conditioning Unit (SCU), Data Extraction Unit (DEU), and Host Controller. The antenna converts electromagnetic energy to a voltage. SCU (or preselector) can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. DEU (e.g., software defined radio) provides tuning, downcoversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata SHOULD specify the presence, model numbers, and operational parameters associated with each.
 
-The SensorDefinition object requires the following additional name/value pairs:
+The `SensorDefinition` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -232,12 +232,12 @@ Swept-tuned detection is a standard spectrum analyzer measurement. The `SweptTun
 |`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 ##### YFactorCalibration Object
-The YFactorCalibration object requires the following:  
+The `YFactorCalibration` object requires the following:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
-|`calibration_dictionary`|false|array|dB|A list of DEU attenuations with cooresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
+|`calibration_dictionary`|false|array|dB|A list of DEU attenuations with corresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
 |`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 An example `calibration_dictionary`, where "1" and "2" are DEU attenuation values:
