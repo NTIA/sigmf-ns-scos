@@ -240,16 +240,22 @@ The `YFactorCalibration` object requires the following:
 |`calibration_dictionary`|false|array|dB|A list of DEU attenuations with corresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
 |`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
-An example `calibration_dictionary`, where "1" and "2" are DEU attenuation values:
+Example of `calibrations`:
+
 ```
-{ 1: { "gain" : [],
-       "noise_figure" : []
-     },
-  2: { "gain" : [],
-       "noise_figure" : []
-     },
+[
+  {
+    "attenuation": 1,
+    "gains": [],
+    "noise_levels": []
+  },
+  {
+    "attenuation": 2,
+    "gains": [],
+    "noise_levels": []
+  },
   ...
-}
+]
 ```
 
 #### 4.3.2 Dynamic Sensor Settings
