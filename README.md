@@ -62,27 +62,29 @@ specified.
 
 ## 3. Control Plane
 
-The control plane for SCOS is implemented through the use of a RESTful API residing on the sensor, see [scos-sensor](https://github.com/NTIA/scos-sensor/blob/master/docs/api/openapi.adoc) (_* note this is currently a private repository and will be released at a future date_). A sensor advertises its **capabilities**, among which are **actions** that you can **schedule** the sensor to do. Some actions acquire data, and those **acquisitions** are retrievable in an easy to use archive format. Acquisitions are "owned" by the schedule entry. Schedule entries are "owned" by a specific user.
+The control plane for SCOS is implemented through the use of a RESTful API residing on the sensor, see [scos-sensor](https://github.com/NTIA/scos-sensor/blob/master/docs/api/openapi.adoc) (_* note this is currently a private repository and will be released at a future date_). A sensor advertises its **capabilities**, among which are **actions** that you can schedule the sensor to do. Some actions acquire data, and those **acquisitions** are retrievable in an easy to use archive format. Acquisitions are "owned" by the schedule entry. Schedule entries are "owned" by a specific user.
 
-Actions are functions that the sensor owner implements and exposes. Actions can do anything, e.g., rotate an antenna, start streaming data over a websocket and never return. Sensor actions are scheduled via a **schedule entry** post, and the sensor executes a schedule entry to the best of its ability given all actions it is already responsible to perform.
+Actions are functions that the sensor owner implements and exposes. Actions can do anything, e.g., rotate an antenna or start streaming data over a socket and never return. Sensor actions are scheduled by posting a **schedule entry** to the sensor's **schedule**. The scheduler periodically reads the schedule and populates a task queue in priority order. 
+
+A **task** represents an action at a _specific_ time. Therefore, a schedule entry represents a range of tasks. The scheduler continues populating its task queue until the schedule is exhausted. When executing the task queue, the scheduler makes a best effort to run each task at its designated time, but the scheduler SHOULD NOT in most cases cancel a running task to start another task, even of higher priority. **priority** is used to disambiguate two or more tasks that are schedule to start at the same time.
 
 The following objects are used within the `scos` SigMF name space in the Control and Data planes.
 
 ### 3.1 ScheduleEntry Object
-The ScheduleEntry object requires the following name/value pairs:
+The `ScheduleEntry` object requires the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`name`|true|string|N/A|The unique identification string assigned to the schedule entry.|
-|`start`|false|integer|seconds|Absolute start time of the schedule in [Unix time](https://en.wikipedia.org/wiki/Unix_time).|
-|`relative_stop`|false|integer|seconds|Stop time of the schedule relative to `start` time.|
-|`stop`|false|integer|seconds|Absolute stop time of the schedule in [Unix time](https://en.wikipedia.org/wiki/Unix_time).|
-|`interval`|false|integer|seconds|Interval time between instances of the `action` being performed.|
-|`priority`|false|integer|N/A|Priority of the schedule, similar to applying [nice](https://en.wikipedia.org/wiki/Nice_(Unix)). Lower numbers are higher priority.|
-|`Action`|true|string|N/A|Name of action to be performed.|
+|`name`|true|string|N/A|The identification string assigned to the schedule entry. MUST be unique on the sensor.|
+|`start`|false|integer|seconds|Requested time to schedule the first task in [Unix time](https://en.wikipedia.org/wiki/Unix_time). Default if unspecified is to start as soon as received.|
+|`relative_stop`|false|boolean|seconds|`stop` should be interpreted as seconds after `start`. Default is false.|
+|`stop`|false|integer|seconds|Absolute stop time of the entry in [Unix time](https://en.wikipedia.org/wiki/Unix_time). If left unspecified, the scheduler MUST continue scheduling tasks until manually stopped.|
+|`interval`|false|integer|seconds|Interval between tasks. If left unspecified, run exactly once and then mark the entry inactive.|
+|`priority`|false|integer|N/A|Priority of the entry, similar to applying [nice](https://en.wikipedia.org/wiki/Nice_(Unix)). Lower numbers are higher priority. Default is 10.|
+|`action`|true|string|N/A|Name of action to be performed.|
 
 ### 3.2 Action Object
-The Action object requires the following name/value pairs
+The `Action` object requires the following name/value pairs
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -98,26 +100,26 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`SensorDefinition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
+|`sensor_definition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
-|`ScheduleEntry`|false|object|N/A|See [ScheduleEntry Object](#31-scheduleentry-object) definition.|
+|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#31-scheduleentry-object) definition.|
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schdeule_entry`.|
 
 #### 4.1.1 SensorDefinition Object
-Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Signal Conditioning Unit (SCU), Data Extraction Unit (DEU), and Host Controller. The antenna converts electromagnetic energy to a voltage. SCU (or preselector) can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. DEU (e.g., software defined radio) provides tuning, downcoversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata must specify the presence, model numbers, and operational parameters associated with each.
+Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Signal Conditioning Unit (SCU), Data Extraction Unit (DEU), and Host Controller. The antenna converts electromagnetic energy to a voltage. SCU (or preselector) can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. DEU (e.g., software defined radio) provides tuning, downcoversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata SHOULD specify the presence, model numbers, and operational parameters associated with each.
 
-The SensorDefinition object requires the following additional name/value pairs:
+The `SensorDefinition` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`Antenna`|true|object|N/A|See [Antenna Object](#antenna-object) definition.|
-|`SignalConditioningUnit`|false|object|N/A|See [SignalConditioningUnit Object](#signalconditioningunit-object) definition.|
-|`DataExtractionUnit`|true|object|N/A|See [DataExtractionUnit Object](#dataextractionunit-object) definition.|
+|`antenna`|true|object|N/A|See [Antenna Object](#antenna-object) definition.|
+|`signal_conditioning_unit`|false|object|N/A|See [SignalConditioningUnit Object](#signalconditioningunit-object) definition.|
+|`data_extraction_unit`|true|object|N/A|See [DataExtractionUnit Object](#dataextractionunit-object) definition.|
 |`host_controller`|false|string|N/A|Description of host computer. E.g. Make, model, and configuration.|
 
 ##### Antenna Object
-The Antenna object requires the following additional name/value pairs
+The `Antenna` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -134,28 +136,28 @@ The Antenna object requires the following additional name/value pairs
 |`voltage_standing_wave_ratio`|false|float|volts|Voltage standing wave ratio.|
 |`cable_loss`|false|float|dB|Cable loss for cable connecting antenna and preselector.|
 |`steerable`|false|boolean|N/A|Defines if the antenna is steerable or not.|
-|`mobile`|false|boolean|N/A|Defines is the antenn is mobile or not.|
+|`mobile`|false|boolean|N/A|Defines if the antenna is mobile or not.|
 
 ##### DataExtractionUnit Object
-The DataExtractionUnit object requires the following additional name/value pairs
+The `DataExtractionUnit` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`model`|true|string|N/A|Make and model of DEU. E.g. `"Ettus N210"`, `"Ettus B200"`, `"Keysight N6841A"`, `"Tektronix B206B"`.|
+|`model`|true|string|N/A|Make and model of DEU. E.g., `"Ettus N210"`, `"Ettus B200"`, `"Keysight N6841A"`, `"Tektronix B206B"`.|
 |`low_frequency`|false|float|Hz|Low frequency of operational range of DEU.|
 |`high_frequency`|false|float|Hz|High frequency of operational range of DEU.|
 |`noise_figure`|false|float|dB|Noise figure of DEU.|
 |`max_power`|false|float|dB|Maximum input power of DEU.|
 
 ##### SignalConditioningUnit Object
-The SignalConditioningUnit object requires the following additional name/value pairs
+The `SignalConditioningUnit` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`rf_path_specs`|false|array|N/A|Specication of SCU RF paths via [RFPath Object](#rfpath-object).|
 
 ##### RFPath Object
-Each RFPath object requires the following additional name/value pairs
+Each `RFPath` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -180,11 +182,11 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |`altitude`|false|float|meters|The height of the antenna above mean sea level.|
 |`environment`|false|string|N/A|A description of the environment where antenna is mounted. E.g. `"indoor"` or `"outdoor"`.|
 |`measurement_type`|true|object|N/A|The type of measurement acquired: [SingleFrequencyFFTDetection](#singlefrequencyfftdetection-object), [SteppedFrequencyFFTDetection](#steppedfrequencyfftdetection-object), [SweptTunedDetection](#swepttuneddetection-object) or [YFactorCalibration](#yfactorcalibration-object).|
-|`SystemToDetect`|false|object|N/A|The system that the measurement is designed to detect. See [SystemToDetect Object](#433-systemtodetect-object) definition.|
+|`system_to_detect`|false|object|N/A|The system that the measurement is designed to detect. See [SystemToDetect Object](#433-systemtodetect-object) definition.|
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `"low"`, `"moderate"` or  `"high"`.|
-|`DynamicAntennaSettings`|false|object|N/A|Dynamic parameters associated with the antenna. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
-|`DynamicSCUSettings`|false|object|N/A|Dynamic parameters associated with the SCU. See [DynamicSCUSettings Object](#dynamicscusettings-object) definition.|
-|`DynamicDEUSettings`|false|object|N/A|Dynamic parameters associated with the DEU. See [DynamicDEUSettings Object](#dynamicdeusettings-object) definition.|
+|`dynamic_antenna_settings`|false|object|N/A|Dynamic parameters associated with the antenna. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
+|`dynamic_scu_settings`|false|object|N/A|Dynamic parameters associated with the SCU. See [DynamicSCUSettings Object](#dynamicscusettings-object) definition.|
+|`dynamic_deu_ettings`|false|object|N/A|Dynamic parameters associated with the DEU. See [DynamicDEUSettings Object](#dynamicdeusettings-object) definition.|
 |`detected_system_noise_powers`|false|float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
 |`temperature`|false|float|celsius|Environmental temperature.|
 |`overload_flag`|false|boolean|N/A|Flag indicator of system signal overload.|
@@ -193,7 +195,7 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. 
 
 ##### SingleFrequencyFFTDetection Object
-Single-frequency FFT detection is a standard software-defined radio measurement. The SingleFrequencyFFTDetection object requires the following name/value pairs:  
+Single-frequency FFT detection is a standard software-defined radio measurement. The `SingleFrequencyFFTDetection` object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -206,7 +208,7 @@ Single-frequency FFT detection is a standard software-defined radio measurement.
 |`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 ##### SteppedFrequencyFFTDetection Object
-The SteppedFrequencyFFTDetection object requires the following name/value pairs:  
+The `SteppedFrequencyFFTDetection` object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -216,7 +218,7 @@ The SteppedFrequencyFFTDetection object requires the following name/value pairs:
 |`SingleFrequencyFFTDetection`|true|object|N/A|See [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object) definition.|
 
 ##### SweptTunedDetection Object
-Swept-tuned detection is a standard spectrum analyzer measurement. The SweptTunedDetection object requires the following name/value pairs:  
+Swept-tuned detection is a standard spectrum analyzer measurement. The `SweptTunedDetection` object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -230,12 +232,12 @@ Swept-tuned detection is a standard spectrum analyzer measurement. The SweptTune
 |`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 ##### YFactorCalibration Object
-The YFactorCalibration object requires the following:  
+The `YFactorCalibration` object requires the following:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
-|`calibrations`|false|array|dB|DEU attenuations and cooresponding gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
+|`calibration_dictionary`|false|array|dB|A list of DEU attenuations with corresponding calibration results. Calibration results are gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|   
 |`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 Example of `calibrations`:
@@ -260,7 +262,7 @@ Example of `calibrations`:
 The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, SCU, and DEU.
 
 ##### DynamicAntennaSettings Object
-The DynamicAntennaSettings object requires the following name/value pairs:  
+The `DynamicAntennaSettings` object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -269,21 +271,21 @@ The DynamicAntennaSettings object requires the following name/value pairs:
 |`polarization`|false|float|string|E.g. `"vertical"`, `"horizontal"`, `"slant-45"`, `"left-hand circular"`, `"right-hand circular"`.|
 
 ##### DynamicDEUSettings Object
-The DynamicDEUSettings object requires the following name/value pairs:  
+The `DynamicDEUSettings` object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`attenuation`|false|float|dB|Attenuation of DEU.|
 
 ##### DynamicSCUSettings Object
-The DynamicSCUSettings object requires the following name/value pairs:  
+The `DynamicSCUSettings` object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`rf_path_number`|false|integer|N/A|SCU RF path number.|
 
 #### 4.3.3 SystemToDetect Object
-The SystemToDetect object requires the following name/value pairs:  
+The `SystemToDetect` object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
