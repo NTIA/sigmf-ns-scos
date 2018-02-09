@@ -14,8 +14,6 @@ The SCOS Transfer Specification defines a standard for the controls and data for
     - [1. Description](#1-description)
     - [2. Conventions Used in this Document](#2-conventions-used-in-this-document)
     - [3. Control Plane](#3-control-plane)
-        - [3.1 ScheduleEntry Object](#31-scheduleentry-object)
-        - [3.2 Action Object](#32-action-object)
     - [4. Data Plane](#4-data-plane)
         - [4.1 Global](#41-global)
             - [4.1.1 SensorDefinition Object](#411-sensordefinition-object)
@@ -23,6 +21,7 @@ The SCOS Transfer Specification defines a standard for the controls and data for
                 - [DataExtractionUnit Object](#dataextractionunit-object)
                 - [SignalConditioningUnit Object](#signalconditioningunit-object)
                 - [RFPath Object](#rfpath-object)
+            - [4.1.2 ScheduleEntry Object](#412-scheduleentry-object)
         - [4.2 Captures](#42-captures)
         - [4.3 Annotations](#43-annotations)
             - [4.3.1 Measurement Types](#431-measurement-types)
@@ -68,30 +67,6 @@ Actions are functions that the sensor owner implements and exposes. Actions can 
 
 A **task** represents an action at a _specific_ time. Therefore, a schedule entry represents a range of tasks. The scheduler continues populating its task queue until the schedule is exhausted. When executing the task queue, the scheduler makes a best effort to run each task at its designated time, but the scheduler SHOULD NOT in most cases cancel a running task to start another task, even of higher priority. **priority** is used to disambiguate two or more tasks that are schedule to start at the same time.
 
-The following objects are used within the `scos` SigMF name space in the Control and Data planes.
-
-### 3.1 ScheduleEntry Object
-The `ScheduleEntry` object requires the following name/value pairs:
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`name`|true|string|N/A|The identification string assigned to the schedule entry. MUST be unique on the sensor.|
-|`start`|false|integer|seconds|Requested time to schedule the first task in [Unix time](https://en.wikipedia.org/wiki/Unix_time). Default if unspecified is to start as soon as received.|
-|`stop_is_relative`|false|boolean|seconds|`stop` should be interpreted as seconds after `start`. Default is false.|
-|`stop`|false|integer|seconds|Absolute stop time of the entry in [Unix time](https://en.wikipedia.org/wiki/Unix_time). If left unspecified, the scheduler MUST continue scheduling tasks until manually stopped.|
-|`interval`|false|integer|seconds|Interval between tasks. If left unspecified, run exactly once and then mark the entry inactive.|
-|`priority`|false|integer|N/A|Priority of the entry, similar to applying [nice](https://en.wikipedia.org/wiki/Nice_(Unix)). Lower numbers are higher priority. Default is 10.|
-|`action`|true|string|N/A|Name of action to be performed.|
-
-### 3.2 Action Object
-The `Action` object requires the following name/value pairs
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`name`|true|string|N/A|The unique identification string assigned to the action.|
-|`summary`|false|string|N/A|A succinct description of the action. Not required, but is RECOMMENDED.|
-|`description`|false|string|N/A|A full description of the action. Not required, but is RECOMMENDED.|
-
 ## 4. Data Plane
 The SCOS specification uses and is fully compliant with the SigMF Specification. Building upon the SigMF [core namespace](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#namespaces), the specification is enhanced through the implementation of a `scos` namespace, the details of which follow.  
 
@@ -103,8 +78,8 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 |`sensor_definition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
-|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#31-scheduleentry-object) definition.|
-|`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schdeule_entry`.|
+|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#412-scheduleentry-object) definition.|
+|`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schedule_entry`.|
 
 #### 4.1.1 SensorDefinition Object
 Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Signal Conditioning Unit (SCU), Data Extraction Unit (DEU), and Host Controller. The antenna converts electromagnetic energy to a voltage. SCU (or preselector) can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. DEU (e.g., software defined radio) provides tuning, downcoversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata SHOULD specify the presence, model numbers, and operational parameters associated with each.
@@ -170,6 +145,19 @@ Each `RFPath` object requires the following additional name/value pairs:
 |`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier.|
 |`cal_source_type`|false|string|N/A|E.g., `"calibrated noise source"`.|
 |`cal_source_ENR`|false|float|dB|Excess noise ratio of calibrated noise source at frequency of RF path.|
+
+### 4.1.2 ScheduleEntry Object
+The `ScheduleEntry` object requires the following name/value pairs:
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`name`|true|string|N/A|The identification string assigned to the schedule entry. MUST be unique on the sensor.|
+|`start`|false|integer|seconds|Requested time to schedule the first task in [Unix time](https://en.wikipedia.org/wiki/Unix_time). Default if unspecified is to start as soon as received.|
+|`stop_is_relative`|false|boolean|seconds|`stop` should be interpreted as seconds after `start`. Default is false.|
+|`stop`|false|integer|seconds|Absolute stop time of the entry in [Unix time](https://en.wikipedia.org/wiki/Unix_time). If left unspecified, the scheduler MUST continue scheduling tasks until manually stopped.|
+|`interval`|false|integer|seconds|Interval between tasks. If left unspecified, run exactly once and then mark the entry inactive.|
+|`priority`|false|integer|N/A|Priority of the entry, similar to applying [nice](https://en.wikipedia.org/wiki/Nice_(Unix)). Lower numbers are higher priority. Default is 10.|
+|`action`|true|string|N/A|Name of action to be performed.|
 
 ### 4.2 Captures
 Per SigMF, the captures value is an array of capture segment objects that describe the parameters of the signal capture. The `scos` specification does not add any enhancements to this section.  
@@ -297,8 +285,7 @@ The `SystemToDetect` object requires the following name/value pairs:
 |`longitude`|false|float|degrees|Longitude.|
 |`altitude`|false|float|meters|Altitude above mean sea level.|
 
-## 5. Index
-[Action Object](#32-action-object)  
+## 5. Index 
 [Annotations](#43-annotations)  
 [Antenna Object](#antenna-object)  
 [Captures](#42-captures)  
@@ -313,7 +300,7 @@ The `SystemToDetect` object requires the following name/value pairs:
 [Global](#41-global)  
 [Measurement Types](#431-measurement-types)  
 [RFPath Object](#rfpath-object)  
-[ScheduleEntry Object](#31-scheduleentry-object)  
+[ScheduleEntry Object](#412-scheduleentry-object)  
 [SCU](#signalconditioningunit-object)  
 [SensorDefinition Object](#411-sensordefinition-object)  
 [SignalConditioningUnit Object](#signalconditioningunit-object)  
