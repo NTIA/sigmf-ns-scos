@@ -61,7 +61,7 @@ specified.
 
 ## 3. Control Plane
 
-The control plane for SCOS is implemented through the use of a RESTful API residing on the sensor, see [scos-sensor](https://github.com/NTIA/scos-sensor/blob/master/docs/api/openapi.adoc) (_* note this is currently a private repository and will be released at a future date_). A sensor advertises its **capabilities**, among which are **actions** that you can schedule the sensor to do. Some actions acquire data, and those **acquisitions** are retrievable in an easy to use archive format. Acquisitions are "owned" by the schedule entry. Schedule entries are "owned" by a specific user.
+The control plane for SCOS is implemented through the use of a RESTful API residing on the sensor, see [SCOS Control Plane API Reference](https://ntia.github.io/scos-sensor/). A sensor advertises its **capabilities**, among which are **actions** that you can schedule the sensor to do. Some actions acquire data, and those **acquisitions** are retrievable in an easy to use archive format. Acquisitions are "owned" by the schedule entry. Schedule entries are "owned" by a specific user.
 
 Actions are functions that the sensor owner implements and exposes. Actions can do anything, e.g., rotate an antenna or start streaming data over a socket and never return. Sensor actions are scheduled by posting a **schedule entry** to the sensor's **schedule**. The scheduler periodically reads the schedule and populates a task queue in priority order. 
 
