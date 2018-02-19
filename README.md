@@ -169,7 +169,7 @@ Each `RFPath` object requires the following additional name/value pairs:
 |`lna_gain`|false|float|dB|Gain of low noise amplifier.|
 |`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier.|
 |`cal_source_type`|false|string|N/A|E.g., `"calibrated noise source"`.|
-|`cal_source_ENR`|false|float|dB|Excess noise ratio of calibrated noise source at frequency of RF path.|
+|`cal_source_enr`|false|float|dB|Excess noise ratio of calibrated noise source at frequency of RF path.|
 
 ### 4.2 Captures
 Per SigMF, the captures value is an array of capture segment objects that describe the parameters of the signal capture. The `scos` specification does not add any enhancements to this section.  
