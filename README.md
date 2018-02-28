@@ -1,5 +1,4 @@
 # SCOS Transfer Specification
-Version 0.1
 
 ## Abstract
 The SCOS Transfer Specification defines a standard for the controls and data format used within the [IEEE 802.22.3 Draft Standard: Spectrum Characterization and Occupancy Sensing (SCOS) system](http://www.ieee802.org/22/P802_22_3_PAR_Detail_Approved.pdf).
@@ -31,8 +30,8 @@ The SCOS Transfer Specification defines a standard for the controls and data for
                 - [YFactorCalibration Object](#yfactorcalibration-object)
             - [4.3.2 Dynamic Sensor Settings](#432-dynamic-sensor-settings)
                 - [DynamicAntennaSettings Object](#dynamicantennasettings-object)
-                - [DynamicDEUSettings Object](#dynamicdeusettings-object)
-                - [DynamicSCUSettings Object](#dynamicscusettings-object)
+                - [DynamicReceiverSettings Object](#dynamicreceiversettings-object)
+                - [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object)
             - [4.3.3 SystemToDetect Object](#433-systemtodetect-object)
     - [5. Index](#5-index)
 
@@ -82,7 +81,7 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schedule_entry`.|
 
 #### 4.1.1 SensorDefinition Object
-Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Signal Conditioning Unit (SCU), Data Extraction Unit (DEU), and Host Controller. The antenna converts electromagnetic energy to a voltage. SCU (or preselector) can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. DEU (e.g., software defined radio) provides tuning, downcoversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata SHOULD specify the presence, model numbers, and operational parameters associated with each.
+Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Preselector, Receiver, and Host Controller. The antenna converts electromagnetic energy to a voltage. The preselector can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. The receiver (e.g., software defined radio) provides tuning, downcoversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata SHOULD specify the presence, model numbers, and operational parameters associated with each.
 
 The `SensorDefinition` object requires the following additional name/value pairs:
 
@@ -118,18 +117,18 @@ The `Receiver` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`model`|true|string|N/A|Make and model of DEU. E.g., `"Ettus N210"`, `"Ettus B200"`, `"Keysight N6841A"`, `"Tektronix B206B"`.|
-|`low_frequency`|false|float|Hz|Low frequency of operational range of DEU.|
-|`high_frequency`|false|float|Hz|High frequency of operational range of DEU.|
-|`noise_figure`|false|float|dB|Noise figure of DEU.|
-|`max_power`|false|float|dB|Maximum input power of DEU.|
+|`model`|true|string|N/A|Make and model of the receiver. E.g., `"Ettus N210"`, `"Ettus B200"`, `"Keysight N6841A"`, `"Tektronix B206B"`.|
+|`low_frequency`|false|float|Hz|Low frequency of operational range of the receiver.|
+|`high_frequency`|false|float|Hz|High frequency of operational range of the receiver.|
+|`noise_figure`|false|float|dB|Noise figure of the receiver.|
+|`max_power`|false|float|dB|Maximum input power of the receiver.|
 
 ##### Preselector Object
 The `Preselector` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_path_specs`|false|array|N/A|Specification of SCU RF paths via [RFPath Object](#rfpath-object).|
+|`rf_path_specs`|false|array|N/A|Specification of the preselector RF paths via [RFPath Object](#rfpath-object).|
 
 ##### RFPath Object
 Each `RFPath` object requires the following additional name/value pairs:
@@ -173,8 +172,8 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |`system_to_detect`|false|object|N/A|The system that the measurement is designed to detect. See [SystemToDetect Object](#433-systemtodetect-object) definition.|
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `"low"`, `"moderate"` or  `"high"`.|
 |`dynamic_antenna_settings`|false|object|N/A|Dynamic parameters associated with the antenna. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
-|`dynamic_scu_settings`|false|object|N/A|Dynamic parameters associated with the SCU. See [DynamicSCUSettings Object](#dynamicscusettings-object) definition.|
-|`dynamic_deu_ettings`|false|object|N/A|Dynamic parameters associated with the DEU. See [DynamicDEUSettings Object](#dynamicdeusettings-object) definition.|
+|`dynamic_preselector_settings`|false|object|N/A|Dynamic parameters associated with the preselector. See [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object) definition.|
+|`dynamic_receiver_settings`|false|object|N/A|Dynamic parameters associated with the receiver. See [DynamicReceiverSettings Object](#dynamicreceiversettings-object) definition.|
 |`detected_system_noise_powers`|false|float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
 |`temperature`|false|float|celsius|Environmental temperature.|
 |`overload_flag`|false|boolean|N/A|Flag indicator of system signal overload.|
@@ -193,7 +192,7 @@ Single-frequency FFT detection is a standard software-defined radio measurement.
 |`detector`|true|string|N/A|E.g. `"sample_iq"`, `"sample_power"`, `"mean_power"`, `"max_power"`, `"min_power"`, `"median_power"`.|
 |`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
-|`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
+|`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 ##### SteppedFrequencyFFTDetection Object
 The `SteppedFrequencyFFTDetection` object requires the following name/value pairs:  
@@ -217,7 +216,7 @@ Swept-tuned detection is a standard spectrum analyzer measurement. The `SweptTun
 |`resolution_bandwidth`|true|float|Hz|Resolution bandwidth.|
 |`video_bandwidth`|true|float|Hz|Video bandwidth.|
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
-|`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
+|`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 ##### YFactorCalibration Object
 The `YFactorCalibration` object requires the following:  
@@ -225,8 +224,8 @@ The `YFactorCalibration` object requires the following:
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
-|`calibrations`|false|array|dB|DEU attenuations and corresponding gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|    
-|`reference`|false|string|N/A|Data reference point, e.g., `"DEU input"`, `"antenna output"`, `"output of isotropic antenna"`.|
+|`calibrations`|false|array|dB|Receiver attenuations and corresponding gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|    
+|`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 Example of `calibrations`:
 
@@ -247,7 +246,7 @@ Example of `calibrations`:
 ```
 
 #### 4.3.2 Dynamic Sensor Settings
-The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, SCU, and DEU.
+The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, the preselector, and the receiver.
 
 ##### DynamicAntennaSettings Object
 The `DynamicAntennaSettings` object requires the following name/value pairs:  
@@ -258,19 +257,19 @@ The `DynamicAntennaSettings` object requires the following name/value pairs:
 |`elevation_angle`|false|float|degrees|Angle of main beam in elevation plane from horizontal.|
 |`polarization`|false|float|string|E.g. `"vertical"`, `"horizontal"`, `"slant-45"`, `"left-hand circular"`, `"right-hand circular"`.|
 
-##### DynamicDEUSettings Object
-The `DynamicDEUSettings` object requires the following name/value pairs:  
+##### DynamicReceiverSettings Object
+The `DynamicReceiverSettings` object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`attenuation`|false|float|dB|Attenuation of DEU.|
+|`attenuation`|false|float|dB|Attenuation of the receiver.|
 
-##### DynamicSCUSettings Object
-The `DynamicSCUSettings` object requires the following name/value pairs:  
+##### DynamicPreselectorSettings Object
+The `DynamicPreselectorSettings` object requires the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_path_number`|false|integer|N/A|SCU RF path number.|
+|`rf_path_number`|false|integer|N/A|The preselector RF path number.|
 
 #### 4.3.3 SystemToDetect Object
 The `SystemToDetect` object requires the following name/value pairs:  
@@ -291,10 +290,10 @@ The `SystemToDetect` object requires the following name/value pairs:
 [Captures](#42-captures)  
 [Control Plane](#3-control-plane)  
 [Data Plane](#4-data-plane)  
-[DynamicAntennaSettings Object](#dynamicantennasettings-object)  
-[DynamicDEUSettings Object](#dynamicdeusettings-object)  
-[DynamicSCUSettings Object](#dynamicscusettings-object)  
 [Dynamic Sensor Settings](#432-dynamic-sensor-settings)  
+[DynamicAntennaSettings Object](#dynamicantennasettings-object)  
+[DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object)  
+[DynamicReceiverSettings Object](#dynamicreceiversettings-object)  
 [Global](#41-global)  
 [Measurement Types](#431-measurement-types)  
 [Preselector Object](#preselector-object)  
