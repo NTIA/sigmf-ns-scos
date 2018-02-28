@@ -18,8 +18,8 @@ The SCOS Transfer Specification defines a standard for the controls and data for
         - [4.1 Global](#41-global)
             - [4.1.1 SensorDefinition Object](#411-sensordefinition-object)
                 - [Antenna Object](#antenna-object)
-                - [Receiver Object](#receiver-object)
-                - [Preselector Object](#preselector-object)
+                - [DataExtractionUnit Object](#dataextractionunit-object)
+                - [SignalConditioningUnit Object](#signalconditioningunit-object)
                 - [RFPath Object](#rfpath-object)
             - [4.1.2 ScheduleEntry Object](#412-scheduleentry-object)
         - [4.2 Captures](#42-captures)
@@ -89,8 +89,8 @@ The `SensorDefinition` object requires the following additional name/value pairs
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`antenna`|true|object|N/A|See [Antenna Object](#antenna-object) definition.|
-|`preselector`|false|object|N/A|See [Preselector Object](#preselector-object) definition.|
-|`receiver`|true|object|N/A|See [Receiver Object](#receiver-object) definition.|
+|`signal_conditioning_unit`|false|object|N/A|See [SignalConditioningUnit Object](#signalconditioningunit-object) definition.|
+|`data_extraction_unit`|true|object|N/A|See [DataExtractionUnit Object](#dataextractionunit-object) definition.|
 |`host_controller`|false|string|N/A|Description of host computer. E.g. Make, model, and configuration.|
 
 ##### Antenna Object
@@ -113,8 +113,8 @@ The `Antenna` object requires the following additional name/value pairs:
 |`steerable`|false|boolean|N/A|Defines if the antenna is steerable or not.|
 |`mobile`|false|boolean|N/A|Defines if the antenna is mobile or not.|
 
-##### Receiver Object
-The `Receiver` object requires the following additional name/value pairs:
+##### DataExtractionUnit Object
+The `DataExtractionUnit` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -124,8 +124,8 @@ The `Receiver` object requires the following additional name/value pairs:
 |`noise_figure`|false|float|dB|Noise figure of DEU.|
 |`max_power`|false|float|dB|Maximum input power of DEU.|
 
-##### Preselector Object
-The `Preselector` object requires the following additional name/value pairs:
+##### SignalConditioningUnit Object
+The `SignalConditioningUnit` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -290,18 +290,20 @@ The `SystemToDetect` object requires the following name/value pairs:
 [Antenna Object](#antenna-object)  
 [Captures](#42-captures)  
 [Control Plane](#3-control-plane)  
+[DataExtractionUnit Object](#dataextractionunit-object)  
 [Data Plane](#4-data-plane)  
+[DEU](#dataextractionunit-object)  
 [DynamicAntennaSettings Object](#dynamicantennasettings-object)  
 [DynamicDEUSettings Object](#dynamicdeusettings-object)  
 [DynamicSCUSettings Object](#dynamicscusettings-object)  
 [Dynamic Sensor Settings](#432-dynamic-sensor-settings)  
 [Global](#41-global)  
 [Measurement Types](#431-measurement-types)  
-[Preselector Object](#preselector-object)  
-[Receiver Object](#receiver-object)  
 [RFPath Object](#rfpath-object)  
 [ScheduleEntry Object](#412-scheduleentry-object)  
+[SCU](#signalconditioningunit-object)  
 [SensorDefinition Object](#411-sensordefinition-object)  
+[SignalConditioningUnit Object](#signalconditioningunit-object)  
 [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object)  
 [SteppedFrequencyFFTDetection Object](#steppedfrequencyfftdetection-object)  
 [SweptTunedDetection Object](#swepttuneddetection-object)  
