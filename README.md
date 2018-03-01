@@ -128,7 +128,7 @@ The `Preselector` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_path_specs`|false|array|N/A|Specification of the preselector RF paths via [RFPath Object](#rfpath-object).|
+|`rf_path`|false|array|N/A|Specification of the preselector RF paths via [RFPath Object](#rfpath-object).|
 
 ##### RFPath Object
 Each `RFPath` object requires the following additional name/value pairs:
@@ -202,7 +202,7 @@ The `SteppedFrequencyFFTDetection` object requires the following name/value pair
 |`center_frequency_start`|true|float|Hz|First center frequency of scan.|
 |`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
 |`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
-|`SingleFrequencyFFTDetection`|true|object|N/A|See [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object) definition.|
+|`single_frequency_fft_detection`|true|object|N/A|See [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object) definition.|
 
 ##### SweptTunedDetection Object
 Swept-tuned detection is a standard spectrum analyzer measurement. The `SweptTunedDetection` object requires the following name/value pairs:  
