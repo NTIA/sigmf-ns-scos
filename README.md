@@ -151,9 +151,9 @@ The `ScheduleEntry` object requires the following name/value pairs:
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`name`|true|string|N/A|The identification string assigned to the schedule entry. MUST be unique on the sensor.|
-|`start`|false|integer|seconds|Requested time to schedule the first task in [Unix time](https://en.wikipedia.org/wiki/Unix_time). Default if unspecified is to start as soon as received.|
-|`stop_is_relative`|false|boolean|seconds|`stop` should be interpreted as seconds after `start`. Default is false.|
-|`stop`|false|integer|seconds|Absolute stop time of the entry in [Unix time](https://en.wikipedia.org/wiki/Unix_time). If left unspecified, the scheduler MUST continue scheduling tasks until manually stopped.|
+|`start`|false|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Requested time to schedule the first task. Default if unspecified is to start as soon as the task is received.|
+|`relative_stop`|false|integer|seconds|Relative seconds after `start` when the task will end. If both `relative_stop` and `absolute_stop` are unspecified, the task will carry on forever. Specifying both `relative_stop` and `absolute_stop` will result in an error.|
+|`absolute_stop`|false|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Absolute time when the task will end. If both `relative_stop` and `absolute_stop` are unspecifified, the task will carry on forever. Specifying both `relative_stop` and `absolute_stop` will result in an error.| 
 |`interval`|false|integer|seconds|Interval between tasks. If left unspecified, run exactly once and then mark the entry inactive.|
 |`priority`|false|integer|N/A|Priority of the entry, similar to applying [nice](https://en.wikipedia.org/wiki/Nice_(Unix)). Lower numbers are higher priority. Default is 10.|
 |`action`|true|string|N/A|Name of action to be performed.|
