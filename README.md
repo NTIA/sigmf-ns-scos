@@ -128,7 +128,7 @@ The `Preselector` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_path`|false|array|N/A|Specification of the preselector RF paths via [RFPath Object](#rfpath-object).|
+|`rf_paths`|false|array|N/A|Specification of the preselector RF paths via [RFPath Object](#rfpath-object).|
 
 ##### RFPath Object
 Each `RFPath` object requires the following additional name/value pairs:
