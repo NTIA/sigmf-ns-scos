@@ -128,7 +128,7 @@ The `Preselector` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_path`|false|array|N/A|Specification of the preselector RF paths via [RFPath Object](#rfpath-object).|
+|`rf_paths`|false|array|N/A|Specification of the preselector RF paths via [RFPath Object](#rfpath-object).|
 
 ##### RFPath Object
 Each `RFPath` object requires the following additional name/value pairs:
@@ -151,12 +151,14 @@ The `ScheduleEntry` object requires the following name/value pairs:
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`name`|true|string|N/A|The identification string assigned to the schedule entry. MUST be unique on the sensor.|
-|`start`|false|integer|seconds|Requested time to schedule the first task in [Unix time](https://en.wikipedia.org/wiki/Unix_time). Default if unspecified is to start as soon as received.|
-|`stop_is_relative`|false|boolean|seconds|`stop` should be interpreted as seconds after `start`. Default is false.|
-|`stop`|false|integer|seconds|Absolute stop time of the entry in [Unix time](https://en.wikipedia.org/wiki/Unix_time). If left unspecified, the scheduler MUST continue scheduling tasks until manually stopped.|
-|`interval`|false|integer|seconds|Interval between tasks. If left unspecified, run exactly once and then mark the entry inactive.|
+|`start`|false|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Requested time to schedule the first task. If unspecified, task will start as soon as possible.|
+|`relative_stop`|false*|integer|seconds|Relative seconds after `start` when the task will end.|
+|`absolute_stop`|false*|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Absolute time when the task will end.| 
+|`interval`|false|integer|seconds|Interval between tasks. If unspecified, task will run exactly once and then mark the entry inactive.|
 |`priority`|false|integer|N/A|Priority of the entry, similar to applying [nice](https://en.wikipedia.org/wiki/Nice_(Unix)). Lower numbers are higher priority. Default is 10.|
 |`action`|true|string|N/A|Name of action to be performed.|
+
+\* If both `relative_stop` and `absolute_stop` are unspecified, the task will carry on forever. Specifying both `relative_stop` and `absolute_stop` will result in an error.
 
 ### 4.2 Captures
 Per SigMF, the captures value is an array of capture segment objects that describe the parameters of the signal capture. The `scos` specification does not add any enhancements to this section.  
