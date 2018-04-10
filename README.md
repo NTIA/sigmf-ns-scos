@@ -20,7 +20,7 @@ The SCOS Transfer Specification defines a standard for the controls and data for
                 - [Receiver Object](#receiver-object)
                 - [Preselector Object](#preselector-object)
                 - [RFPath Object](#rfpath-object)
-            - [4.1.2 Filter Object](#412-filter-object)
+            - [4.1.2 Digital Filter Object](#412-digital-filter-object)
             - [4.1.3 ScheduleEntry Object](#413-scheduleentry-object)
         - [4.2 Captures](#42-captures)
         - [4.3 Annotations](#43-annotations)
@@ -76,7 +76,7 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`sensor_definition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
-|`post_processing_filter`|false|object|N/A|See [Filter Object](#412-filter-object) definition.|
+|`post_processing_filter`|false|object|N/A|See [DigitalFilter Object](#412-digital-filter-object) definition.|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
 |`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#413-scheduleentry-object) definition.|
@@ -147,8 +147,8 @@ Each `RFPath` object requires the following additional name/value pairs:
 |`cal_source_type`|false|string|N/A|E.g., `"calibrated noise source"`.|
 |`cal_source_enr`|false|float|dB|Excess noise ratio of calibrated noise source at frequency of RF path.|
 
-### 4.1.2 Filter Object
-Each `Filter` object requires the following additional name/value pairs:
+### 4.1.2 Digital Filter Object
+Each `DigitalFilter` object requires the following additional name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -306,11 +306,11 @@ The `SystemToDetect` object requires the following name/value pairs:
 [Captures](#42-captures)  
 [Control Plane](#3-control-plane)  
 [Data Plane](#4-data-plane)  
+[DigitalFilter](#412-digital-filter-object)
 [Dynamic Sensor Settings](#432-dynamic-sensor-settings)  
 [DynamicAntennaSettings Object](#dynamicantennasettings-object)  
 [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object)  
 [DynamicReceiverSettings Object](#dynamicreceiversettings-object) 
-[Filter](#412-filter-object)
 [Global](#41-global)  
 [Measurement Types](#431-measurement-types)  
 [Preselector Object](#preselector-object)  
