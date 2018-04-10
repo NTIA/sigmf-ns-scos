@@ -240,22 +240,26 @@ The `YFactorCalibration` object requires the following:
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
-|`calibrations`|false|array|dB|Receiver attenuations and corresponding gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|    
-|`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
+|`receiver_setting_name`|false|string|N/A|Receiver parameter name, e.g., `"attenuation"`, `"input range"`.|
+|`receiver_setting_units`|false|string|N/A|Receiver parameter units, e.g., `"dB"`, `"dBm"`.|
+|`calibrations`|false|array|dB|Receiver settings and corresponding frequency, gain, and noise figure arrays equal in length to the number of frequencies. Number of frequencies is defined by number of center frequencies (time-domain y-factor calibration) or number_of_samples_in_fft (frequency-domain y-factor calibration).|
+|`single_frequency_fft_detection`|true|object|N/A|See [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object) |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 Example of `calibrations`:
 
 ```
 [
   {
-    "attenuation": 1,
-    "gains": [],
-    "noise_levels": []
+    "receiver_setting": 1,
+    "frequency": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "gain": [7.1, 7.2, 7.0, 7.1, 7.4, 7.1, 7.0, 7.3, 7.2, 7.0],
+    "noise_figure": [9.1, 9.2, 9.0, 9.1, 9.4, 9.1, 9.0, 9.3, 9.2, 9.0]
   },
   {
-    "attenuation": 2,
-    "gains": [],
-    "noise_levels": []
+    "receiver_setting": 2,
+    "frequency": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "gain": [6.1, 6.2, 6.0, 6.1, 6.4, 6.1, 6.0, 6.3, 6.2, 6.0],
+    "noise_figure": [9.1, 9.2, 9.0, 9.1, 9.4, 9.1, 9.0, 9.3, 9.2, 9.0]
   },
   ...
 ]
