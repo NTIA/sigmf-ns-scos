@@ -306,7 +306,7 @@ The `SystemToDetect` object requires the following name/value pairs:
 [Captures](#42-captures)  
 [Control Plane](#3-control-plane)  
 [Data Plane](#4-data-plane)  
-[DigitalFilter](#412-digital-filter-object)
+[DigitalFilter Object](#412-digital-filter-object)
 [Dynamic Sensor Settings](#432-dynamic-sensor-settings)  
 [DynamicAntennaSettings Object](#dynamicantennasettings-object)  
 [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object)  
