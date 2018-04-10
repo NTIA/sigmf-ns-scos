@@ -20,7 +20,8 @@ The SCOS Transfer Specification defines a standard for the controls and data for
                 - [Receiver Object](#receiver-object)
                 - [Preselector Object](#preselector-object)
                 - [RFPath Object](#rfpath-object)
-            - [4.1.2 ScheduleEntry Object](#412-scheduleentry-object)
+            - [4.1.2 Filter Object](#412-filter-object)
+            - [4.1.3 ScheduleEntry Object](#413-scheduleentry-object)
         - [4.2 Captures](#42-captures)
         - [4.3 Annotations](#43-annotations)
             - [4.3.1 Measurement Types](#431-measurement-types)
@@ -75,10 +76,10 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`sensor_definition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
-|`antialiasing_filter`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
+|`post_processing_filter`|false|object|N/A|See [Filter Object](#412-filter-object) definition.|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
-|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#412-scheduleentry-object) definition.|
+|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#413-scheduleentry-object) definition.|
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schedule_entry`.|
 
 #### 4.1.1 SensorDefinition Object
@@ -146,7 +147,19 @@ Each `RFPath` object requires the following additional name/value pairs:
 |`cal_source_type`|false|string|N/A|E.g., `"calibrated noise source"`.|
 |`cal_source_enr`|false|float|dB|Excess noise ratio of calibrated noise source at frequency of RF path.|
 
-### 4.1.2 ScheduleEntry Object
+### 4.1.2 Filter Object
+Each `Filter` object requires the following additional name/value pairs:
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`type`|false|string|N/A|E.g., `"FIR"`|
+|`length`|false|integer|N/A|Number of taps.|
+|`frequency_cutoff`|false|float|Hz|Point in the frequency response where a transition band and passband meet.|
+|`ripple_passband`|false|float|dB|Ripple in passband.|
+|`attenuation_stopband`|false|float|dB|Attenuation of stopband.|
+|`frequency_stopband`|false|float|Hz|Point in filter frequency response where stopband starts.|
+
+### 4.1.3 ScheduleEntry Object
 The `ScheduleEntry` object requires the following name/value pairs:
 
 |name|required|type|unit|description|
@@ -296,13 +309,14 @@ The `SystemToDetect` object requires the following name/value pairs:
 [Dynamic Sensor Settings](#432-dynamic-sensor-settings)  
 [DynamicAntennaSettings Object](#dynamicantennasettings-object)  
 [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object)  
-[DynamicReceiverSettings Object](#dynamicreceiversettings-object)  
+[DynamicReceiverSettings Object](#dynamicreceiversettings-object) 
+[Filter](#412-filter-object)
 [Global](#41-global)  
 [Measurement Types](#431-measurement-types)  
 [Preselector Object](#preselector-object)  
 [Receiver Object](#receiver-object)  
 [RFPath Object](#rfpath-object)  
-[ScheduleEntry Object](#412-scheduleentry-object)  
+[ScheduleEntry Object](#413-scheduleentry-object)  
 [SensorDefinition Object](#411-sensordefinition-object)  
 [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object)  
 [SteppedFrequencyFFTDetection Object](#steppedfrequencyfftdetection-object)  
