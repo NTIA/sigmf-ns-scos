@@ -247,12 +247,12 @@ The purpose of the `YFactorCalibration` is to provide parameters and results for
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"preselector input"`.|
 |`calibrations`|false|array|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays equal in length to the length of `frequency`.|
 
-Example `YFactorCalibration` object for case where calibrations are performed at two receiver settings and ten frequencies:
+Example `YFactorCalibration` object for case where calibrations are performed at two receiver settings and five frequencies:
 
 ```
 {
-  "frequencies": [100000000, 200000000, 300000000, 400000000, 500000000, 600000000, 700000000, 800000000, 900000000, 1000000000]
-  "excess_noise_ratios": [12.3, 12.4, 12.7, 12.6, 12.5, 12.5, 12.4, 12.5, 12.6, 12.6],
+  "frequencies": [100000000, 200000000, 300000000, 400000000, 500000000]
+  "excess_noise_ratios": [12.3, 12.4, 12.7, 12.6, 12.5],
   "receiver_setting_name": "input range",
   "receiver_setting_units": "dBm",
   "reference": "preselector input",
@@ -260,13 +260,13 @@ Example `YFactorCalibration` object for case where calibrations are performed at
   [
     {
       "receiver_setting": -30,
-      "gains": [7.1, 7.2, 7.0, 7.1, 7.4, 7.1, 7.0, 7.3, 7.2, 7.0],
-      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4, 9.1, 9.0, 9.3, 9.2, 9.0],
+      "gains": [7.1, 7.2, 7.0, 7.1, 7.4],
+      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4],
     },
     {
       "receiver_setting": -20,
-      "gains": [6.1, 6.2, 6.0, 6.1, 6.4, 6.1, 6.0, 6.3, 6.2, 6.0],
-      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4, 9.1, 9.0, 9.3, 9.2, 9.0]
+      "gains": [6.1, 6.2, 6.0, 6.1, 6.4],
+      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4]
     },
     ...
   ]
