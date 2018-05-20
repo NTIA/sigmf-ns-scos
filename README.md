@@ -76,7 +76,7 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`sensor_definition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
-|`post_processing_filter`|false|object|N/A|Describes post-processing low-pass filter appropriate for IQ captures, e.g., anti-aliasing filter. See [DigitalFilter Object](#412-digital-filter-object) definition.|
+|`anti_aliasing_filter`|false|object|N/A|Describes anti-aliasing low-pass filter applied to IQ captures. See [DigitalFilter Object](#412-digital-filter-object) definition.|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
 |`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#413-scheduleentry-object) definition.|
@@ -146,14 +146,15 @@ Each `RFPath` object contains the following name/value pairs:
 |`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier.|
 |`cal_source_type`|false|string|N/A|E.g., `"calibrated noise source"`.|
 
-### 4.1.2 Digital Filter Object
+### 4.1.2 DigitalFilter Object
 Each `DigitalFilter` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`type`|false|string|N/A|E.g., `"FIR"`|
+|`type`|false|string|N/A|Description of digital filter, e.g., `"FIR"`: Finite impulse response|
 |`length`|false|integer|N/A|Number of taps.|
-|`frequency_cutoff`|false|float|Hz|Point in the frequency response where a transition band and passband meet.|
+|`frequency_cutoff`|false|float|Hz|Frequency at which the magnitude response decreases (from its maximum) by `attenuation_cutoff`.|
+|`attenuation_cutoff`|false|float|dB|Magnitude response threshold (below maximum) that specifies `frequency_cutoff`.|
 |`ripple_passband`|false|float|dB|Ripple in passband.|
 |`attenuation_stopband`|false|float|dB|Attenuation of stopband.|
 |`frequency_stopband`|false|float|Hz|Point in filter frequency response where stopband starts.|
@@ -238,30 +239,38 @@ The purpose of the `YFactorCalibration` is to provide parameters and results for
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
-|`frequency`|false|array|Hz|Frequencies that y-factor calibrations are performed.|
-|`excess_noise_ratio`|false|array|dB|Excess noise ratio of calibrated noise source at `frequency` of y-factor calibration.|
-|`receiver_setting_name`|false|string|N/A|Name of receiver setting. Use if y-factor calibration is performed over a range of a receiver parameter, e.g., `"attenuation"`, `"input range"`.|
+|`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time that calibration was performed.|
+|`frequencies`|false|array|Hz|Frequencies that y-factor calibrations are performed.|
+|`excess_noise_ratios`|false|array|dB|Excess noise ratio of calibrated noise source at `frequency` of y-factor calibration.|
+|`receiver_setting_name`|false|string|N/A|Name of adjustable receiver setting that affects noise figure, e.g., `"attenuation"`, `"input range"`.|
 |`receiver_setting_units`|false|string|N/A|Units corresponding to `receiver_setting_name`, e.g., `"dB"`, `"dBm"`.|
-|`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
-|`calibrations`|false|array|dB|Receiver settings and corresponding gain and noise figure arrays equal in length to the length of `frequency`.|
+|`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"preselector input"`.|
+|`calibrations`|false|array|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays equal in length to the length of `frequency`.|
 
-Example of `calibrations` for two receiver settings and ten frequencies:
+Example `YFactorCalibration` object for case where calibrations are performed at two receiver settings and ten frequencies:
 
 ```
-[
-  {
-    "receiver_setting": 1,
-    "gain": [7.1, 7.2, 7.0, 7.1, 7.4, 7.1, 7.0, 7.3, 7.2, 7.0],
-    "noise_figure": [9.1, 9.2, 9.0, 9.1, 9.4, 9.1, 9.0, 9.3, 9.2, 9.0]
-  },
-  {
-    "receiver_setting": 2,
-    "gain": [6.1, 6.2, 6.0, 6.1, 6.4, 6.1, 6.0, 6.3, 6.2, 6.0],
-    "noise_figure": [9.1, 9.2, 9.0, 9.1, 9.4, 9.1, 9.0, 9.3, 9.2, 9.0]
-  },
-  ...
-]
+{
+  "frequencies": [100000000, 200000000, 300000000, 400000000, 500000000, 600000000, 700000000, 800000000, 900000000, 1000000000]
+  "excess_noise_ratios": [12.3, 12.4, 12.7, 12.6, 12.5, 12.5, 12.4, 12.5, 12.6, 12.6],
+  "receiver_setting_name": "input range",
+  "receiver_setting_units": "dBm",
+  "reference": "preselector input",
+  "calibrations":
+  [
+    {
+      "receiver_setting": -30,
+      "gains": [7.1, 7.2, 7.0, 7.1, 7.4, 7.1, 7.0, 7.3, 7.2, 7.0],
+      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4, 9.1, 9.0, 9.3, 9.2, 9.0],
+    },
+    {
+      "receiver_setting": -20,
+      "gains": [6.1, 6.2, 6.0, 6.1, 6.4, 6.1, 6.0, 6.3, 6.2, 6.0],
+      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4, 9.1, 9.0, 9.3, 9.2, 9.0]
+    },
+    ...
+  ]
+}
 ```
 
 #### 4.3.2 Dynamic Sensor Settings
