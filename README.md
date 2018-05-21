@@ -20,7 +20,8 @@ The SCOS Transfer Specification defines a standard for the controls and data for
                 - [Receiver Object](#receiver-object)
                 - [Preselector Object](#preselector-object)
                 - [RFPath Object](#rfpath-object)
-            - [4.1.2 ScheduleEntry Object](#412-scheduleentry-object)
+            - [4.1.2 Digital Filter Object](#412-digital-filter-object)
+            - [4.1.3 ScheduleEntry Object](#413-scheduleentry-object)
         - [4.2 Captures](#42-captures)
         - [4.3 Annotations](#43-annotations)
             - [4.3.1 Measurement Types](#431-measurement-types)
@@ -75,15 +76,16 @@ Per SigMF, the global object consists of name/value pairs that provide informati
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`sensor_definition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#411-sensordefinition-object) definition. This object is RECOMMENDED.|
+|`anti_aliasing_filter`|false|object|N/A|Describes anti-aliasing low-pass filter applied to IQ captures. See [DigitalFilter Object](#412-digital-filter-object) definition.|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
-|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#412-scheduleentry-object) definition.|
+|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#413-scheduleentry-object) definition.|
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schedule_entry`.|
 
 #### 4.1.1 SensorDefinition Object
 Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Preselector, Receiver, and Host Controller. The antenna converts electromagnetic energy to a voltage. The preselector can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. The receiver (e.g., software defined radio) provides tuning, downcoversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata SHOULD specify the presence, model numbers, and operational parameters associated with each.
 
-The `SensorDefinition` object requires the following additional name/value pairs:
+The `SensorDefinition` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -93,7 +95,7 @@ The `SensorDefinition` object requires the following additional name/value pairs
 |`host_controller`|false|string|N/A|Description of host computer. E.g. Make, model, and configuration.|
 
 ##### Antenna Object
-The `Antenna` object requires the following additional name/value pairs:
+The `Antenna` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -113,7 +115,7 @@ The `Antenna` object requires the following additional name/value pairs:
 |`mobile`|false|boolean|N/A|Defines if the antenna is mobile or not.|
 
 ##### Receiver Object
-The `Receiver` object requires the following additional name/value pairs:
+The `Receiver` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -124,14 +126,14 @@ The `Receiver` object requires the following additional name/value pairs:
 |`max_power`|false|float|dB|Maximum input power of the receiver.|
 
 ##### Preselector Object
-The `Preselector` object requires the following additional name/value pairs:
+The `Preselector` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`rf_paths`|false|array|N/A|Specification of the preselector RF paths via [RFPath Object](#rfpath-object).|
 
 ##### RFPath Object
-Each `RFPath` object requires the following additional name/value pairs:
+Each `RFPath` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -143,10 +145,22 @@ Each `RFPath` object requires the following additional name/value pairs:
 |`lna_gain`|false|float|dB|Gain of low noise amplifier.|
 |`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier.|
 |`cal_source_type`|false|string|N/A|E.g., `"calibrated noise source"`.|
-|`cal_source_enr`|false|float|dB|Excess noise ratio of calibrated noise source at frequency of RF path.|
 
-### 4.1.2 ScheduleEntry Object
-The `ScheduleEntry` object requires the following name/value pairs:
+### 4.1.2 DigitalFilter Object
+Each `DigitalFilter` object contains the following name/value pairs:
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`type`|false|string|N/A|Description of digital filter, e.g., `"FIR"`: Finite impulse response|
+|`length`|false|integer|N/A|Number of taps.|
+|`frequency_cutoff`|false|float|Hz|Frequency at which the magnitude response decreases (from its maximum) by `attenuation_cutoff`.|
+|`attenuation_cutoff`|false|float|dB|Magnitude response threshold (below maximum) that specifies `frequency_cutoff`.|
+|`ripple_passband`|false|float|dB|Ripple in passband.|
+|`attenuation_stopband`|false|float|dB|Attenuation of stopband.|
+|`frequency_stopband`|false|float|Hz|Point in filter frequency response where stopband starts.|
+
+### 4.1.3 ScheduleEntry Object
+The `ScheduleEntry` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -184,7 +198,7 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. 
 
 ##### SingleFrequencyFFTDetection Object
-Single-frequency FFT detection is a standard software-defined radio measurement. The `SingleFrequencyFFTDetection` object requires the following name/value pairs:  
+Single-frequency FFT detection is a standard software-defined radio measurement. The `SingleFrequencyFFTDetection` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -197,7 +211,7 @@ Single-frequency FFT detection is a standard software-defined radio measurement.
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 ##### SteppedFrequencyFFTDetection Object
-The `SteppedFrequencyFFTDetection` object requires the following name/value pairs:  
+The `SteppedFrequencyFFTDetection` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -207,7 +221,7 @@ The `SteppedFrequencyFFTDetection` object requires the following name/value pair
 |`single_frequency_fft_detection`|true|object|N/A|See [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object) definition.|
 
 ##### SweptTunedDetection Object
-Swept-tuned detection is a standard spectrum analyzer measurement. The `SweptTunedDetection` object requires the following name/value pairs:  
+Swept-tuned detection is a standard spectrum analyzer measurement. The `SweptTunedDetection` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -221,37 +235,48 @@ Swept-tuned detection is a standard spectrum analyzer measurement. The `SweptTun
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 ##### YFactorCalibration Object
-The `YFactorCalibration` object requires the following:  
+The purpose of the `YFactorCalibration` is to provide parameters and results for time-domain y-factor calibrations. The `YFactorCalibration` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time of last calibration.|
-|`calibrations`|false|array|dB|Receiver attenuations and corresponding gain and noise figure arrays equal in length to the [`sample_count`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#annotation-segment-objects).|    
-|`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
+|`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time that calibration was performed.|
+|`frequencies`|false|array|Hz|Frequencies that y-factor calibrations are performed.|
+|`excess_noise_ratios`|false|array|dB|Excess noise ratio of calibrated noise source at `frequencies` of y-factor calibration.|
+|`receiver_setting_name`|false|string|N/A|Name of adjustable receiver setting that affects noise figure, e.g., `"attenuation"`, `"input range"`.|
+|`receiver_setting_units`|false|string|N/A|Units corresponding to `receiver_setting_name`, e.g., `"dB"`, `"dBm"`.|
+|`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"preselector input"`.|
+|`calibrations`|false|array|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays equal in length to the length of `frequencies`.|
 
-Example of `calibrations`:
+Example `YFactorCalibration` object for case where calibrations are performed at two receiver settings and five frequencies:
 
 ```
-[
-  {
-    "attenuation": 1,
-    "gains": [],
-    "noise_levels": []
-  },
-  {
-    "attenuation": 2,
-    "gains": [],
-    "noise_levels": []
-  },
-  ...
-]
+{
+  "frequencies": [100000000, 200000000, 300000000, 400000000, 500000000]
+  "excess_noise_ratios": [12.3, 12.4, 12.7, 12.6, 12.5],
+  "receiver_setting_name": "input range",
+  "receiver_setting_units": "dBm",
+  "reference": "preselector input",
+  "calibrations":
+  [
+    {
+      "receiver_setting": -30,
+      "gains": [7.1, 7.2, 7.0, 7.1, 7.4],
+      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4],
+    },
+    {
+      "receiver_setting": -20,
+      "gains": [6.1, 6.2, 6.0, 6.1, 6.4],
+      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4]
+    },
+  ]
+}
 ```
 
 #### 4.3.2 Dynamic Sensor Settings
 The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, the preselector, and the receiver.
 
 ##### DynamicAntennaSettings Object
-The `DynamicAntennaSettings` object requires the following name/value pairs:  
+The `DynamicAntennaSettings` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -260,21 +285,21 @@ The `DynamicAntennaSettings` object requires the following name/value pairs:
 |`polarization`|false|float|string|E.g. `"vertical"`, `"horizontal"`, `"slant-45"`, `"left-hand circular"`, `"right-hand circular"`.|
 
 ##### DynamicReceiverSettings Object
-The `DynamicReceiverSettings` object requires the following name/value pairs:  
+The `DynamicReceiverSettings` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`attenuation`|false|float|dB|Attenuation of the receiver.|
 
 ##### DynamicPreselectorSettings Object
-The `DynamicPreselectorSettings` object requires the following name/value pairs:  
+The `DynamicPreselectorSettings` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`rf_path_number`|false|integer|N/A|The preselector RF path number.|
 
 #### 4.3.3 SystemToDetect Object
-The `SystemToDetect` object requires the following name/value pairs:  
+The `SystemToDetect` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -292,6 +317,7 @@ The `SystemToDetect` object requires the following name/value pairs:
 [Captures](#42-captures)  
 [Control Plane](#3-control-plane)  
 [Data Plane](#4-data-plane)  
+[DigitalFilter Object](#412-digital-filter-object)  
 [Dynamic Sensor Settings](#432-dynamic-sensor-settings)  
 [DynamicAntennaSettings Object](#dynamicantennasettings-object)  
 [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object)  
@@ -301,7 +327,7 @@ The `SystemToDetect` object requires the following name/value pairs:
 [Preselector Object](#preselector-object)  
 [Receiver Object](#receiver-object)  
 [RFPath Object](#rfpath-object)  
-[ScheduleEntry Object](#412-scheduleentry-object)  
+[ScheduleEntry Object](#413-scheduleentry-object)  
 [SensorDefinition Object](#411-sensordefinition-object)  
 [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object)  
 [SteppedFrequencyFFTDetection Object](#steppedfrequencyfftdetection-object)  
