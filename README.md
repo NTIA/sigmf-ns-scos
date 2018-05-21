@@ -241,11 +241,11 @@ The purpose of the `YFactorCalibration` is to provide parameters and results for
 |----|--------------|-------|-------|-----------|
 |`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time that calibration was performed.|
 |`frequencies`|false|array|Hz|Frequencies that y-factor calibrations are performed.|
-|`excess_noise_ratios`|false|array|dB|Excess noise ratio of calibrated noise source at `frequency` of y-factor calibration.|
+|`excess_noise_ratios`|false|array|dB|Excess noise ratio of calibrated noise source at `frequencies` of y-factor calibration.|
 |`receiver_setting_name`|false|string|N/A|Name of adjustable receiver setting that affects noise figure, e.g., `"attenuation"`, `"input range"`.|
 |`receiver_setting_units`|false|string|N/A|Units corresponding to `receiver_setting_name`, e.g., `"dB"`, `"dBm"`.|
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"preselector input"`.|
-|`calibrations`|false|array|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays equal in length to the length of `frequency`.|
+|`calibrations`|false|array|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays equal in length to the length of `frequencies`.|
 
 Example `YFactorCalibration` object for case where calibrations are performed at two receiver settings and five frequencies:
 
