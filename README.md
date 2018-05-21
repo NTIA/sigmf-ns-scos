@@ -268,7 +268,6 @@ Example `YFactorCalibration` object for case where calibrations are performed at
       "gains": [6.1, 6.2, 6.0, 6.1, 6.4],
       "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4]
     },
-    ...
   ]
 }
 ```
