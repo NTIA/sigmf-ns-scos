@@ -25,8 +25,8 @@ The SCOS Transfer Specification defines a standard for the controls and data for
         - [4.2 Captures](#42-captures)
         - [4.3 Annotations](#43-annotations)
             - [4.3.1 Measurement Types](#431-measurement-types)
-                - [Detection Object](#detection-object)
-                - [FFTDetection Object](#fftdetection-object)
+                - [TimeDomainDetection Object](#timedomaindetection-object)
+                - [FrequencyDomainDetection Object](#frequencydomaindetection-object)
                 - [SteppedFrequencyDetection Object](#steppedfrequencydetection-object)
                 - [SweptTunedDetection Object](#swepttuneddetection-object)
                 - [YFactorCalibration Object](#yfactorcalibration-object)
@@ -198,22 +198,22 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 #### 4.3.1 Measurement Types
 The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. 
 
-##### Detection Object
-Detection is an algorithm applied to time-domain IQ samples captured at a single frequency. The `Detection` object contains the following name/value pairs:  
+##### TimeDomainDetection Object
+Time-domain detection algorithms are applied to IQ time series captured at a single frequency. The `TimeDomainDetection` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`detector`|true|string|N/A|E.g. `"sample_iq"`, `"sample_power"`, `"mean_power"`, `"max_power"`, `"min_power"`, `"median_power"`.|
+|`detector`|true|string|N/A|E.g. `"sample_power"`, `"mean_power"`, `"max_power"`, `"min_power"`, `"median_power"`, `"m4s_power"`.|
 |`number_of_samples`|true|integer|N/A|Number of samples to be integrated over by detector.|
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
-##### FFTDetection Object
-FFT detection is an algorithm applied to IQ samples captured at a single frequency that involves a discrete Fourier transform and returns frequency domain results. The `FFTDetection` object contains the following name/value pairs:  
+##### FrequencyDomainDetection Object
+Frequency-domain detection algorithms are applied to discrete Fourier transforms of IQ time series captured at a single frequency. The `FrequencyDomainDetection` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`detector`|true|string|N/A|E.g. `"fft_sample_iq"`, `"fft_sample_power"`, `"fft_mean_power"`, `"fft_max_power"`, `"fft_min_power"`, `"fft_median_power"`.|
+|`detector`|true|string|N/A|E.g. `"fft_sample_iq"`, `"fft_sample_power"`, `"fft_mean_power"`, `"fft_max_power"`, `"fft_min_power"`, `"fft_median_power"`, `"fft_m4s_power"`.|
 |`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
@@ -227,7 +227,7 @@ The `SteppedFrequencyDetection` object contains the following name/value pairs:
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`frequencies`|false|array of floats|Hz|Center frequencies where stepped-frequency detections are performed.|
-|`algorithm`|true|object|N/A|Algorithm applied to IQ samples. See [Detection Object](#detection-object), [FFTDetection Object](#fftdetection-object) definition.|
+|`algorithm`|true|object|N/A|Algorithm applied to IQ samples. See [TimeDomainDetection Object](#timedomaindetection-object), [FrequencyDomainDetection Object](#frequencydomaindetection-object) definition.|
 
 Example `SteppedFrequencyDetection` object for case where mean-power measurements are performed at five frequencies:
 
@@ -353,8 +353,8 @@ The `SystemToDetect` object contains the following name/value pairs:
 [RFPath Object](#rfpath-object)  
 [ScheduleEntry Object](#413-scheduleentry-object)  
 [SensorDefinition Object](#411-sensordefinition-object)  
-[Detection Object](#detection-object)  
-[FFTDetection Object](#fftdetection-object)  
+[TimeDomainDetection Object](#timedomaindetection-object)  
+[FrequencyDomainDetection Object](#frequencydomaindetection-object)  
 [SteppedFrequencyDetection Object](#steppedfrequencydetection-object)  
 [SweptTunedDetection Object](#swepttuneddetection-object)  
 [SystemToDetect Object](#433-systemtodetect-object)  
