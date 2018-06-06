@@ -124,7 +124,7 @@ The `Receiver` object contains the following name/value pairs:
 |`low_frequency`|false|float|Hz|Low frequency of operational range of the receiver.|
 |`high_frequency`|false|float|Hz|High frequency of operational range of the receiver.|
 |`noise_figure`|false|float|dB|Noise figure of the receiver.|
-|`max_power`|false|float|dB|Maximum input power of the receiver.|
+|`max_power`|false|float|dBm|Maximum input power of the receiver.|
 
 ##### Preselector Object
 The `Preselector` object contains the following name/value pairs:
