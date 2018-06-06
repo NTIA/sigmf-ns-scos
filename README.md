@@ -230,7 +230,7 @@ The `SteppedFrequencyDetection` object contains the following name/value pairs:
 |`algorithm`|true|object|N/A|Algorithm applied to IQ samples. See [Detection Object](#detection-object), [FFTDetection Object](#fftdetection-object) definition.|
 |`results`|false|array|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays equal in length to the length of `frequencies`.|
 
-Example `SteppedFrequencyDetection` object for case where `SingleFrequencyDetection` measurements are performed at five frequencies:
+Example `SteppedFrequencyDetection` object for case where mean-power measurements are performed at five frequencies:
 
 ```
 {
