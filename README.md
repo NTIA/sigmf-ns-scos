@@ -25,8 +25,9 @@ The SCOS Transfer Specification defines a standard for the controls and data for
         - [4.2 Captures](#42-captures)
         - [4.3 Annotations](#43-annotations)
             - [4.3.1 Measurement Types](#431-measurement-types)
-                - [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object)
-                - [SteppedFrequencyFFTDetection Object](#steppedfrequencyfftdetection-object)
+                - [Detection Object](#detection-object)
+                - [FFTDetection Object](#fftdetection-object)
+                - [SteppedFrequencyDetection Object](#steppedfrequencydetection-object)
                 - [SweptTunedDetection Object](#swepttuneddetection-object)
                 - [YFactorCalibration Object](#yfactorcalibration-object)
             - [4.3.2 Dynamic Sensor Settings](#432-dynamic-sensor-settings)
@@ -184,7 +185,7 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |----|--------------|-------|-------|-----------|
 |`altitude`|false|float|meters|The height of the antenna above mean sea level.|
 |`environment`|false|string|N/A|A description of the environment where antenna is mounted. E.g. `"indoor"` or `"outdoor"`.|
-|`measurement_type`|true|object|N/A|The type of measurement acquired: [SingleFrequencyFFTDetection](#singlefrequencyfftdetection-object), [SteppedFrequencyFFTDetection](#steppedfrequencyfftdetection-object), [SweptTunedDetection](#swepttuneddetection-object) or [YFactorCalibration](#yfactorcalibration-object).|
+|`measurement_type`|true|object|N/A|The type of measurement acquired, e.g., [SteppedFrequencyDetection](#steppedfrequencydetection-object), [SweptTunedDetection](#swepttuneddetection-object) or [YFactorCalibration](#yfactorcalibration-object).|
 |`system_to_detect`|false|object|N/A|The system that the measurement is designed to detect. See [SystemToDetect Object](#433-systemtodetect-object) definition.|
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `"low"`, `"moderate"` or  `"high"`.|
 |`dynamic_antenna_settings`|false|object|N/A|Dynamic parameters associated with the antenna. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
@@ -197,28 +198,53 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 #### 4.3.1 Measurement Types
 The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. 
 
-##### SingleFrequencyFFTDetection Object
-Single-frequency FFT detection is a standard software-defined radio measurement. The `SingleFrequencyFFTDetection` object contains the following name/value pairs:  
+##### Detection Object
+Detection is an algorithm applied to time-domain IQ samples captured at a single frequency. The `Detection` object contains the following name/value pairs:  
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`detector`|true|string|N/A|E.g. `"sample_iq"`, `"sample_power"`, `"mean_power"`, `"max_power"`, `"min_power"`, `"median_power"`.|
+|`number_of_samples`|true|integer|N/A|Number of samples to be integrated over by detector.|
+|`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
+|`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
+
+##### FFTDetection Object
+FFT detection is an algorithm applied to IQ samples captured at a single frequency that involves a discrete Fourier transform and returns frequency domain results. The `FFTDetection` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`number_of_samples_in_fft`|true|integer|N/A|Number of samples in FFT to calcluate delta_f = [`samplerate`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#global-object)/`number_of_samples_in_fft`.|
 |`window`|true|string|N/A|E.g. `"blackman-harris"`, `"flattop"`, `"gaussian_a3.5"`, `"gauss top"`, `"hamming"`, `"hanning"`, `"rectangular"`.|
 |`equivalent_noise_bandwidth`|false|float|Hz|Bandwidth of brickwall filter that has same integrated noise power as that of the actual filter.|
-|`detector`|true|string|N/A|E.g. `"sample_iq"`, `"sample_power"`, `"mean_power"`, `"max_power"`, `"min_power"`, `"median_power"`.|
+|`detector`|true|string|N/A|E.g. `"fft_sample_iq"`, `"fft_sample_power"`, `"fft_mean_power"`, `"fft_max_power"`, `"fft_min_power"`, `"fft_median_power"`.|
 |`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
-##### SteppedFrequencyFFTDetection Object
-The `SteppedFrequencyFFTDetection` object contains the following name/value pairs:  
+##### SteppedFrequencyDetection Object
+The `SteppedFrequencyDetection` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`center_frequency_start`|true|float|Hz|First center frequency of scan.|
-|`center_frequency_stop`|true|float|Hz|Last center frequency of scan.|
-|`center_frequency_step`|true|float|Hz|Center frequency step of scan.|
-|`single_frequency_fft_detection`|true|object|N/A|See [SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object) definition.|
+|`frequencies`|false|array|Hz|Center frequencies where stepped-frequency detections are performed.|
+|`algorithm`|true|object|N/A|Algorithm applied to IQ samples. See [Detection Object](#detection-object), [FFTDetection Object](#fftdetection-object) definition.|
+|`results`|false|array|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays equal in length to the length of `frequencies`.|
+
+Example `SteppedFrequencyDetection` object for case where `SingleFrequencyDetection` measurements are performed at five frequencies:
+
+```
+{
+  "frequencies": [100000000, 200000000, 300000000, 400000000, 500000000]
+  "algorithm"
+  {
+    "detector": "mean_power",
+    "number_of_samples": 100000,
+    "units": "dBm",
+    "reference": "output of isotropic antenna"
+  }
+  "results": [-10.1, -11.1, -12.3, -10.8, -9.4]
+}
+```
 
 ##### SweptTunedDetection Object
 Swept-tuned detection is a standard spectrum analyzer measurement. The `SweptTunedDetection` object contains the following name/value pairs:  
@@ -245,7 +271,7 @@ The purpose of the `YFactorCalibration` is to provide parameters and results for
 |`receiver_setting_name`|false|string|N/A|Name of adjustable receiver setting that affects noise figure, e.g., `"attenuation"`, `"input range"`.|
 |`receiver_setting_units`|false|string|N/A|Units corresponding to `receiver_setting_name`, e.g., `"dB"`, `"dBm"`.|
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"preselector input"`.|
-|`calibrations`|false|array|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays equal in length to the length of `frequencies`.|
+|`results`|false|array|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays equal in length to the length of `frequencies`.|
 
 Example `YFactorCalibration` object for case where calibrations are performed at two receiver settings and five frequencies:
 
@@ -256,7 +282,7 @@ Example `YFactorCalibration` object for case where calibrations are performed at
   "receiver_setting_name": "input range",
   "receiver_setting_units": "dBm",
   "reference": "preselector input",
-  "calibrations":
+  "results":
   [
     {
       "receiver_setting": -30,
@@ -329,8 +355,9 @@ The `SystemToDetect` object contains the following name/value pairs:
 [RFPath Object](#rfpath-object)  
 [ScheduleEntry Object](#413-scheduleentry-object)  
 [SensorDefinition Object](#411-sensordefinition-object)  
-[SingleFrequencyFFTDetection Object](#singlefrequencyfftdetection-object)  
-[SteppedFrequencyFFTDetection Object](#steppedfrequencyfftdetection-object)  
+[Detection Object](#detection-object)  
+[FFTDetection Object](#fftdetection-object)  
+[SteppedFrequencyDetection Object](#steppedfrequencydetection-object)  
 [SweptTunedDetection Object](#swepttuneddetection-object)  
 [SystemToDetect Object](#433-systemtodetect-object)  
 [YFactorCalibration Object](#yfactorcalibration-object)  
