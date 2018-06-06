@@ -228,7 +228,6 @@ The `SteppedFrequencyDetection` object contains the following name/value pairs:
 |----|--------------|-------|-------|-----------|
 |`frequencies`|false|array of floats|Hz|Center frequencies where stepped-frequency detections are performed.|
 |`algorithm`|true|object|N/A|Algorithm applied to IQ samples. See [Detection Object](#detection-object), [FFTDetection Object](#fftdetection-object) definition.|
-|`results`|false|array of floats|dB|Detection results with array lenght equal to length of `frequencies`.|
 
 Example `SteppedFrequencyDetection` object for case where mean-power measurements are performed at five frequencies:
 
@@ -242,7 +241,6 @@ Example `SteppedFrequencyDetection` object for case where mean-power measurement
     "units": "dBm",
     "reference": "output of isotropic antenna"
   }
-  "results": [-10.1, -11.1, -12.3, -10.8, -9.4]
 }
 ```
 
@@ -271,7 +269,7 @@ The purpose of the `YFactorCalibration` is to provide parameters and results for
 |`receiver_setting_name`|false|string|N/A|Name of adjustable receiver setting that affects noise figure, e.g., `"attenuation"`, `"input range"`.|
 |`receiver_setting_units`|false|string|N/A|Units corresponding to `receiver_setting_name`, e.g., `"dB"`, `"dBm"`.|
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"preselector input"`.|
-|`results`|false|array of objects|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays (i.e., arrays of floats with lengths equal to the length of `frequencies`.)|
+|`calibrations`|false|array of objects|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays (i.e., arrays of floats with lengths equal to the length of `frequencies`.)|
 
 Example `YFactorCalibration` object for case where calibrations are performed at two receiver settings and five frequencies:
 
@@ -282,7 +280,7 @@ Example `YFactorCalibration` object for case where calibrations are performed at
   "receiver_setting_name": "input range",
   "receiver_setting_units": "dBm",
   "reference": "preselector input",
-  "results":
+  "calibrations":
   [
     {
       "receiver_setting": -30,
