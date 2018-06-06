@@ -105,8 +105,8 @@ The `Antenna` object contains the following name/value pairs:
 |`low_frequency`|false|float|Hz|Low frequency of operational range.|
 |`high_frequency`|false|float|Hz|High frequency of operational range.|
 |`gain`|false|float|dBi|Antenna gain in direction of maximum radiation or reception.|
-|`horizontal_gain_pattern`|false|array|dBi|Antenna gain pattern in horizontal plane.|
-|`vertical_gain_pattern`|false|array|dBi|Antenna gain pattern in vertical plane.|
+|`horizontal_gain_pattern`|false|array of floats|dBi|Antenna gain pattern in horizontal plane.|
+|`vertical_gain_pattern`|false|array of floats|dBi|Antenna gain pattern in vertical plane.|
 |`horizontal_beam_width`|false|float|degrees|Horizontal 3-dB beamwidth.|
 |`vertical_beam_width`|false|float|degrees|Vertical 3-dB beamwidth.|
 |`cross_polar_discrimination`|false|float|N/A|Cross-polarization discrimination.|
@@ -131,7 +131,7 @@ The `Preselector` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`rf_paths`|false|array|N/A|Specification of the preselector RF paths via [RFPath Object](#rfpath-object).|
+|`rf_paths`|false|array of objects|N/A|Specification of the preselector RF paths via [RFPath Object](#rfpath-object).|
 
 ##### RFPath Object
 Each `RFPath` object contains the following name/value pairs:
@@ -226,9 +226,9 @@ The `SteppedFrequencyDetection` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`frequencies`|false|array|Hz|Center frequencies where stepped-frequency detections are performed.|
+|`frequencies`|false|array of floats|Hz|Center frequencies where stepped-frequency detections are performed.|
 |`algorithm`|true|object|N/A|Algorithm applied to IQ samples. See [Detection Object](#detection-object), [FFTDetection Object](#fftdetection-object) definition.|
-|`results`|false|array|dB|Detection results with array lenght equal to length of `frequencies`.|
+|`results`|false|array of floats|dB|Detection results with array lenght equal to length of `frequencies`.|
 
 Example `SteppedFrequencyDetection` object for case where mean-power measurements are performed at five frequencies:
 
@@ -266,12 +266,12 @@ The purpose of the `YFactorCalibration` is to provide parameters and results for
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time that calibration was performed.|
-|`frequencies`|false|array|Hz|Frequencies that y-factor calibrations are performed.|
-|`excess_noise_ratios`|false|array|dB|Excess noise ratio of calibrated noise source at `frequencies` of y-factor calibration.|
+|`frequencies`|false|array of floats|Hz|Frequencies that y-factor calibrations are performed.|
+|`excess_noise_ratios`|false|array of floats|dB|Excess noise ratio of calibrated noise source at `frequencies` of y-factor calibration.|
 |`receiver_setting_name`|false|string|N/A|Name of adjustable receiver setting that affects noise figure, e.g., `"attenuation"`, `"input range"`.|
 |`receiver_setting_units`|false|string|N/A|Units corresponding to `receiver_setting_name`, e.g., `"dB"`, `"dBm"`.|
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"preselector input"`.|
-|`results`|false|array|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays equal in length to the length of `frequencies`.|
+|`results`|false|array of objects|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays (i.e., arrays of floats with lengths equal to the length of `frequencies`.)|
 
 Example `YFactorCalibration` object for case where calibrations are performed at two receiver settings and five frequencies:
 
