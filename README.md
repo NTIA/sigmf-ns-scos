@@ -213,13 +213,13 @@ FFT detection is an algorithm applied to IQ samples captured at a single frequen
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`number_of_samples_in_fft`|true|integer|N/A|Number of samples in FFT to calcluate delta_f = [`samplerate`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#global-object)/`number_of_samples_in_fft`.|
-|`window`|true|string|N/A|E.g. `"blackman-harris"`, `"flattop"`, `"gaussian_a3.5"`, `"gauss top"`, `"hamming"`, `"hanning"`, `"rectangular"`.|
-|`equivalent_noise_bandwidth`|false|float|Hz|Bandwidth of brickwall filter that has same integrated noise power as that of the actual filter.|
 |`detector`|true|string|N/A|E.g. `"fft_sample_iq"`, `"fft_sample_power"`, `"fft_mean_power"`, `"fft_max_power"`, `"fft_min_power"`, `"fft_median_power"`.|
 |`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
+|`number_of_samples_in_fft`|true|integer|N/A|Number of samples in FFT to calcluate delta_f = [`samplerate`](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#global-object)/`number_of_samples_in_fft`.|
+|`window`|true|string|N/A|E.g. `"blackman-harris"`, `"flattop"`, `"gaussian_a3.5"`, `"gauss top"`, `"hamming"`, `"hanning"`, `"rectangular"`.|
+|`equivalent_noise_bandwidth`|false|float|Hz|Bandwidth of brickwall filter that has same integrated noise power as that of the actual filter.|
 
 ##### SteppedFrequencyDetection Object
 The `SteppedFrequencyDetection` object contains the following name/value pairs:  
@@ -228,7 +228,7 @@ The `SteppedFrequencyDetection` object contains the following name/value pairs:
 |----|--------------|-------|-------|-----------|
 |`frequencies`|false|array|Hz|Center frequencies where stepped-frequency detections are performed.|
 |`algorithm`|true|object|N/A|Algorithm applied to IQ samples. See [Detection Object](#detection-object), [FFTDetection Object](#fftdetection-object) definition.|
-|`results`|false|array|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays equal in length to the length of `frequencies`.|
+|`results`|false|array|dB|Detection results with array lenght equal to length of `frequencies`.|
 
 Example `SteppedFrequencyDetection` object for case where mean-power measurements are performed at five frequencies:
 
