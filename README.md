@@ -27,8 +27,8 @@ The SCOS Transfer Specification defines a standard for the controls and data for
             - [4.3.1 Measurement Types](#431-measurement-types)
                 - [TimeDomainDetection Object](#timedomaindetection-object)
                 - [FrequencyDomainDetection Object](#frequencydomaindetection-object)
-                - [SteppedFrequencyDetection Object](#steppedfrequencydetection-object)
-                - [SweptTunedDetection Object](#swepttuneddetection-object)
+                - [SteppedFrequencyMeasurement Object](#steppedfrequencymeasurement-object)
+                - [SweptTunedMeasurement Object](#swepttunedmeasurement-object)
                 - [YFactorCalibration Object](#yfactorcalibration-object)
             - [4.3.2 Dynamic Sensor Settings](#432-dynamic-sensor-settings)
                 - [DynamicAntennaSettings Object](#dynamicantennasettings-object)
@@ -185,7 +185,7 @@ Per SigMF, the annotations value is an array of annotation segment objects that 
 |----|--------------|-------|-------|-----------|
 |`altitude`|false|float|meters|The height of the antenna above mean sea level.|
 |`environment`|false|string|N/A|A description of the environment where antenna is mounted. E.g. `"indoor"` or `"outdoor"`.|
-|`measurement_type`|true|object|N/A|The type of measurement acquired, e.g., [SteppedFrequencyDetection](#steppedfrequencydetection-object), [SweptTunedDetection](#swepttuneddetection-object) or [YFactorCalibration](#yfactorcalibration-object).|
+|`measurement_type`|true|object|N/A|The type of measurement acquired, e.g., [SteppedFrequencyMeasurement](#steppedfrequencymeasurement-object), [SweptTunedMeasurement](#swepttunedmeasurement-object) or [YFactorCalibration](#yfactorcalibration-object).|
 |`system_to_detect`|false|object|N/A|The system that the measurement is designed to detect. See [SystemToDetect Object](#433-systemtodetect-object) definition.|
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `"low"`, `"moderate"` or  `"high"`.|
 |`dynamic_antenna_settings`|false|object|N/A|Dynamic parameters associated with the antenna. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
@@ -221,15 +221,15 @@ Frequency-domain detection algorithms are applied to discrete Fourier transforms
 |`window`|true|string|N/A|E.g. `"blackman-harris"`, `"flattop"`, `"gaussian_a3.5"`, `"gauss top"`, `"hamming"`, `"hanning"`, `"rectangular"`.|
 |`equivalent_noise_bandwidth`|false|float|Hz|Bandwidth of brickwall filter that has same integrated noise power as that of the actual filter.|
 
-##### SteppedFrequencyDetection Object
-The `SteppedFrequencyDetection` object contains the following name/value pairs:  
+##### SteppedFrequencyMeasurement Object
+The `SteppedFrequencyMeasurement` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`frequencies`|false|array of floats|Hz|Center frequencies where stepped-frequency detections are performed.|
 |`algorithm`|true|object|N/A|Algorithm applied to IQ samples. See [TimeDomainDetection Object](#timedomaindetection-object), [FrequencyDomainDetection Object](#frequencydomaindetection-object) definition.|
 
-Example `SteppedFrequencyDetection` object for case where mean-power measurements are performed at five frequencies:
+Example `SteppedFrequencyMeasurement` object for case where mean-power measurements are performed at five frequencies:
 
 ```
 {
@@ -244,8 +244,8 @@ Example `SteppedFrequencyDetection` object for case where mean-power measurement
 }
 ```
 
-##### SweptTunedDetection Object
-Swept-tuned detection is a standard spectrum analyzer measurement. The `SweptTunedDetection` object contains the following name/value pairs:  
+##### SweptTunedMeasurement Object
+Swept-tuned measurement is a standard spectrum analyzer measurement. The `SweptTunedMeasurement` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -355,7 +355,7 @@ The `SystemToDetect` object contains the following name/value pairs:
 [SensorDefinition Object](#411-sensordefinition-object)  
 [TimeDomainDetection Object](#timedomaindetection-object)  
 [FrequencyDomainDetection Object](#frequencydomaindetection-object)  
-[SteppedFrequencyDetection Object](#steppedfrequencydetection-object)  
-[SweptTunedDetection Object](#swepttuneddetection-object)  
+[SteppedFrequencyMeasurement Object](#steppedfrequencymeasurement-object)  
+[SweptTunedMeasurement Object](#swepttunedmeasurement-object)  
 [SystemToDetect Object](#433-systemtodetect-object)  
 [YFactorCalibration Object](#yfactorcalibration-object)  
