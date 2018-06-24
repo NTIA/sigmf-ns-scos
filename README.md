@@ -18,16 +18,16 @@ The SCOS Transfer Specification defines a standard for the controls and data for
             - [Receiver Object](#receiver-object)
             - [Preselector Object](#preselector-object)
             - [RFPath Object](#rfpath-object)
-        - [3.2 ScheduleEntry Object](#32-scheduleentry-object)
-        - [3.3 Digital Filter Object](#33-digitalfilter-object)
+        - [3.2 TransmitterDefinition Object](#32-transmitterdefinition-object)
+        - [3.3 ScheduleEntry Object](#33-scheduleentry-object)
+        - [3.4 Digital Filter Object](#34-digitalfilter-object)
     - [4. Captures](#4-captures)
     - [5. Annotations](#5-annotations)
         - [5.1 Dynamic Sensor Settings](#51-dynamic-sensor-settings)
             - [DynamicAntennaSettings Object](#dynamicantennasettings-object)
             - [DynamicReceiverSettings Object](#dynamicreceiversettings-object)
             - [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object)
-        - [5.2 TransmitterDefinition Object](#52-transmitterdefinition-object)
-        - [5.3 Measurement Types](#53-measurement-types)
+        - [5.2 Measurement Types](#52-measurement-types)
             - [TimeDomainDetection Object](#timedomaindetection-object)
             - [FrequencyDomainDetection Object](#frequencydomaindetection-object)
             - [SteppedFrequencyMeasurement Object](#steppedfrequencymeasurement-object)
@@ -58,10 +58,11 @@ Global informataion is applicable to the entire dataset.
 |----|--------------|-------|-------|-----------|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`sensor_definition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#31-sensordefinition-object) definition. This object is RECOMMENDED.|
+|`transmitter_definition`|false|object|N/A|The transmitter that the measurement is designed to detect, e.g., propagation measurements. See [TransmitterDefinition Object](#32-transmitterdefinition-object) definition.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
-|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#32-scheduleentry-object) definition.|
+|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#33-scheduleentry-object) definition.|
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schedule_entry`.|
-|`anti_aliasing_filter`|false|object|N/A|Describes anti-aliasing low-pass filter applied to IQ captures. See [DigitalFilter Object](#33-digital-filter-object) definition.|
+|`anti_aliasing_filter`|false|object|N/A|Describes anti-aliasing low-pass filter applied to IQ captures. See [DigitalFilter Object](#34-digital-filter-object) definition.|
 
 ### 3.1 SensorDefinition Object
 Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Preselector, Receiver, and Host Controller. The antenna converts electromagnetic energy to a voltage. The preselector can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. The receiver (e.g., software defined radio) provides tuning, downcoversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata SHOULD specify the presence, model numbers, and operational parameters associated with each.
@@ -127,7 +128,20 @@ Each `RFPath` object contains the following name/value pairs:
 |`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier.|
 |`cal_source_type`|false|string|N/A|E.g., `"calibrated noise source"`.|
 
-### 3.2 ScheduleEntry Object
+### 3.2 TransmitterDefinition Object
+The `TransmitterDefinition` object contains the following name/value pairs:  
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`system_name`|false|string|N/A|Name of system to be detected.|
+|`transmit_power`|false|float|dBm|Transmitter power going into antenna.|
+|`antenna`|true|object|N/A|See [Antenna Object](#antenna-object) definition.|
+|`waveform`|false|object|N/A|See SigMF [waveform namespace](https://github.com/NTIA/sigmf-ns-waveform)
+|`latitude`|false|float|degrees|Latitude.|
+|`longitude`|false|float|degrees|Longitude.|
+|`altitude`|false|float|meters|Altitude above mean sea level.|
+
+### 3.3 ScheduleEntry Object
 The `ScheduleEntry` object is associated with the SCOS control plane, which is implemented through the use of a RESTful API residing on the sensor, see [SCOS Sensor](https://github.com/NTIA/scos-sensor) and [SCOS Control Plane API Reference](https://ntia.github.io/scos-sensor/). A sensor advertises its **capabilities**, among which are **actions** that users can schedule the sensor to do. Sensor actions are scheduled by posting a **schedule entry** to the sensor's **schedule**. The scheduler periodically reads the schedule and populates a task queue in priority order. A **task** represents an action at a _specific_ time. Therefore, a schedule entry represents a range of tasks. The scheduler continues populating its task queue until the schedule is exhausted. When executing the task queue, the scheduler makes a best effort to run each task at its designated time, but the scheduler SHOULD NOT in most cases cancel a running task to start another task, even of higher priority. **priority** is used to disambiguate two or more tasks that are schedule to start at the same time.
 
 The `ScheduleEntry` object contains the following name/value pairs:
@@ -144,7 +158,7 @@ The `ScheduleEntry` object contains the following name/value pairs:
 
 \* If both `relative_stop` and `absolute_stop` are unspecified, the task will carry on forever. Specifying both `relative_stop` and `absolute_stop` will result in an error.
 
-### 3.3 DigitalFilter Object
+### 3.4 DigitalFilter Object
 Each `DigitalFilter` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
@@ -170,7 +184,7 @@ Per SigMF, the `Annoations` value is an array of annoation segment objects that 
 |`dynamic_antenna_settings`|false|object|N/A|Dynamic parameters associated with the antenna. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
 |`dynamic_preselector_settings`|false|object|N/A|Dynamic parameters associated with the preselector. See [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object) definition.|
 |`dynamic_receiver_settings`|false|object|N/A|Dynamic parameters associated with the receiver. See [DynamicReceiverSettings Object](#dynamicreceiversettings-object) definition.|
-|`transmitter_definition`|false|object|N/A|The transmitter that the measurement is designed to detect. See [TransmitterDefinition Object](#52-transmitterdefinition-object) definition.|
+|`transmitter_identification`|false|object|N/A|Transmitter identification parameters. See [TransmitterDefinition Object](#32-transmitterdefinition-object) definition.|
 |`measurement_type`|true|object|N/A|The type of measurement acquired, e.g., [SteppedFrequencyMeasurement](#steppedfrequencymeasurement-object), [SweptTunedMeasurement](#swepttunedmeasurement-object) or [YFactorCalibration](#yfactorcalibration-object).|
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `"low"`, `"moderate"` or  `"high"`.|
 |`detected_system_noise_powers`|false|float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
@@ -203,20 +217,7 @@ The `DynamicPreselectorSettings` object contains the following name/value pairs:
 |----|--------------|-------|-------|-----------|
 |`rf_path_number`|false|integer|N/A|The preselector RF path number.|
 
-### 5.2 TransmitterDefinition Object
-The `TransmitterDefinition` object contains the following name/value pairs:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`system_name`|false|string|N/A|Name of system to be detected.|
-|`transmit_power`|false|float|dBm|Transmitter power going into antenna.|
-|`antenna`|true|object|N/A|See [Antenna Object](#antenna-object) definition.|
-|`waveform`|false|object|N/A|See SigMF [waveform namespace](https://github.com/NTIA/sigmf-ns-waveform)
-|`latitude`|false|float|degrees|Latitude.|
-|`longitude`|false|float|degrees|Longitude.|
-|`altitude`|false|float|meters|Altitude above mean sea level.|
-
-### 5.3 Measurement Types
+### 5.2 Measurement Types
 The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. 
 
 #### TimeDomainDetection Object
@@ -321,21 +322,21 @@ Example `YFactorCalibration` object for case where calibrations are performed at
 [Annotations](#5-annotations)  
 [Antenna Object](#antenna-object)  
 [Captures](#4-captures)  
-[DigitalFilter Object](#33-digitalfilter-object)  
+[DigitalFilter Object](#34-digitalfilter-object)  
 [Dynamic Sensor Settings](#51-dynamic-sensor-settings)  
 [DynamicAntennaSettings Object](#dynamicantennasettings-object)  
 [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object)  
 [DynamicReceiverSettings Object](#dynamicreceiversettings-object)  
 [Global](#3-global)  
-[Measurement Types](#53-measurement-types)  
+[Measurement Types](#52-measurement-types)  
 [Preselector Object](#preselector-object)  
 [Receiver Object](#receiver-object)  
 [RFPath Object](#rfpath-object)  
-[ScheduleEntry Object](#32-scheduleentry-object)  
+[ScheduleEntry Object](#33-scheduleentry-object)  
 [SensorDefinition Object](#31-sensordefinition-object)  
 [TimeDomainDetection Object](#timedomaindetection-object)  
 [FrequencyDomainDetection Object](#frequencydomaindetection-object)  
 [SteppedFrequencyMeasurement Object](#steppedfrequencymeasurement-object)  
 [SweptTunedMeasurement Object](#swepttunedmeasurement-object)  
-[TransmitterDefinition Object](#52-transmitterdefinition-object)  
+[TransmitterDefinition Object](#32-transmitterdefinition-object)  
 [YFactorCalibration Object](#yfactorcalibration-object)  
