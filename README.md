@@ -142,7 +142,7 @@ The `TransmitterDefinition` object contains the following name/value pairs:
 |`altitude`|false|float|meters|Altitude above mean sea level.|
 
 ### 3.3 ScheduleEntry Object
-The `ScheduleEntry` object is associated with the SCOS control plane, which is implemented through the use of a RESTful API residing on the sensor, see [SCOS Sensor](https://github.com/NTIA/scos-sensor) and [SCOS Control Plane API Reference](https://ntia.github.io/scos-sensor/). A sensor advertises its **capabilities**, among which are **actions** that users can schedule the sensor to do. Sensor actions are scheduled by posting a **schedule entry** to the sensor's **schedule**. The scheduler periodically reads the schedule and populates a task queue in priority order. A **task** represents an action at a _specific_ time. Therefore, a schedule entry represents a range of tasks. The scheduler continues populating its task queue until the schedule is exhausted. When executing the task queue, the scheduler makes a best effort to run each task at its designated time, but the scheduler SHOULD NOT in most cases cancel a running task to start another task, even of higher priority. **priority** is used to disambiguate two or more tasks that are schedule to start at the same time.
+The `ScheduleEntry` object is associated with the SCOS control plane, which is implemented through the use of a RESTful API residing on the sensor, see [SCOS Sensor](https://github.com/NTIA/scos-sensor) and [SCOS Control Plane API Reference](https://ntia.github.io/scos-sensor/). A sensor advertises its **capabilities**, among which are **actions** that users can schedule the sensor to do. Sensor actions are scheduled by posting a **schedule entry** to the sensor's **schedule**. The scheduler periodically reads the schedule and populates a task queue in priority order. A **task** represents an action at a _specific_ time. Therefore, a schedule entry represents a range of tasks. The scheduler continues populating its task queue until the schedule is exhausted. When executing the task queue, the scheduler makes a best effort to run each task at its designated time, but the scheduler SHOULD NOT in most cases cancel a running task to start another task, even of higher priority. **priority** is used to disambiguate two or more tasks that are scheduled to start at the same time.
 
 The `ScheduleEntry` object contains the following name/value pairs:
 
@@ -226,6 +226,7 @@ Time-domain detection algorithms are applied to IQ time series captured at a sin
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`detector`|true|string|N/A|E.g. `"sample_power"`, `"mean_power"`, `"max_power"`, `"min_power"`, `"median_power"`, `"m4s_power"`.|
+|`detection_domain`|true|string|N/A|Domain in which detector is applied, i.e., `"time"`.|
 |`number_of_samples`|true|integer|N/A|Number of samples to be integrated over by detector.|
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
@@ -236,6 +237,7 @@ Frequency-domain detection algorithms are applied to discrete Fourier transforms
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`detector`|true|string|N/A|E.g. `"fft_sample_iq"`, `"fft_sample_power"`, `"fft_mean_power"`, `"fft_max_power"`, `"fft_min_power"`, `"fft_median_power"`, `"fft_m4s_power"`.|
+|`detection_domain`|true|string|N/A|Domain in which detector is applied, i.e., `"frequency"`.|
 |`number_of_ffts`|true|integer|N/A|Number of FFTs to be integrated over by detector.|
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
@@ -255,9 +257,8 @@ Example `SteppedFrequencyMeasurement` object for case where mean-power measureme
 
 ```
 {
-  "frequencies": [100000000, 200000000, 300000000, 400000000, 500000000]
-  "algorithm"
-  {
+  "frequencies": [100000000, 200000000, 300000000, 400000000, 500000000],
+  "algorithm": {
     "detector": "mean_power",
     "number_of_samples": 100000,
     "units": "dBm",
@@ -297,7 +298,7 @@ Example `YFactorCalibration` object for case where calibrations are performed at
 
 ```
 {
-  "frequencies": [100000000, 200000000, 300000000, 400000000, 500000000]
+  "frequencies": [100000000, 200000000, 300000000, 400000000, 500000000],
   "excess_noise_ratios": [12.3, 12.4, 12.7, 12.6, 12.5],
   "receiver_setting_name": "input range",
   "receiver_setting_units": "dBm",
@@ -307,13 +308,13 @@ Example `YFactorCalibration` object for case where calibrations are performed at
     {
       "receiver_setting": -30,
       "gains": [7.1, 7.2, 7.0, 7.1, 7.4],
-      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4],
+      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4]
     },
     {
       "receiver_setting": -20,
       "gains": [6.1, 6.2, 6.0, 6.1, 6.4],
       "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4]
-    },
+    }
   ]
 }
 ```
