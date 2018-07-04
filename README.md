@@ -1,7 +1,7 @@
-# SCOS Transfer Specification
+# SCOS SigMF Namespace
 
 ## Abstract
-The SCOS Transfer Specification defines a standard for the controls and data format used within the [IEEE 802.22.3 Draft Standard: Spectrum Characterization and Occupancy Sensing (SCOS) system](http://www.ieee802.org/22/P802_22_3_PAR_Detail_Approved.pdf).
+The SCOS SigMF namespace defines a standard for the controls and data format used within the [IEEE 802.22.3 Draft Standard: Spectrum Characterization and Occupancy Sensing (SCOS) system](http://www.ieee802.org/22/P802_22_3_PAR_Detail_Approved.pdf).
 
 ## Table of Contents
 
@@ -13,12 +13,12 @@ The SCOS Transfer Specification defines a standard for the controls and data for
     - [1. Description](#1-description)
     - [2. Conventions Used in this Document](#2-conventions-used-in-this-document)
     - [3. Global](#3-global)
-        - [3.1 SensorDefinition Object](#31-sensordefinition-object)
+        - [3.1 Sensor Object](#31-sensor-object)
             - [Antenna Object](#antenna-object)
             - [Receiver Object](#receiver-object)
             - [Preselector Object](#preselector-object)
             - [RFPath Object](#rfpath-object)
-        - [3.2 TransmitterDefinition Object](#32-transmitterdefinition-object)
+        - [3.2 Transmitter Object](#32-transmitter-object)
         - [3.3 ScheduleEntry Object](#33-scheduleentry-object)
         - [3.4 Digital Filter Object](#34-digitalfilter-object)
     - [4. Captures](#4-captures)
@@ -38,7 +38,7 @@ The SCOS Transfer Specification defines a standard for the controls and data for
 <!-- markdown-toc end -->
 
 ## 1. Description
-This transfer specification defines the data format used within the NTIA implementation of the [IEEE 802.22.3 draft standard](http://www.ieee802.org/22/P802_22_3_PAR_Detail_Approved.pdf) - also called the NTIA Spectrum Characterization and Occupancy Sensing (SCOS) system. This system fully implements the [SigMF Specification](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md) for the data plane. The goal of SCOS is to standardize the control method and data transfer format for “time share” access to a networked fleet of sensors. Use cases require a solid solution for basic sensor control and RF data collection with flexibility to incorporate new sensing solutions and metrics in the future.
+This SCOS SigMF namespace defines the data format used within the NTIA implementation of the [IEEE 802.22.3 draft standard](http://www.ieee802.org/22/P802_22_3_PAR_Detail_Approved.pdf) - also called the NTIA Spectrum Characterization and Occupancy Sensing (SCOS) system. This system fully implements the [SigMF Specification](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md) for the data plane. The goal of SCOS is to standardize the control method and data transfer format for “time share” access to a networked fleet of sensors. Use cases require a solid solution for basic sensor control and RF data collection with flexibility to incorporate new sensing solutions and metrics in the future.
 
 ## 2. Conventions Used in this Document
 
@@ -57,17 +57,17 @@ Global informataion is applicable to the entire dataset.
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
-|`sensor_definition`|false|object|N/A|Describes the sensor model components. See [SensorDefinition Object](#31-sensordefinition-object) definition. This object is RECOMMENDED.|
-|`transmitter_definition`|false|object|N/A|The transmitter that the measurement is designed to detect, e.g., propagation measurements. See [TransmitterDefinition Object](#32-transmitterdefinition-object) definition.|
+|`sensor_definition`|false|object|N/A|Describes the sensor model components. See [Sensor Object](#31-sensor-object) definition. This object is RECOMMENDED.|
+|`transmitter_definition`|false|object|N/A|The transmitter that the measurement is designed to detect, e.g., propagation measurements. See [Transmitter Object](#32-transmitter-object) definition.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
 |`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#33-scheduleentry-object) definition.|
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schedule_entry`.|
 |`anti_aliasing_filter`|false|object|N/A|Describes anti-aliasing low-pass filter applied to IQ captures. See [DigitalFilter Object](#34-digital-filter-object) definition.|
 
-### 3.1 SensorDefinition Object
+### 3.1 Sensor Object
 Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Preselector, Receiver, and Host Controller. The antenna converts electromagnetic energy to a voltage. The preselector can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. The receiver (e.g., software defined radio) provides tuning, downcoversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata SHOULD specify the presence, model numbers, and operational parameters associated with each.
 
-The `SensorDefinition` object contains the following name/value pairs:
+The `Sensor` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -128,8 +128,8 @@ Each `RFPath` object contains the following name/value pairs:
 |`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier.|
 |`cal_source_type`|false|string|N/A|E.g., `"calibrated noise source"`.|
 
-### 3.2 TransmitterDefinition Object
-The `TransmitterDefinition` object contains the following name/value pairs:  
+### 3.2 Transmitter Object
+The `Transmitter` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -184,7 +184,7 @@ Per SigMF, the `Annoations` value is an array of annoation segment objects that 
 |`dynamic_antenna_settings`|false|object|N/A|Dynamic parameters associated with the antenna. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
 |`dynamic_preselector_settings`|false|object|N/A|Dynamic parameters associated with the preselector. See [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object) definition.|
 |`dynamic_receiver_settings`|false|object|N/A|Dynamic parameters associated with the receiver. See [DynamicReceiverSettings Object](#dynamicreceiversettings-object) definition.|
-|`transmitter_identification`|false|object|N/A|Transmitter identification parameters. See [TransmitterDefinition Object](#32-transmitterdefinition-object) definition.|
+|`transmitter_identification`|false|object|N/A|Transmitter identification parameters. See [Transmitter Object](#32-transmitter-object) definition.|
 |`measurement_type`|true|object|N/A|The type of measurement acquired, e.g., [SteppedFrequencyMeasurement](#steppedfrequencymeasurement-object), [SweptTunedMeasurement](#swepttunedmeasurement-object) or [YFactorCalibration](#yfactorcalibration-object).|
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `"low"`, `"moderate"` or  `"high"`.|
 |`detected_system_noise_powers`|false|float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
@@ -334,10 +334,10 @@ Example `YFactorCalibration` object for case where calibrations are performed at
 [Receiver Object](#receiver-object)  
 [RFPath Object](#rfpath-object)  
 [ScheduleEntry Object](#33-scheduleentry-object)  
-[SensorDefinition Object](#31-sensordefinition-object)  
+[Sensor Object](#31-sensor-object)  
 [TimeDomainDetection Object](#timedomaindetection-object)  
 [FrequencyDomainDetection Object](#frequencydomaindetection-object)  
 [SteppedFrequencyMeasurement Object](#steppedfrequencymeasurement-object)  
 [SweptTunedMeasurement Object](#swepttunedmeasurement-object)  
-[TransmitterDefinition Object](#32-transmitterdefinition-object)  
+[Transmitter Object](#32-transmitter-object)  
 [YFactorCalibration Object](#yfactorcalibration-object)  
