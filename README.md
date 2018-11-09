@@ -175,7 +175,7 @@ Each `DigitalFilter` object contains the following name/value pairs:
 Per SigMF, the `Captures` value is an array of capture segment objects that describe the parameters of the signal capture. The `scos` specification does not add any enhancements to this section.
 
 ## 5. Annotations
-Per SigMF, the `Annoations` value is an array of annoation segment objects that describe anything regarding the signal data not part of the `global` and `captures` objtects. Each SigMF annotation segment object must contain a `core:sample_start` name/value pair, which indicates the first index at which the rest of the segment's name/value pairs apply.
+Per SigMF, the `Annotations` value is an array of annotation segment objects that describe anything regarding the signal data not part of the `global` and `captures` objtects. Each SigMF annotation segment object must contain a `core:sample_start` name/value pair, which indicates the first index at which the rest of the segment's name/value pairs apply.
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
