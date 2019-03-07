@@ -190,36 +190,16 @@ Per SigMF, the `Annotations` value is an array of annotation segment objects tha
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `"low"`, `"moderate"` or  `"high"`.|
 |`temperature`|false|float|celsius|Environmental temperature.|
 |`overload_flag`|false|boolean|N/A|Flag indicator of system signal overload.|
+|`receiver-attenuation`|false|float|dB|Attenuation of the receiver.|
+|`receiver-scaling_factor`|false|float|N/A|Factor that converts receiver A/D output to volts.|
+|`receiver-1db_compression_point`|false|float|dBm|Maximum input of receiver.|
+|`receiver-system_noise_power`|false|object|N/A|The system noise power. See [SystemNoise Object](#systemnoise-object) definition. This object is RECOMMENDED.|
+|`preselector-rf_path_number`|false|integer|N/A|The preselector RF path number.|
+|`antenna-azimuth_angle`|false|float|degrees|Angle of main beam in azimuthal plane from North.|
+|`antenna-elevation_angle`|false|float|degrees|Angle of main beam in elevation plane from horizontal.|
+|`antenna-polarization`|false|float|string|E.g. `"vertical"`, `"horizontal"`, `"slant-45"`, `"left-hand circular"`, `"right-hand circular"`.|
 
-### 5.1 Dynamic Sensor Settings
-The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, the preselector, and the  receiver.
-
-#### DynamicAntennaSettings Object
-The `DynamicAntennaSettings` object contains the following name/value pairs:  
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`azimuth_angle`|false|float|degrees|Angle of main beam in azimuthal plane from North.|
-|`elevation_angle`|false|float|degrees|Angle of main beam in elevation plane from horizontal.|
-|`polarization`|false|float|string|E.g. `"vertical"`, `"horizontal"`, `"slant-45"`, `"left-hand circular"`, `"right-hand circular"`.|
-
-#### DynamicReceiverSettings Object
-The `DynamicReceiverSettings` object contains the following name/value pairs:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`attenuation`|false|float|dB|Attenuation of the receiver.|
-|`scaling_factor`|false|float|N/A|Factor that converts receiver A/D output to volts.|
-|`1db_compression_point`|false|float|dBm|Maximum input of receiver.|
-|`system_noise_power`|false|object|N/A|The system noise power. See [SystemNoise Object](#systemnoise-object) definition. This object is RECOMMENDED.|
-
-#### DynamicPreselectorSettings Object
-The `DynamicPreselectorSettings` object contains the following name/value pairs:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`rf_path_number`|false|integer|N/A|The preselector RF path number.|
-
-### 5.2 Measurement Types
+### 5.1 Measurement Types
 The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. 
 
 #### TimeDomainDetection Object
@@ -300,10 +280,6 @@ Example `YFactorCalibration` object for case where calibrations are performed at
 [Antenna Object](#antenna-object)  
 [Captures](#4-captures)  
 [DigitalFilter Object](#34-digitalfilter-object)  
-[Dynamic Sensor Settings](#51-dynamic-sensor-settings)  
-[DynamicAntennaSettings Object](#dynamicantennasettings-object)  
-[DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object)  
-[DynamicReceiverSettings Object](#dynamicreceiversettings-object)  
 [Global](#3-global)  
 [Measurement Types](#52-measurement-types)  
 [Preselector Object](#preselector-object)  
