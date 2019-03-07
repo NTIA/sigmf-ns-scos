@@ -237,44 +237,6 @@ System noise is inherent to every measurement. The `SystemNoise` object contains
 |`system_noise`|true|float|N/A|Mean power of the system noise.|
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
 
-#### YFactorCalibration Object
-The purpose of the `YFactorCalibration` is to provide parameters and results for time-domain y-factor calibrations. The `YFactorCalibration` object contains the following name/value pairs:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`last_time_performed`|true|datetime|[ISO-8601](https://github.com/gnuradio/SigMF/blob/master/sigmf-spec.md#the-datetime-pair)|Date and time that calibration was performed.|
-|`frequencies`|false|array of floats|Hz|Frequencies that y-factor calibrations are performed.|
-|`excess_noise_ratios`|false|array of floats|dB|Excess noise ratio of calibrated noise source at `frequencies` of y-factor calibration.|
-|`receiver_setting_name`|false|string|N/A|Name of adjustable receiver setting that affects noise figure, e.g., `"attenuation"`, `"input range"`.|
-|`receiver_setting_units`|false|string|N/A|Units corresponding to `receiver_setting_name`, e.g., `"dB"`, `"dBm"`.|
-|`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"preselector input"`.|
-|`calibrations`|false|array of objects|dB|Receiver settings and corresponding `gains` and `noise_figures` arrays (i.e., arrays of floats with lengths equal to the length of `frequencies`.)|
-
-Example `YFactorCalibration` object for case where calibrations are performed at two receiver settings and five frequencies:
-
-```
-{
-  "frequencies": [100000000, 200000000, 300000000, 400000000, 500000000],
-  "excess_noise_ratios": [12.3, 12.4, 12.7, 12.6, 12.5],
-  "receiver_setting_name": "input range",
-  "receiver_setting_units": "dBm",
-  "reference": "preselector input",
-  "calibrations":
-  [
-    {
-      "receiver_setting": -30,
-      "gains": [7.1, 7.2, 7.0, 7.1, 7.4],
-      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4]
-    },
-    {
-      "receiver_setting": -20,
-      "gains": [6.1, 6.2, 6.0, 6.1, 6.4],
-      "noise_figures": [9.1, 9.2, 9.0, 9.1, 9.4]
-    }
-  ]
-}
-```
-
 ## 6. Index 
 [Annotations](#5-annotations)  
 [Antenna Object](#antenna-object)  
