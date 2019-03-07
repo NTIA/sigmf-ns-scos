@@ -52,7 +52,7 @@ We have adopted SigMF's conventions:
 - Information is given as global, capture, or annotation
 
 ## 3. Global
-Global informataion is applicable to the entire dataset.
+Global information is applicable to the entire dataset.
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
@@ -65,7 +65,7 @@ Global informataion is applicable to the entire dataset.
 |`anti_aliasing_filter`|false|object|N/A|Describes anti-aliasing low-pass filter applied to IQ captures. See [DigitalFilter Object](#34-digital-filter-object) definition.|
 
 ### 3.1 Sensor Object
-Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Preselector, Receiver, and Host Controller. The antenna converts electromagnetic energy to a voltage. The preselector can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. The receiver (e.g., software defined radio) provides tuning, downcoversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata SHOULD specify the presence, model numbers, and operational parameters associated with each.
+Sensor definition follows a simplified hardware model comprised of the following elements: Antenna, Preselector, Receiver, and Host Controller. The antenna converts electromagnetic energy to a voltage. The preselector can provide local calibration signals, RF filtering to protect from strong out-of-band signals, and low-noise amplification to improve sensitivity. The receiver (e.g., software defined radio) provides tuning, down conversion, sampling, and digital signal processing. Sensor implementations are not required to have each component, but metadata SHOULD specify the presence, model numbers, and operational parameters associated with each.
 
 The `Sensor` object contains the following name/value pairs:
 
@@ -106,6 +106,7 @@ The `Receiver` object contains the following name/value pairs:
 |`high_frequency`|false|float|Hz|High frequency of operational range of the receiver.|
 |`noise_figure`|false|float|dB|Noise figure of the receiver.|
 |`max_power`|false|float|dBm|Maximum input power of the receiver.|
+|`a2d_bits`|false|int|bits|Number of bits in A/D converter.|
 
 #### Preselector Object
 The `Preselector` object contains the following name/value pairs:
@@ -187,16 +188,14 @@ Per SigMF, the `Annotations` value is an array of annotation segment objects tha
 |`transmitter_identification`|false|object|N/A|Transmitter identification parameters. See [Transmitter Object](#32-transmitter-object) definition.|
 |`measurement_type`|true|object|N/A|The type of measurement acquired, e.g., [SteppedFrequencyMeasurement](#steppedfrequencymeasurement-object), [SweptTunedMeasurement](#swepttunedmeasurement-object) or [YFactorCalibration](#yfactorcalibration-object).|
 |`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `"low"`, `"moderate"` or  `"high"`.|
-|`detected_system_noise_powers`|false|float|dBm|The detected system noise power referenced to the output of isotropic antenna.|
 |`temperature`|false|float|celsius|Environmental temperature.|
 |`overload_flag`|false|boolean|N/A|Flag indicator of system signal overload.|
 
 ### 5.1 Dynamic Sensor Settings
-The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, the preselector, and the receiver.
+The following annotation objects are used within the `scos` SigMF name space associated with dynamic settings in the antenna, the preselector, and the  receiver.
 
 #### DynamicAntennaSettings Object
 The `DynamicAntennaSettings` object contains the following name/value pairs:  
-
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`azimuth_angle`|false|float|degrees|Angle of main beam in azimuthal plane from North.|
@@ -209,6 +208,9 @@ The `DynamicReceiverSettings` object contains the following name/value pairs:
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`attenuation`|false|float|dB|Attenuation of the receiver.|
+|`scaling_factor`|false|float|N/A|Factor that converts receiver A/D output to volts.|
+|`1db_compression_point`|false|float|dBm|Maximum input of receiver.|
+|`system_noise_power`|false|object|N/A|The system noise power. See [SystemNoise Object](#systemnoise-object) definition. This object is RECOMMENDED.|
 
 #### DynamicPreselectorSettings Object
 The `DynamicPreselectorSettings` object contains the following name/value pairs:  
@@ -245,41 +247,15 @@ Frequency-domain detection algorithms are applied to discrete Fourier transforms
 |`window`|true|string|N/A|E.g. `"blackman-harris"`, `"flattop"`, `"gaussian_a3.5"`, `"gauss top"`, `"hamming"`, `"hanning"`, `"rectangular"`.|
 |`equivalent_noise_bandwidth`|false|float|Hz|Bandwidth of brickwall filter that has same integrated noise power as that of the actual filter.|
 
-#### SteppedFrequencyMeasurement Object
-The `SteppedFrequencyMeasurement` object contains the following name/value pairs:  
+#### SystemNoise Object
+System noise is inherent to every measurement. The `SystemNoise` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
-|`frequencies`|false|array of floats|Hz|Center frequencies where stepped-frequency detections are performed.|
-|`algorithm`|true|object|N/A|Algorithm applied to IQ samples. See [TimeDomainDetection Object](#timedomaindetection-object), [FrequencyDomainDetection Object](#frequencydomaindetection-object) definition.|
-
-Example `SteppedFrequencyMeasurement` object for case where mean-power measurements are performed at five frequencies:
-
-```
-{
-  "frequencies": [100000000, 200000000, 300000000, 400000000, 500000000],
-  "algorithm": {
-    "detector": "mean_power",
-    "number_of_samples": 100000,
-    "units": "dBm",
-    "reference": "output of isotropic antenna"
-  }
-}
-```
-
-#### SweptTunedMeasurement Object
-Swept-tuned measurement is a standard spectrum analyzer measurement. The `SweptTunedMeasurement` object contains the following name/value pairs:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`frequency_start`|true|float|Hz|First frequency of scan.|
-|`frequency_stop`|true|float|Hz|Last frequency of scan.|
-|`frequency_step`|true|float|Hz|Frequency step of scan.|
-|`dwell_time`|true|float|seconds|Integration time of detector at each frequency step.|
-|`resolution_bandwidth`|true|float|Hz|Resolution bandwidth.|
-|`video_bandwidth`|true|float|Hz|Video bandwidth.|
+|`detector`|true|string|N/A|Determination method of system noise. E.g. `"mean"` or `"peak"`.|
+|`reference`|true|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`.|
+|`system_noise`|true|float|N/A|Mean power of the system noise.|
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
-|`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
 #### YFactorCalibration Object
 The purpose of the `YFactorCalibration` is to provide parameters and results for time-domain y-factor calibrations. The `YFactorCalibration` object contains the following name/value pairs:  
@@ -337,7 +313,6 @@ Example `YFactorCalibration` object for case where calibrations are performed at
 [Sensor Object](#31-sensor-object)  
 [TimeDomainDetection Object](#timedomaindetection-object)  
 [FrequencyDomainDetection Object](#frequencydomaindetection-object)  
-[SteppedFrequencyMeasurement Object](#steppedfrequencymeasurement-object)  
-[SweptTunedMeasurement Object](#swepttunedmeasurement-object)  
+[SystemNoise Object](#systemnoise-object)  
 [Transmitter Object](#32-transmitter-object)  
 [YFactorCalibration Object](#yfactorcalibration-object)  
