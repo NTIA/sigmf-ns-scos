@@ -18,21 +18,14 @@ The SCOS SigMF namespace defines a standard for the controls and data format use
             - [Receiver Object](#receiver-object)
             - [Preselector Object](#preselector-object)
             - [RFPath Object](#rfpath-object)
-        - [3.2 Transmitter Object](#32-transmitter-object)
-        - [3.3 ScheduleEntry Object](#33-scheduleentry-object)
-        - [3.4 Digital Filter Object](#34-digitalfilter-object)
+        - [3.2 ScheduleEntry Object](#32-scheduleentry-object)
+        - [3.3 Digital Filter Object](#33-digitalfilter-object)
     - [4. Captures](#4-captures)
     - [5. Annotations](#5-annotations)
-        - [5.1 Dynamic Sensor Settings](#51-dynamic-sensor-settings)
-            - [DynamicAntennaSettings Object](#dynamicantennasettings-object)
-            - [DynamicReceiverSettings Object](#dynamicreceiversettings-object)
-            - [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object)
-        - [5.2 Measurement Types](#52-measurement-types)
-            - [TimeDomainDetection Object](#timedomaindetection-object)
-            - [FrequencyDomainDetection Object](#frequencydomaindetection-object)
-            - [SteppedFrequencyMeasurement Object](#steppedfrequencymeasurement-object)
-            - [SweptTunedMeasurement Object](#swepttunedmeasurement-object)
-            - [YFactorCalibration Object](#yfactorcalibration-object)
+        - [5.1 TimeDomainDetection Object](#51-timedomaindetection-object)
+        - [5.2 FrequencyDomainDetection Object](#52-frequencydomaindetection-object)
+        - [5.3 SystemNoise Object](#53-systemnoise-object)
+        - [5.4 Emitter Object](#54-emitter-object)
     - [6. Index](#6-index)
 
 <!-- markdown-toc end -->
@@ -58,9 +51,9 @@ Global information is applicable to the entire dataset.
 |----|--------------|-------|-------|-----------|
 |`sensor_id`|true|string|N/A|Unique name for the sensor.|
 |`sensor_definition`|false|object|N/A|Describes the sensor model components. See [Sensor Object](#31-sensor-object) definition. This object is RECOMMENDED.|
-|`transmitter_definition`|false|object|N/A|The transmitter that the measurement is designed to detect, e.g., propagation measurements. See [Transmitter Object](#32-transmitter-object) definition.|
+|`emitter_definition`|false|object|N/A|The emitter that the measurement is designed to detect, e.g., propagation measurements. See [Emitter Object](#32-emitter-object) definition.|
 |`version`|true|string|N/A|The version of the SigMF SCOS namespace extension.|
-|`schedule_entry`|false|object|N/A|See [ScheduleEntry Object](#33-scheduleentry-object) definition.|
+|`schedule_entry`|true|object|N/A|See [ScheduleEntry Object](#33-scheduleentry-object) definition. This object is REQUIRED for SCOS Manager data distribution.|
 |`task_id`|false|integer|N/A|A unique identifier that increments with each task of a `schedule_entry`.|
 |`anti_aliasing_filter`|false|object|N/A|Describes anti-aliasing low-pass filter applied to IQ captures. See [DigitalFilter Object](#34-digital-filter-object) definition.|
 
@@ -129,20 +122,7 @@ Each `RFPath` object contains the following name/value pairs:
 |`lna_noise_figure`|false|float|dB|Noise figure of low noise amplifier.|
 |`cal_source_type`|false|string|N/A|E.g., `"calibrated noise source"`.|
 
-### 3.2 Transmitter Object
-The `Transmitter` object contains the following name/value pairs:  
-
-|name|required|type|unit|description|
-|----|--------------|-------|-------|-----------|
-|`system_name`|false|string|N/A|Name of system to be detected.|
-|`transmit_power`|false|float|dBm|Transmitter power going into antenna.|
-|`antenna`|true|object|N/A|See [Antenna Object](#antenna-object) definition.|
-|`waveform`|false|object|N/A|See SigMF [waveform namespace](https://github.com/NTIA/sigmf-ns-waveform)
-|`latitude`|false|float|degrees|Latitude.|
-|`longitude`|false|float|degrees|Longitude.|
-|`altitude`|false|float|meters|Altitude above mean sea level.|
-
-### 3.3 ScheduleEntry Object
+### 3.2 ScheduleEntry Object
 The `ScheduleEntry` object is associated with the SCOS control plane, which is implemented through the use of a RESTful API residing on the sensor, see [SCOS Sensor](https://github.com/NTIA/scos-sensor) and [SCOS Control Plane API Reference](https://ntia.github.io/scos-sensor/). A sensor advertises its **capabilities**, among which are **actions** that users can schedule the sensor to do. Sensor actions are scheduled by posting a **schedule entry** to the sensor's **schedule**. The scheduler periodically reads the schedule and populates a task queue in priority order. A **task** represents an action at a _specific_ time. Therefore, a schedule entry represents a range of tasks. The scheduler continues populating its task queue until the schedule is exhausted. When executing the task queue, the scheduler makes a best effort to run each task at its designated time, but the scheduler SHOULD NOT in most cases cancel a running task to start another task, even of higher priority. **priority** is used to disambiguate two or more tasks that are scheduled to start at the same time.
 
 The `ScheduleEntry` object contains the following name/value pairs:
@@ -159,7 +139,7 @@ The `ScheduleEntry` object contains the following name/value pairs:
 
 \* If both `relative_stop` and `absolute_stop` are unspecified, the task will carry on forever. Specifying both `relative_stop` and `absolute_stop` will result in an error.
 
-### 3.4 DigitalFilter Object
+### 3.3 DigitalFilter Object
 Each `DigitalFilter` object contains the following name/value pairs:
 
 |name|required|type|unit|description|
@@ -181,28 +161,25 @@ Per SigMF, the `Annotations` value is an array of annotation segment objects tha
 |name|required|type|unit|description|
 |----|--------------|-------|-------|-----------|
 |`altitude`|false|float|meters|The height of the antenna above mean sea level.|
+|`speed`|false|float|m/s|Speed at which the antenna is moving.|
+|`bearing`|false|float|degrees|Angle relative to true North.|
+|`azimuth_angle`|false|float|degrees|Angle of main beam in azimuthal plane from North.|
+|`elevation_angle`|false|float|degrees|Angle of main beam in elevation plane from horizontal.|
+|`polarization`|false|float|string|E.g. `"vertical"`, `"horizontal"`, `"slant-45"`, `"left-hand circular"`, `"right-hand circular"`.|
+|`preselector-rf_path_number`|false|integer|N/A|The preselector RF path number.|
+|`gps-fix-quality`|false|string|N/A|NMEA string denoting the quality of the GPS fix.|
 |`environment`|false|string|N/A|A description of the environment where antenna is mounted. E.g. `"indoor"` or `"outdoor"`.|
-|`dynamic_antenna_settings`|false|object|N/A|Dynamic parameters associated with the antenna. See [DynamicAntennaSettings Object](#dynamicantennasettings-object) definition.|
-|`dynamic_preselector_settings`|false|object|N/A|Dynamic parameters associated with the preselector. See [DynamicPreselectorSettings Object](#dynamicpreselectorsettings-object) definition.|
-|`dynamic_receiver_settings`|false|object|N/A|Dynamic parameters associated with the receiver. See [DynamicReceiverSettings Object](#dynamicreceiversettings-object) definition.|
-|`transmitter_identification`|false|object|N/A|Transmitter identification parameters. See [Transmitter Object](#32-transmitter-object) definition.|
-|`measurement_type`|true|object|N/A|The type of measurement acquired, e.g., [SteppedFrequencyMeasurement](#steppedfrequencymeasurement-object), [SweptTunedMeasurement](#swepttunedmeasurement-object) or [YFactorCalibration](#yfactorcalibration-object).|
-|`data_sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `"low"`, `"moderate"` or  `"high"`.|
+|`measurement_type`|true|object|N/A|The type of measurement acquired, e.g., [TimeDomainDetection Object](#51-timedomaindetection-object), [FrequencyDomainDetection Object](#52-frequencydomaindetection-object) .|
+|`data-sensitivity`|false|string|N/A|The sensitivity of the data captured. E.g. `"low"`, `"moderate"`, `"high"`, `"Distributable only to Organization A"`.|
 |`temperature`|false|float|celsius|Environmental temperature.|
-|`overload_flag`|false|boolean|N/A|Flag indicator of system signal overload.|
+|`overload-flag`|false|boolean|N/A|Flag indicator of system signal overload.|
 |`receiver-attenuation`|false|float|dB|Attenuation of the receiver.|
 |`receiver-scaling_factor`|false|float|N/A|Factor that converts receiver A/D output to volts.|
 |`receiver-1db_compression_point`|false|float|dBm|Maximum input of receiver.|
-|`receiver-system_noise_power`|false|object|N/A|The system noise power. See [SystemNoise Object](#systemnoise-object) definition. This object is RECOMMENDED.|
-|`preselector-rf_path_number`|false|integer|N/A|The preselector RF path number.|
-|`antenna-azimuth_angle`|false|float|degrees|Angle of main beam in azimuthal plane from North.|
-|`antenna-elevation_angle`|false|float|degrees|Angle of main beam in elevation plane from horizontal.|
-|`antenna-polarization`|false|float|string|E.g. `"vertical"`, `"horizontal"`, `"slant-45"`, `"left-hand circular"`, `"right-hand circular"`.|
+|`receiver-system_noise_power`|false|object|N/A|The system noise power. See [SystemNoise Object](#53-systemnoise-object) definition. This object is RECOMMENDED.|
+|`emitter_identification`|false|object|N/A|Emitter identification parameters. See [Emitter Object](#54-emitter-object) definition.|
 
-### 5.1 Measurement Types
-The following annotation objects are used within the `scos` SigMF name space associated with `measurement_type`. 
-
-#### TimeDomainDetection Object
+### 5.1 TimeDomainDetection Object
 Time-domain detection algorithms are applied to IQ time series captured at a single frequency. The `TimeDomainDetection` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
@@ -213,7 +190,7 @@ Time-domain detection algorithms are applied to IQ time series captured at a sin
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
 |`reference`|false|string|N/A|Data reference point, e.g., `"receiver input"`, `"antenna output"`, `"output of isotropic antenna"`.|
 
-#### FrequencyDomainDetection Object
+### 5.2 FrequencyDomainDetection Object
 Frequency-domain detection algorithms are applied to discrete Fourier transforms of IQ time series captured at a single frequency. The `FrequencyDomainDetection` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
@@ -227,7 +204,7 @@ Frequency-domain detection algorithms are applied to discrete Fourier transforms
 |`window`|true|string|N/A|E.g. `"blackman-harris"`, `"flattop"`, `"gaussian_a3.5"`, `"gauss top"`, `"hamming"`, `"hanning"`, `"rectangular"`.|
 |`equivalent_noise_bandwidth`|false|float|Hz|Bandwidth of brickwall filter that has same integrated noise power as that of the actual filter.|
 
-#### SystemNoise Object
+### 5.3 SystemNoise Object
 System noise is inherent to every measurement. The `SystemNoise` object contains the following name/value pairs:  
 
 |name|required|type|unit|description|
@@ -237,20 +214,33 @@ System noise is inherent to every measurement. The `SystemNoise` object contains
 |`system_noise`|true|float|N/A|Mean power of the system noise.|
 |`units`|true|string|N/A|Data units, e.g., `"dBm"`, `"watts"`, `"volts"`.|
 
+### 5.4 Emitter Object
+The `Emitter` object contains the following name/value pairs:  
+
+|name|required|type|unit|description|
+|----|--------------|-------|-------|-----------|
+|`system_name`|false|string|N/A|Name of system to be detected.|
+|`emitter_power`|false|float|dBm|Emitter power going into antenna.|
+|`antenna`|false|object|N/A|See [Antenna Object](#antenna-object) definition.|
+|`waveform`|false|object|N/A|See SigMF [waveform namespace](https://github.com/NTIA/sigmf-ns-waveform)
+|`latitude`|false|float|decimal degrees|Latitude of emitter.|
+|`longitude`|false|float|decimal degrees|Longitude of emitter.|
+|`altitude`|false|float|meters|The height of the antenna above mean sea level.|
+|`speed`|false|float|m/s|Speed at which the antenna is moving.|
+|`bearing`|false|float|degrees|Angle relative to true North.|
+
 ## 6. Index 
 [Annotations](#5-annotations)  
 [Antenna Object](#antenna-object)  
 [Captures](#4-captures)  
 [DigitalFilter Object](#34-digitalfilter-object)  
 [Global](#3-global)  
-[Measurement Types](#52-measurement-types)  
 [Preselector Object](#preselector-object)  
 [Receiver Object](#receiver-object)  
 [RFPath Object](#rfpath-object)  
 [ScheduleEntry Object](#33-scheduleentry-object)  
 [Sensor Object](#31-sensor-object)  
-[TimeDomainDetection Object](#timedomaindetection-object)  
-[FrequencyDomainDetection Object](#frequencydomaindetection-object)  
-[SystemNoise Object](#systemnoise-object)  
-[Transmitter Object](#32-transmitter-object)  
-[YFactorCalibration Object](#yfactorcalibration-object)  
+[TimeDomainDetection Object](#51-timedomaindetection-object)
+[FrequencyDomainDetection Object](#52-frequencydomaindetection-object)  
+[SystemNoise Object](#53-systemnoise-object)  
+[Emitter Object](#54-Emitter-object)  
